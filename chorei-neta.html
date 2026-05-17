@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>現場朝礼ネタ｜CHOREI</title>
+<style>
+  :root{
+    --bg:#000;--bg2:#111;--bg3:#1c1c1c;--line:#2a2a2a;
+    --text:#fff;--accent:#FFD400;--accent2:#FF4D4D;--good:#28C76F;
+    --muted:#9aa0a6;--tag:#222;--tagOn:#FFD400;--tagOnText:#000;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;font-size:18px;line-height:1.55;}
+  body{padding-bottom:96px;}
+  header{position:sticky;top:0;z-index:50;background:#000;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:14px 16px;}
+  header h1{margin:0;font-size:22px;letter-spacing:.05em;}
+  header h1 span{color:var(--accent);}
+  header .date{color:var(--muted);font-size:13px;}
+  header .admin-badge{background:var(--accent);color:#000;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;margin-left:8px;display:none;}
+  header .admin-badge.on{display:inline-block;}
+
+  nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:50;background:#000;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);}
+  nav.tabs button{appearance:none;background:transparent;border:0;color:var(--muted);padding:10px 4px 14px;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:4px;}
+  nav.tabs button .icon{font-size:22px;}
+  nav.tabs button.active{color:var(--accent);}
+
+  main{padding:14px 14px 16px;}
+  .section-title{font-size:14px;color:var(--muted);margin:18px 4px 8px;letter-spacing:.05em;}
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px;cursor:pointer;}
+  .card h3{margin:0 0 6px;font-size:20px;line-height:1.4;}
+  .card p.summary{margin:0;color:#dcdcdc;font-size:15px;}
+  .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+  .meta .pill{background:var(--tag);color:#ddd;border-radius:999px;padding:4px 10px;font-size:12px;border:1px solid var(--line);}
+  .meta .pill.used{background:#3a2200;color:#FFB060;border-color:#553200;}
+  .meta .pill.fav{background:#332b00;color:var(--accent);border-color:#5a4a00;}
+  .meta .pill.cat{background:#102030;color:#9ad;border-color:#1c3a5a;}
+
+  .work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .work-btn{background:var(--bg3);border:1px solid var(--line);color:var(--text);border-radius:14px;padding:14px 6px;font-size:14px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;}
+  .work-btn .ico{font-size:30px;}
+
+  .tag-group{margin-bottom:10px;}
+  .tag-group .label{font-size:12px;color:var(--muted);margin:0 4px 6px;}
+  .tag-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .tag{background:var(--tag);color:#ddd;border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:14px;cursor:pointer;}
+  .tag.on{background:var(--tagOn);color:var(--tagOnText);border-color:var(--tagOn);font-weight:700;}
+  .tag.add{background:transparent;color:var(--accent);border:1px dashed var(--accent);}
+
+  .modal-back{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;display:none;align-items:flex-end;justify-content:center;}
+  .modal-back.open{display:flex;}
+  .modal{background:#000;border-top:1px solid var(--line);width:100%;max-width:640px;max-height:92vh;overflow-y:auto;border-radius:18px 18px 0 0;padding:18px 18px 100px;}
+  .modal h2{font-size:26px;margin:6px 0 10px;line-height:1.35;}
+  .modal .body{font-size:20px;line-height:1.8;}
+  .modal .body b.num{color:var(--accent2);font-size:22px;}
+  .modal .body b.act{color:var(--accent);}
+  .modal .actions{position:fixed;left:0;right:0;bottom:0;background:#000;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:8px;z-index:101;}
+  .modal .actions button{appearance:none;background:var(--bg3);border:1px solid var(--line);color:#fff;border-radius:10px;padding:10px 4px;font-size:13px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;}
+  .modal .actions button.primary{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700;}
+  .modal .actions button .ico{font-size:18px;}
+  .close-x{position:sticky;top:0;display:flex;justify-content:flex-end;background:#000;padding:4px 0 8px;}
+  .close-x button{background:transparent;border:0;color:#fff;font-size:24px;cursor:pointer;}
+
+  .feedback-row{display:flex;gap:8px;margin-top:14px;}
+  .feedback-row button{flex:1;background:var(--bg3);border:1px solid var(--line);color:#fff;border-radius:12px;padding:14px;font-size:15px;cursor:pointer;}
+
+  form .row{margin-bottom:12px;}
+  form label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px;}
+  form input[type=text], form input[type=password], form textarea, form select{
+    width:100%;background:var(--bg3);border:1px solid var(--line);color:#fff;border-radius:10px;padding:12px;font-size:16px;font-family:inherit;
+  }
+  form textarea{min-height:150px;resize:vertical;}
+  .submit-btn{width:100%;background:var(--accent);color:#000;border:0;border-radius:12px;padding:16px;font-size:18px;font-weight:700;cursor:pointer;margin-top:6px;}
+  .ghost-btn{background:transparent;border:1px solid var(--line);color:#fff;border-radius:10px;padding:10px 14px;cursor:pointer;font-size:14px;margin:4px 4px 4px 0;}
+  .danger-btn{background:transparent;border:1px solid #552020;color:#FF6060;border-radius:10px;padding:10px 14px;cursor:pointer;font-size:14px;margin:4px 4px 4px 0;}
+
+  .qr-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;background:#fff;color:#000;padding:18px;border-radius:14px;}
+  .qr-wrap img{width:220px;height:220px;}
+
+  .toggle-row{display:flex;align-items:center;justify-content:space-between;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:8px;gap:10px;}
+  .switch{width:50px;height:28px;background:#333;border-radius:999px;position:relative;cursor:pointer;flex-shrink:0;}
+  .switch::after{content:"";position:absolute;width:22px;height:22px;background:#fff;border-radius:50%;top:3px;left:3px;transition:.2s;}
+  .switch.on{background:var(--accent);}
+  .switch.on::after{left:25px;}
+
+  .empty{color:var(--muted);text-align:center;padding:24px;}
+
+  .topbar-recommend{background:linear-gradient(135deg,#1c1c1c,#2a2200);border:1px solid #5a4a00;border-radius:14px;padding:14px;margin-bottom:14px;}
+  .topbar-recommend .label{color:var(--accent);font-size:12px;letter-spacing:.1em;}
+  .topbar-recommend .title{font-size:20px;margin-top:4px;line-height:1.4;}
+
+  .filter-bar{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+  .filter-bar label{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);}
+  .count{color:var(--muted);font-size:13px;margin-left:auto;}
+
+  .panel{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px;}
+  .panel h4{margin:0 0 10px;font-size:16px;}
+  .panel .help{color:var(--muted);font-size:12px;line-height:1.6;margin:6px 0;}
+  .panel code{background:#000;color:var(--accent);padding:2px 6px;border-radius:4px;font-size:13px;}
+  .pre-script{background:#000;border:1px solid var(--line);border-radius:8px;padding:10px;color:#9af;font-size:12px;white-space:pre-wrap;word-break:break-all;max-height:220px;overflow:auto;}
+
+  .floating-add{position:fixed;right:16px;bottom:84px;width:56px;height:56px;border-radius:50%;background:var(--accent);color:#000;font-size:30px;border:0;box-shadow:0 4px 14px rgba(0,0,0,.6);z-index:40;display:none;cursor:pointer;font-weight:700;}
+  .floating-add.show{display:block;}
+
+  .admin-only{display:none;}
+  body.admin .admin-only{display:block;}
+  body.admin .admin-only-inline{display:inline-block;}
+
+  .status-line{font-size:12px;color:var(--muted);margin-top:6px;min-height:1.2em;}
+  .status-line.ok{color:var(--good);}
+  .status-line.err{color:var(--accent2);}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>現場朝礼<span>ネタ</span><span class="admin-badge" id="adminBadge">管理者</span></h1>
+  <div class="date" id="todayLabel"></div>
+</header>
+
+<main>
+  <!-- ホーム -->
+  <section id="view-home" class="view">
+    <div class="topbar-recommend" id="recommendBox"></div>
+    <div class="section-title">今日のメイン作業は？</div>
+    <div class="work-grid" id="workGrid"></div>
+    <div class="section-title">今の時期のおすすめ</div>
+    <div id="seasonalList"></div>
+  </section>
+
+  <!-- さがす -->
+  <section id="view-search" class="view" style="display:none;">
+    <div class="section-title">タグでしぼる（タップだけ）</div>
+    <div id="tagFilters"></div>
+    <div class="filter-bar">
+      <label><input type="checkbox" id="excludeUsed"> 過去1ヶ月に使ったネタを除外</label>
+      <span class="count" id="countLabel"></span>
+    </div>
+    <div id="searchList"></div>
+  </section>
+
+  <!-- お気に入り -->
+  <section id="view-fav" class="view" style="display:none;">
+    <div class="section-title">お気に入りに保存したネタ</div>
+    <div id="favList"></div>
+  </section>
+
+  <!-- 設定 -->
+  <section id="view-settings" class="view" style="display:none;">
+
+    <div class="section-title">朝礼看板用 QRコード</div>
+    <div class="qr-wrap">
+      <img id="qrImg" alt="QR">
+      <div style="font-weight:700;">スマホのカメラで読み取り</div>
+      <div style="font-size:11px;color:#555;text-align:center;word-break:break-all;" id="qrUrl"></div>
+    </div>
+
+    <div class="section-title">管理者ログイン</div>
+    <div class="panel" id="loginPanel">
+      <p class="help">編集機能（追加・修正・削除・通知送信）は管理者のみ利用できます。初期PINは <code>123456</code>。ログイン後のパネルで変更してください。</p>
+      <div class="row" id="loginRow">
+        <label>PIN（4〜10桁の数字）</label>
+        <input type="password" id="pinInput" inputmode="numeric" placeholder="●●●●●●">
+        <div style="margin-top:8px;">
+          <button class="submit-btn" type="button" onclick="adminLogin()">ログイン</button>
+        </div>
+        <div class="status-line" id="loginStatus"></div>
+      </div>
+      <div class="admin-only">
+        <p style="color:var(--good);font-weight:700;">✅ 管理者モード ON</p>
+        <button class="ghost-btn" onclick="adminLogout()">ログアウト</button>
+        <button class="ghost-btn" onclick="changePin()">PINを変更</button>
+      </div>
+    </div>
+
+    <div class="admin-only">
+      <div class="section-title">📲 朝の自動プッシュ通知</div>
+      <div class="panel">
+        <p class="help">手元から直接送信できる Webhook 方式に対応。下に貼り付けた URL に「本日のネタ」を投稿します。<b>定期実行は GAS（Google Apps Script）の cron で行う</b>のが最も簡単です。雛形は下の「定期実行スクリプト」をコピーして GAS に貼り付けてください。</p>
+
+        <div class="row">
+          <label>① Discord Webhook URL（推奨・最も簡単）</label>
+          <input type="text" id="discordWebhook" placeholder="https://discord.com/api/webhooks/...">
+        </div>
+        <div class="row">
+          <label>② Slack Incoming Webhook URL</label>
+          <input type="text" id="slackWebhook" placeholder="https://hooks.slack.com/services/...">
+        </div>
+        <div class="row">
+          <label>③ LINE Messaging API（公式アカウント）Channel Access Token</label>
+          <input type="text" id="lineToken" placeholder="長期チャネルアクセストークン">
+          <div class="help">登録した友だち全員に送信（ブロードキャスト）。LINE Notify は2025/3で終了したため、現行は Messaging API を使います。</div>
+        </div>
+        <button class="ghost-btn" onclick="saveNotifyConfig()">設定を保存</button>
+        <button class="submit-btn" style="margin-top:10px;" onclick="sendTodayNow()">📤 いま「本日のネタ」を全員に送信</button>
+        <div class="status-line" id="notifyStatus"></div>
+
+        <h4 style="margin-top:18px;">⏰ 毎朝 7:30 自動送信（GAS雛形）</h4>
+        <p class="help">下記スクリプトを <a href="https://script.google.com/" target="_blank" style="color:var(--accent);">Google Apps Script</a> に貼り付け、トリガーで「日次 07:00–08:00」に設定すれば毎朝自動配信されます。HTMLのURLは公開URLを入れてください。</p>
+        <button class="ghost-btn" onclick="copyGasScript()">📋 GAS スクリプトをコピー</button>
+        <pre class="pre-script" id="gasScriptBox"></pre>
+      </div>
+
+      <div class="section-title">🗒️ Notion 連携（メモ保存）</div>
+      <div class="panel">
+        <p class="help">詳細画面の「Notion保存」ボタンで、選んだネタを Notion のデータベースにページとして追加します。<br>使い方：(1) <a href="https://www.notion.so/my-integrations" target="_blank" style="color:var(--accent);">Notion Integrations</a> でインテグレーションを作成 → トークンを取得。(2) 保存先データベースを作り、インテグレーションを「接続」。(3) データベースに <code>Title</code>（タイトル）/<code>Body</code>（テキスト）プロパティを用意。(4) 下にトークンとデータベースIDを入力。</p>
+        <div class="row">
+          <label>Notion Integration Token (secret_...)</label>
+          <input type="text" id="notionToken" placeholder="secret_...">
+        </div>
+        <div class="row">
+          <label>Database ID</label>
+          <input type="text" id="notionDb" placeholder="32文字のID">
+        </div>
+        <button class="ghost-btn" onclick="saveNotionConfig()">保存</button>
+        <div class="status-line" id="notionStatus"></div>
+      </div>
+
+      <div class="section-title">☁️ ネット公開（GitHub Pages 連携）</div>
+      <div class="panel">
+        <p class="help">この HTML を <a href="https://pages.github.com/" target="_blank" style="color:var(--accent);">GitHub Pages</a> に公開すると、誰でも閲覧できる URL になります。<b>編集はあなただけ</b>、閲覧は全員可能です。<br>下記に GitHub の情報を入力すると、編集した内容をブラウザから直接リポジトリに反映できます（GitHub Pages は数十秒で再ビルド）。</p>
+        <div class="row">
+          <label>GitHub Personal Access Token (fine-grained, Contents: Read &amp; Write)</label>
+          <input type="text" id="ghToken" placeholder="github_pat_...">
+        </div>
+        <div class="row">
+          <label>Owner / Repo</label>
+          <input type="text" id="ghRepo" placeholder="例: shirakei68/chorei-neta">
+        </div>
+        <div class="row">
+          <label>データファイルのパス</label>
+          <input type="text" id="ghPath" placeholder="例: neta_data.js" value="neta_data.js">
+        </div>
+        <button class="ghost-btn" onclick="saveGhConfig()">保存</button>
+        <button class="submit-btn" style="margin-top:10px;" onclick="publishToGitHub()">📤 編集内容を GitHub に反映</button>
+        <div class="status-line" id="ghStatus"></div>
+      </div>
+
+      <div class="section-title">💾 データ管理</div>
+      <div class="panel">
+        <button class="ghost-btn" onclick="exportData()">📥 全データをJSONで出力</button>
+        <button class="ghost-btn" onclick="exportNetaJs()">📥 neta_data.js 形式で出力</button>
+        <button class="ghost-btn" onclick="document.getElementById('importFile').click()">📤 JSONを読み込み</button>
+        <input type="file" id="importFile" accept="application/json" style="display:none;" onchange="importData(event)">
+        <button class="danger-btn" onclick="resetAll()">⚠️ 全データ初期化</button>
+      </div>
+    </div>
+
+    <div class="section-title">SNSで広める</div>
+    <div class="toggle-row">
+      <div><div style="font-weight:700;">公式 X アカウント</div><div style="font-size:12px;color:var(--muted);">毎日の人気ネタを自動投稿</div></div>
+      <button class="ghost-btn" onclick="window.open('https://twitter.com/intent/follow?screen_name=chorei_neta','_blank')">フォロー</button>
+    </div>
+
+    <div class="section-title">人気ランキング</div>
+    <div id="ranking"></div>
+
+  </section>
+</main>
+
+<!-- 詳細モーダル -->
+<div class="modal-back" id="modal">
+  <div class="modal">
+    <div class="close-x"><button onclick="closeModal()">×</button></div>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- 編集モーダル -->
+<div class="modal-back" id="editModal">
+  <div class="modal">
+    <div class="close-x"><button onclick="closeEditModal()">×</button></div>
+    <h2 id="editTitle">編集</h2>
+    <form id="editForm">
+      <div class="row">
+        <label>タイトル</label>
+        <input type="text" id="e-title" required>
+      </div>
+      <div class="row">
+        <label>カテゴリ</label>
+        <input type="text" id="e-category" placeholder="例: 熱中症・暑熱対策">
+      </div>
+      <div class="row">
+        <label>本文（数値は &lt;b class="num"&gt;30℃&lt;/b&gt; 行動は &lt;b class="act"&gt;水分補給&lt;/b&gt; のように囲む）</label>
+        <textarea id="e-body" required></textarea>
+      </div>
+      <div class="row">
+        <label>作業タグ（カンマ区切り）</label>
+        <input type="text" id="e-tag-work">
+      </div>
+      <div class="row">
+        <label>天候・季節タグ</label>
+        <input type="text" id="e-tag-weather">
+      </div>
+      <div class="row">
+        <label>対象者タグ</label>
+        <input type="text" id="e-tag-audience">
+      </div>
+      <div class="row">
+        <label>雰囲気タグ</label>
+        <input type="text" id="e-tag-mood">
+      </div>
+      <div class="row">
+        <label>該当月（カンマ区切り、空欄なら全月）</label>
+        <input type="text" id="e-months" placeholder="例: 6,7,8">
+      </div>
+      <button class="submit-btn" type="submit">💾 保存</button>
+    </form>
+  </div>
+</div>
+
+<button class="floating-add admin-only-inline" id="addFab" onclick="openEditModal(null)" title="新規追加">＋</button>
+
+<!-- タブ -->
+<nav class="tabs">
+  <button data-view="home" class="active"><span class="icon">🏠</span>ホーム</button>
+  <button data-view="search"><span class="icon">🔍</span>さがす</button>
+  <button data-view="fav"><span class="icon">⭐</span>お気に入り</button>
+  <button data-view="settings"><span class="icon">⚙️</span>設定</button>
+</nav>
+
+<!-- 初期データ（同じフォルダの neta_data.js） -->
+<script src="neta_data.js"></script>
+<script>
+/* =========================================================================
+   現場朝礼ネタ - 単一ページアプリ
+   - 閲覧: 誰でも
+   - 編集: 管理者PIN必須（自分しか編集できない）
+   - 保存: ブラウザ localStorage（管理者の端末で編集 → GitHubに反映）
+   - 通知: Discord/Slack Webhook、LINE Messaging API（ブロードキャスト）
+   - 連携: Notion API（指定DBにページ作成）
+   - 公開: GitHub Pages 上に置いた neta_data.js を REST API で直接更新
+   ========================================================================= */
+
+const LS = "chorei_v2";
+const ADMIN_KEY = "chorei_admin_v2";
+
+const DEFAULT_TAGS = {
+  work:["全作業","運転・交通","コンクリート打設","クレーン・重機","高所作業","電気作業","掘削","解体","鉄筋","型枠","重機作業","土工"],
+  weather:["夏・猛暑","冬・冷え込み","強風","雨上がり","花粉","梅雨","乾燥","台風"],
+  audience:["新規入場者向け","若手向け","全員向け","ベテラン向け","運転手向け"],
+  mood:["場を和ませる（笑い・クイズ）","気を引き締める（法令・罰則・統計）","学べる雑学","数字で語る","演出・パフォーマンス"]
+};
+
+/* ===== 状態管理 ===== */
+function loadState(){
+  try{
+    const raw = localStorage.getItem(LS);
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  // 初期データは neta_data.js から
+  const neta = (typeof NETA_DATA !== "undefined" ? NETA_DATA : []).map(n=>({
+    ...n, used:[], fav:false, fb:{good:0,useful:0}
+  }));
+  const init = {
+    neta, tags:DEFAULT_TAGS,
+    notify:{discord:"",slack:"",line:""},
+    notion:{token:"",db:""},
+    gh:{token:"",repo:"",path:"neta_data.js"}
+  };
+  localStorage.setItem(LS, JSON.stringify(init));
+  return init;
+}
+function saveState(){ localStorage.setItem(LS, JSON.stringify(STATE)); }
+let STATE = loadState();
+
+/* ===== 管理者認証 ===== */
+async function sha256(s){
+  const buf = new TextEncoder().encode(s);
+  const h = await crypto.subtle.digest("SHA-256", buf);
+  return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+// 初期PIN: 123456 のSHA-256
+const INITIAL_PIN_HASH = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92";
+function getPinHash(){ return localStorage.getItem("chorei_pinhash") || INITIAL_PIN_HASH; }
+function setPinHash(h){ localStorage.setItem("chorei_pinhash", h); }
+
+function isAdmin(){ return sessionStorage.getItem(ADMIN_KEY)==="1"; }
+function setAdmin(b){
+  if(b) sessionStorage.setItem(ADMIN_KEY,"1");
+  else sessionStorage.removeItem(ADMIN_KEY);
+  applyAdminUI();
+}
+function applyAdminUI(){
+  document.body.classList.toggle("admin", isAdmin());
+  document.getElementById("adminBadge").classList.toggle("on", isAdmin());
+  document.getElementById("addFab").classList.toggle("show", isAdmin());
+  document.getElementById("loginRow").style.display = isAdmin() ? "none" : "block";
+}
+async function adminLogin(){
+  const pin = document.getElementById("pinInput").value.trim();
+  const h = await sha256(pin);
+  const status = document.getElementById("loginStatus");
+  if(h === getPinHash()){
+    setAdmin(true);
+    status.textContent = "ログイン成功"; status.className="status-line ok";
+    document.getElementById("pinInput").value="";
+    if(currentNetaId) openModal(currentNetaId);
+  } else {
+    status.textContent = "PINが違います"; status.className="status-line err";
+  }
+}
+function adminLogout(){ setAdmin(false); }
+async function changePin(){
+  const cur = prompt("現在のPIN");
+  if(cur===null) return;
+  if(await sha256(cur) !== getPinHash()){ alert("PINが違います"); return; }
+  const np = prompt("新しいPIN（4〜10桁の数字推奨）");
+  if(!np || np.length<4) return alert("4桁以上にしてください");
+  setPinHash(await sha256(np));
+  alert("PINを変更しました");
+}
+
+/* ===== 日付 ===== */
+const today = new Date();
+const monthNow = today.getMonth()+1;
+const dayOfWeek = today.getDay();
+const wdJa = ["日","月","火","水","木","金","土"];
+document.getElementById("todayLabel").textContent =
+  `${today.getFullYear()}/${monthNow}/${today.getDate()}（${wdJa[dayOfWeek]}）`;
+
+/* ===== タブ ===== */
+document.querySelectorAll("nav.tabs button").forEach(b=>{
+  b.addEventListener("click",()=>{
+    document.querySelectorAll("nav.tabs button").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    document.querySelectorAll(".view").forEach(v=>v.style.display="none");
+    document.getElementById("view-"+b.dataset.view).style.display="block";
+    if(b.dataset.view==="search") renderSearch();
+    if(b.dataset.view==="fav") renderFav();
+    if(b.dataset.view==="settings") renderSettings();
+  });
+});
+
+/* ===== ホーム ===== */
+function recommendForToday(){
+  let pool = STATE.neta.filter(n=>(n.months||[]).includes(monthNow));
+  if(pool.length===0) pool = STATE.neta;
+  // 月曜→月曜系
+  if(dayOfWeek===1){
+    const p = pool.find(n=>/月曜|連休明け|休み明け|睡眠/.test(n.title));
+    if(p) return p;
+  }
+  // 月末→工期末
+  if(today.getDate()>=25){
+    const p = pool.find(n=>/工期末|焦/.test(n.title));
+    if(p) return p;
+  }
+  // 5月→連休/急な気温
+  if(monthNow===5){
+    const p = pool.find(n=>/連休|急な気温|春の熱中症/.test(n.title));
+    if(p) return p;
+  }
+  // 6〜9月→熱中症
+  if([6,7,8,9].includes(monthNow)){
+    const p = pool.find(n=>/熱中症|水分|暑/.test(n.title));
+    if(p) return p;
+  }
+  // 11〜2月→冬・冷え込み
+  if([11,12,1,2].includes(monthNow)){
+    const p = pool.find(n=>/冬|寒|凍|冷え/.test(n.title));
+    if(p) return p;
+  }
+  // フィードバックgood順
+  return [...pool].sort((a,b)=>(b.fb?.good||0)-(a.fb?.good||0))[0] || STATE.neta[0];
+}
+function stripTagsForSummary(html, len=90){
+  return (html||"").replace(/<br\s*\/?>/g,"  ").replace(/<[^>]+>/g,"").slice(0,len) + "…";
+}
+function renderHome(){
+  const r = recommendForToday();
+  if(r){
+    document.getElementById("recommendBox").innerHTML = `
+      <div class="label">▼ 今日の自動レコメンド</div>
+      <div class="title">${r.title}</div>
+      <p style="color:#ccc;margin:6px 0 10px;font-size:14px;">${stripTagsForSummary(r.body)}</p>
+      <button class="submit-btn" onclick="openModal('${r.id}')">この台本をひらく</button>`;
+  }
+  const works = [
+    {key:"運転・交通",ico:"🚛"},
+    {key:"コンクリート打設",ico:"🧱"},
+    {key:"クレーン・重機",ico:"🏗️"},
+    {key:"高所作業",ico:"🪜"},
+    {key:"電気作業",ico:"⚡"},
+    {key:"全作業",ico:"📋"}
+  ];
+  document.getElementById("workGrid").innerHTML = works.map(w=>
+    `<button class="work-btn" onclick="filterByWork('${w.key}')"><span class="ico">${w.ico}</span>${w.key}</button>`
+  ).join("");
+  const seasonal = STATE.neta.filter(n=>(n.months||[]).includes(monthNow)).slice(0,8);
+  document.getElementById("seasonalList").innerHTML = seasonal.map(cardHTML).join("") ||
+    `<div class="empty">該当する月のネタがありません</div>`;
+}
+function cardHTML(n){
+  const pills = [];
+  if(n.fav) pills.push('<span class="pill fav">⭐</span>');
+  if(isUsedRecently(n)) pills.push('<span class="pill used">使用済</span>');
+  if(n.category) pills.push(`<span class="pill cat">${n.category}</span>`);
+  Object.values(n.tags||{}).flat().slice(0,2).forEach(t=>pills.push(`<span class="pill">${t}</span>`));
+  return `<div class="card" onclick="openModal('${n.id}')">
+    <h3>${n.title}</h3>
+    <p class="summary">${stripTagsForSummary(n.body)}</p>
+    <div class="meta">${pills.join("")}</div>
+  </div>`;
+}
+function isUsedRecently(n){
+  if(!n.used || n.used.length===0) return false;
+  const last = new Date(n.used[n.used.length-1]);
+  return (Date.now()-last.getTime()) < 30*24*3600*1000;
+}
+
+/* ===== さがす ===== */
+const activeFilters = {work:new Set(),weather:new Set(),audience:new Set(),mood:new Set()};
+function renderSearch(){
+  const wrap = document.getElementById("tagFilters");
+  // 実データに含まれるタグを動的に集める
+  const live = {work:new Set(),weather:new Set(),audience:new Set(),mood:new Set()};
+  STATE.neta.forEach(n=>{
+    ["work","weather","audience","mood"].forEach(c=>(n.tags?.[c]||[]).forEach(t=>live[c].add(t)));
+  });
+  wrap.innerHTML = ["work","weather","audience","mood"].map(cat=>{
+    const label = {work:"作業内容",weather:"天候・季節",audience:"対象者",mood:"雰囲気"}[cat];
+    const all = Array.from(new Set([...STATE.tags[cat], ...live[cat]]));
+    const tags = all.map(t=>{
+      const on = activeFilters[cat].has(t)?"on":"";
+      return `<button class="tag ${on}" onclick="toggleFilter('${cat}','${t.replace(/'/g,"\\'")}')">${t}</button>`;
+    }).join("");
+    return `<div class="tag-group"><div class="label">${label}</div><div class="tag-row">${tags}</div></div>`;
+  }).join("");
+  applySearch();
+}
+function toggleFilter(cat,t){
+  if(activeFilters[cat].has(t)) activeFilters[cat].delete(t);
+  else activeFilters[cat].add(t);
+  renderSearch();
+}
+function applySearch(){
+  const exclude = document.getElementById("excludeUsed").checked;
+  const list = STATE.neta.filter(n=>{
+    for(const cat of Object.keys(activeFilters)){
+      const sel = activeFilters[cat]; if(sel.size===0) continue;
+      const tagSet = new Set(n.tags?.[cat]||[]);
+      let ok=false;
+      for(const v of sel){ if(tagSet.has(v) || (cat==="work" && tagSet.has("全作業"))) ok=true; }
+      if(!ok) return false;
+    }
+    if(exclude && isUsedRecently(n)) return false;
+    return true;
+  });
+  document.getElementById("countLabel").textContent = `${list.length}件`;
+  document.getElementById("searchList").innerHTML = list.length ? list.map(cardHTML).join("")
+    : `<div class="empty">条件に合うネタがありません</div>`;
+}
+document.getElementById("excludeUsed").addEventListener("change", applySearch);
+function filterByWork(key){
+  Object.values(activeFilters).forEach(s=>s.clear());
+  if(key!=="全作業") activeFilters.work.add(key);
+  document.querySelector('nav.tabs button[data-view="search"]').click();
+}
+
+/* ===== お気に入り ===== */
+function renderFav(){
+  const list = STATE.neta.filter(n=>n.fav);
+  document.getElementById("favList").innerHTML = list.length ? list.map(cardHTML).join("")
+    : `<div class="empty">⭐ お気に入りはまだありません</div>`;
+}
+
+/* ===== モーダル ===== */
+let currentNetaId = null;
+function openModal(id){
+  const n = STATE.neta.find(x=>x.id===id); if(!n) return;
+  currentNetaId = id;
+  const fb = n.fb||{good:0,useful:0};
+  const adminButtons = isAdmin() ? `
+    <div style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="ghost-btn" onclick="openEditModal('${n.id}')">✏️ 編集</button>
+      <button class="danger-btn" onclick="deleteNeta('${n.id}')">🗑️ 削除</button>
+    </div>` : "";
+  document.getElementById("modalContent").innerHTML = `
+    <h2>${n.title}</h2>
+    ${n.category?`<div style="color:#9ad;font-size:12px;margin-bottom:8px;">${n.category}</div>`:""}
+    <div class="body">${n.body}</div>
+    <div class="feedback-row">
+      <button onclick="vote('good')">👍 現場でウケた！ <b>${fb.good}</b></button>
+      <button onclick="vote('useful')">📝 役に立った <b>${fb.useful}</b></button>
+    </div>
+    <div style="margin-top:12px;color:var(--muted);font-size:12px;">
+      タグ: ${Object.values(n.tags||{}).flat().join(" / ") || "なし"}
+    </div>
+    ${adminButtons}
+    <div class="actions">
+      <button class="primary" onclick="speak()"><span class="ico">🔊</span>音声</button>
+      <button onclick="toggleFav()"><span class="ico">${n.fav?"⭐":"☆"}</span>★</button>
+      <button onclick="markUsed()"><span class="ico">✅</span>使った</button>
+      <button onclick="shareNeta()"><span class="ico">📤</span>共有</button>
+    </div>`;
+  document.getElementById("modal").classList.add("open");
+}
+function closeModal(){
+  document.getElementById("modal").classList.remove("open");
+  if(window.speechSynthesis && speechSynthesis.speaking) speechSynthesis.cancel();
+  renderHome(); if(document.getElementById("view-search").style.display!=="none") renderSearch();
+  renderFav();
+}
+function vote(kind){
+  const n = STATE.neta.find(x=>x.id===currentNetaId);
+  n.fb = n.fb||{good:0,useful:0}; n.fb[kind]++; saveState(); openModal(currentNetaId);
+}
+function toggleFav(){
+  const n = STATE.neta.find(x=>x.id===currentNetaId);
+  n.fav = !n.fav; saveState(); openModal(currentNetaId);
+}
+function markUsed(){
+  const n = STATE.neta.find(x=>x.id===currentNetaId);
+  n.used = n.used||[]; n.used.push(new Date().toISOString()); saveState();
+  alert("使用済として記録しました");
+}
+
+/* ===== 共有・Notion ===== */
+async function shareNeta(){
+  const n = STATE.neta.find(x=>x.id===currentNetaId);
+  const plain = `【今日の朝礼ネタ】${n.title}\n\n${n.body.replace(/<br\s*\/?>/g,"\n").replace(/<[^>]+>/g,"")}\n\n#現場朝礼ネタ`;
+  const choice = STATE.notion.token ? confirm("OK：Notionに保存　／　キャンセル：OS共有でLINE/Keep等へ") : false;
+  if(choice){
+    try{
+      await notionCreatePage(n);
+      alert("Notionに保存しました");
+    }catch(e){ alert("Notion保存失敗: "+e.message); }
+    return;
+  }
+  if(navigator.share){
+    try{ await navigator.share({title:n.title,text:plain}); }catch(e){}
+  } else {
+    await navigator.clipboard.writeText(plain);
+    alert("クリップボードにコピーしました");
+  }
+}
+
+async function notionCreatePage(n){
+  const t = STATE.notion.token, db = STATE.notion.db;
+  if(!t||!db) throw new Error("Notion未設定");
+  const body = {
+    parent:{database_id:db},
+    properties:{
+      Title:{title:[{text:{content:n.title}}]},
+      Body:{rich_text:[{text:{content:(n.body||"").replace(/<[^>]+>/g,"").slice(0,1900)}}]}
+    }
+  };
+  const r = await fetch("https://api.notion.com/v1/pages",{
+    method:"POST",
+    headers:{
+      "Authorization":"Bearer "+t,
+      "Notion-Version":"2022-06-28",
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify(body)
+  });
+  if(!r.ok){ throw new Error((await r.text()).slice(0,200)); }
+  return r.json();
+}
+
+/* ===== 音声 ===== */
+function speak(){
+  if(!("speechSynthesis" in window)){ alert("この端末は音声に未対応"); return; }
+  if(speechSynthesis.speaking){ speechSynthesis.cancel(); return; }
+  const n = STATE.neta.find(x=>x.id===currentNetaId);
+  const text = n.title + "。" + (n.body||"").replace(/<br\s*\/?>/g,"。").replace(/<[^>]+>/g,"").replace(/&nbsp;/g," ");
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang="ja-JP"; u.rate=0.95;
+  speechSynthesis.speak(u);
+}
+
+/* ===== 編集モーダル（管理者のみ） ===== */
+let editingId = null;
+function openEditModal(id){
+  if(!isAdmin()){ alert("管理者ログインが必要です"); return; }
+  editingId = id;
+  const isNew = !id;
+  const n = isNew ? {title:"",body:"",category:"",tags:{work:[],weather:[],audience:[],mood:[]},months:[]}
+                  : STATE.neta.find(x=>x.id===id);
+  document.getElementById("editTitle").textContent = isNew ? "新規追加" : "編集";
+  document.getElementById("e-title").value = n.title;
+  document.getElementById("e-category").value = n.category||"";
+  document.getElementById("e-body").value = n.body;
+  document.getElementById("e-tag-work").value = (n.tags?.work||[]).join(", ");
+  document.getElementById("e-tag-weather").value = (n.tags?.weather||[]).join(", ");
+  document.getElementById("e-tag-audience").value = (n.tags?.audience||[]).join(", ");
+  document.getElementById("e-tag-mood").value = (n.tags?.mood||[]).join(", ");
+  document.getElementById("e-months").value = (n.months||[]).join(",");
+  document.getElementById("editModal").classList.add("open");
+}
+function closeEditModal(){ document.getElementById("editModal").classList.remove("open"); }
+document.getElementById("editForm").addEventListener("submit",(e)=>{
+  e.preventDefault();
+  const get = id=>document.getElementById(id).value.trim();
+  const splitTags = s=>s.split(/[、,]/).map(x=>x.trim()).filter(Boolean);
+  const monthsRaw = get("e-months");
+  const months = monthsRaw ? monthsRaw.split(/[、,]/).map(x=>parseInt(x.trim(),10)).filter(x=>x>=1&&x<=12)
+                           : Array.from({length:12},(_,i)=>i+1);
+  const obj = {
+    id: editingId || "u"+Date.now(),
+    title: get("e-title"),
+    category: get("e-category"),
+    body: get("e-body"),
+    tags:{
+      work:splitTags(get("e-tag-work")),
+      weather:splitTags(get("e-tag-weather")),
+      audience:splitTags(get("e-tag-audience")),
+      mood:splitTags(get("e-tag-mood")),
+    },
+    months
+  };
+  if(editingId){
+    const idx = STATE.neta.findIndex(x=>x.id===editingId);
+    const old = STATE.neta[idx];
+    STATE.neta[idx] = {...old, ...obj};
+  } else {
+    obj.used=[]; obj.fav=false; obj.fb={good:0,useful:0};
+    STATE.neta.unshift(obj);
+  }
+  saveState(); closeEditModal();
+  renderHome(); renderSearch(); renderFav();
+  alert(editingId?"更新しました（端末内に保存）":"追加しました（端末内に保存）");
+});
+function deleteNeta(id){
+  if(!confirm("削除しますか？")) return;
+  STATE.neta = STATE.neta.filter(x=>x.id!==id);
+  saveState(); closeModal();
+}
+
+/* ===== 設定タブ描画 ===== */
+function renderSettings(){
+  // QR
+  const url = location.href.split("#")[0];
+  document.getElementById("qrUrl").textContent = url;
+  document.getElementById("qrImg").src = "https://api.qrserver.com/v1/create-qr-code/?size=440x440&data="+encodeURIComponent(url);
+  // 通知設定欄
+  document.getElementById("discordWebhook").value = STATE.notify.discord||"";
+  document.getElementById("slackWebhook").value = STATE.notify.slack||"";
+  document.getElementById("lineToken").value = STATE.notify.line||"";
+  // Notion
+  document.getElementById("notionToken").value = STATE.notion.token||"";
+  document.getElementById("notionDb").value = STATE.notion.db||"";
+  // GitHub
+  document.getElementById("ghToken").value = STATE.gh.token||"";
+  document.getElementById("ghRepo").value = STATE.gh.repo||"";
+  document.getElementById("ghPath").value = STATE.gh.path||"neta_data.js";
+  // GASスクリプト
+  document.getElementById("gasScriptBox").textContent = gasScriptText();
+  // ランキング
+  const rank = [...STATE.neta].sort((a,b)=>((b.fb?.good||0)+(b.fb?.useful||0))-((a.fb?.good||0)+(a.fb?.useful||0))).slice(0,5);
+  document.getElementById("ranking").innerHTML = rank.map((n,i)=>`
+    <div class="card" onclick="openModal('${n.id}')">
+      <h3>${i+1}位　${n.title}</h3>
+      <div class="meta"><span class="pill">👍 ${n.fb?.good||0}</span><span class="pill">📝 ${n.fb?.useful||0}</span></div>
+    </div>`).join("") || `<div class="empty">まだフィードバックがありません</div>`;
+  applyAdminUI();
+}
+
+function saveNotifyConfig(){
+  STATE.notify.discord = document.getElementById("discordWebhook").value.trim();
+  STATE.notify.slack = document.getElementById("slackWebhook").value.trim();
+  STATE.notify.line = document.getElementById("lineToken").value.trim();
+  saveState();
+  setStatus("notifyStatus","保存しました","ok");
+}
+function saveNotionConfig(){
+  STATE.notion.token = document.getElementById("notionToken").value.trim();
+  STATE.notion.db = document.getElementById("notionDb").value.trim();
+  saveState();
+  setStatus("notionStatus","保存しました","ok");
+}
+function saveGhConfig(){
+  STATE.gh.token = document.getElementById("ghToken").value.trim();
+  STATE.gh.repo = document.getElementById("ghRepo").value.trim();
+  STATE.gh.path = document.getElementById("ghPath").value.trim()||"neta_data.js";
+  saveState();
+  setStatus("ghStatus","保存しました","ok");
+}
+function setStatus(id,msg,cls){
+  const el = document.getElementById(id);
+  el.textContent = msg; el.className = "status-line "+(cls||"");
+}
+
+/* ===== 通知送信 ===== */
+function buildTodayMessage(){
+  const r = recommendForToday();
+  if(!r) return null;
+  const url = location.href.split("#")[0]+"#n="+r.id;
+  const plain = (r.body||"").replace(/<br\s*\/?>/g,"\n").replace(/<[^>]+>/g,"").slice(0,400);
+  return {
+    title:r.title,
+    text:`【本日の朝礼ネタ】${r.title}\n\n${plain}\n\n▼台本を開く\n${url}`,
+    url, neta:r
+  };
+}
+async function sendTodayNow(){
+  const m = buildTodayMessage();
+  if(!m){ return setStatus("notifyStatus","ネタがありません","err"); }
+  const results=[];
+  if(STATE.notify.discord){
+    try{
+      const r = await fetch(STATE.notify.discord,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({content:m.text})});
+      results.push("Discord:"+(r.ok?"OK":r.status));
+    }catch(e){ results.push("Discord:NG"); }
+  }
+  if(STATE.notify.slack){
+    try{
+      const r = await fetch(STATE.notify.slack,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:m.text})});
+      results.push("Slack:"+(r.ok?"OK":r.status));
+    }catch(e){ results.push("Slack:NG"); }
+  }
+  if(STATE.notify.line){
+    // LINE Messaging API broadcast。ブラウザからのfetchは通常CORSで失敗するためGAS経由を案内。
+    try{
+      const r = await fetch("https://api.line.me/v2/bot/message/broadcast",{
+        method:"POST",
+        headers:{"Authorization":"Bearer "+STATE.notify.line,"Content-Type":"application/json"},
+        body:JSON.stringify({messages:[{type:"text",text:m.text}]})
+      });
+      results.push("LINE:"+(r.ok?"OK":r.status));
+    }catch(e){
+      results.push("LINE:ブラウザCORS不可→GAS経由で送信してください");
+    }
+  }
+  if(results.length===0) setStatus("notifyStatus","送信先が未設定です","err");
+  else setStatus("notifyStatus", results.join(" / "), results.every(x=>x.includes("OK"))?"ok":"err");
+}
+
+function gasScriptText(){
+  const url = location.href.split("#")[0];
+  return `// 毎朝7:30に「本日のネタ」を取りに行って通知するGAS雛形
+// 1. script.google.com で新規プロジェクト作成
+// 2. このコードを貼り付ける
+// 3. 下の3つの定数を埋める
+// 4. トリガー: dailyPush を「日次」「7:00-8:00」に設定
+
+const PAGE_URL       = "${url}";        // この朝礼ネタアプリの公開URL
+const DISCORD_HOOK   = "";              // Discord Webhook URL（不要なら空）
+const SLACK_HOOK     = "";              // Slack Webhook URL
+const LINE_TOKEN     = "";              // LINE Messaging API チャネルアクセストークン
+
+// 公開済みのnetaデータJSON（neta_data.json）を別途置く場合
+const NETA_JSON_URL  = "";              // 例: GitHub Pages 上の neta_data.json への直リンク
+
+function dailyPush(){
+  // (推奨) 静的JSONを置いておき、その中からレコメンドを選ぶ
+  let title, text;
+  if(NETA_JSON_URL){
+    const arr = JSON.parse(UrlFetchApp.fetch(NETA_JSON_URL).getContentText());
+    const today = new Date();
+    const m = today.getMonth()+1;
+    const pool = arr.filter(n => (n.months||[]).includes(m));
+    const pick = pool[Math.floor(Math.random()*pool.length)] || arr[0];
+    title = pick.title;
+    const plain = (pick.body||"").replace(/<br\\s*\\/?>/g,"\\n").replace(/<[^>]+>/g,"").slice(0,400);
+    text  = "【本日の朝礼ネタ】"+title+"\\n\\n"+plain+"\\n\\n▼台本\\n"+PAGE_URL+"#n="+pick.id;
+  } else {
+    title = "本日の朝礼ネタ";
+    text  = "【本日の朝礼ネタ】\\n台本はこちら → "+PAGE_URL;
+  }
+
+  if(DISCORD_HOOK) UrlFetchApp.fetch(DISCORD_HOOK,{method:"post",contentType:"application/json",payload:JSON.stringify({content:text})});
+  if(SLACK_HOOK)   UrlFetchApp.fetch(SLACK_HOOK,  {method:"post",contentType:"application/json",payload:JSON.stringify({text:text})});
+  if(LINE_TOKEN){
+    UrlFetchApp.fetch("https://api.line.me/v2/bot/message/broadcast",{
+      method:"post",
+      headers:{Authorization:"Bearer "+LINE_TOKEN},
+      contentType:"application/json",
+      payload:JSON.stringify({messages:[{type:"text",text:text}]})
+    });
+  }
+}`;
+}
+async function copyGasScript(){
+  await navigator.clipboard.writeText(gasScriptText());
+  alert("GASスクリプトをコピーしました");
+}
+
+/* ===== GitHub Pages へ反映 ===== */
+async function publishToGitHub(){
+  const {token,repo,path} = STATE.gh;
+  if(!token||!repo||!path) return setStatus("ghStatus","GitHub設定が不完全","err");
+  setStatus("ghStatus","送信中...","");
+  try{
+    // 現在のファイルのSHA取得（差分用）
+    let sha=null;
+    const meta = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`,{
+      headers:{Authorization:"Bearer "+token, Accept:"application/vnd.github+json"}
+    });
+    if(meta.ok){ sha = (await meta.json()).sha; }
+    // 新しい内容
+    const content = "const NETA_DATA = "+JSON.stringify(stripRuntime(STATE.neta),null,2)+";\n";
+    const b64 = btoa(unescape(encodeURIComponent(content)));
+    const body = {message:"update neta_data ("+new Date().toISOString()+")", content:b64};
+    if(sha) body.sha = sha;
+    const put = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`,{
+      method:"PUT",
+      headers:{Authorization:"Bearer "+token, Accept:"application/vnd.github+json", "Content-Type":"application/json"},
+      body:JSON.stringify(body)
+    });
+    if(put.ok) setStatus("ghStatus","✅ GitHubに反映しました（数十秒で公開URLに反映）","ok");
+    else setStatus("ghStatus","失敗: "+(await put.text()).slice(0,200),"err");
+  }catch(e){ setStatus("ghStatus","エラー: "+e.message,"err"); }
+}
+function stripRuntime(neta){
+  // 配布データには used/fav/fb を含めない（端末ごとの状態なので）
+  return neta.map(({used,fav,fb,...rest})=>rest);
+}
+
+/* ===== ローカル入出力 ===== */
+function exportData(){
+  const blob = new Blob([JSON.stringify(STATE,null,2)],{type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "chorei-state-"+(new Date().toISOString().slice(0,10))+".json";
+  a.click();
+}
+function exportNetaJs(){
+  const content = "const NETA_DATA = "+JSON.stringify(stripRuntime(STATE.neta),null,2)+";\n";
+  const blob = new Blob([content],{type:"application/javascript"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "neta_data.js";
+  a.click();
+}
+function importData(e){
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ()=>{
+    try{
+      STATE = JSON.parse(r.result); saveState();
+      alert("インポートしました"); renderHome(); renderSearch(); renderFav(); renderSettings();
+    }catch(err){ alert("読み込み失敗"); }
+  };
+  r.readAsText(f);
+}
+function resetAll(){
+  if(!confirm("全データを初期化します（neta_data.js から再ロード）。よろしいですか？")) return;
+  localStorage.removeItem(LS);
+  STATE = loadState(); renderHome(); renderSearch(); renderFav(); renderSettings();
+  alert("初期化しました");
+}
+
+/* ===== ディープリンク（#n=id でモーダル直接オープン） ===== */
+function checkHash(){
+  const h = location.hash;
+  const m = h.match(/n=([^&]+)/);
+  if(m) openModal(decodeURIComponent(m[1]));
+}
+
+/* ===== 起動 ===== */
+applyAdminUI();
+renderHome();
+checkHash();
+</script>
+</body>
+</html>

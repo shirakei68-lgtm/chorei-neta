@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shirakei68-lgtm.github.io/chorei-neta/sitemap.xml

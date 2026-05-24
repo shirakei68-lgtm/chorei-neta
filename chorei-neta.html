@@ -7,7 +7,46 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>現場朝礼ネタ｜CHOREI</title>
+<title>現場朝礼ネタ｜CHOREI - 建設現場の朝礼スピーチ150選</title>
+
+<!-- SEO: 検索エンジン対策 -->
+<meta name="description" content="建設・土木現場の朝礼で使えるスピーチ・ネタ集 155本以上を無料公開。熱中症対策・KY活動・季節の話題・安全衛生まで、現場監督・職長がそのまま読み上げられる台本を毎日更新。">
+<meta name="keywords" content="朝礼,朝礼ネタ,朝礼スピーチ,建設現場,土木現場,現場朝礼,KY活動,安全朝礼,職長,現場監督,熱中症対策,危険予知,朝礼一言,朝礼挨拶">
+<meta name="author" content="CHOREI">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://shirakei68-lgtm.github.io/chorei-neta/chorei-neta.html">
+
+<!-- Open Graph (SNSシェア時のサムネ) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="現場朝礼ネタ｜CHOREI">
+<meta property="og:title" content="現場朝礼ネタ｜CHOREI - 建設現場の朝礼スピーチ150選">
+<meta property="og:description" content="建設・土木現場の朝礼で使えるスピーチ・ネタ集 155本以上。熱中症対策・KY活動・季節の話題まで、現場監督・職長がそのまま読み上げられる台本。">
+<meta property="og:url" content="https://shirakei68-lgtm.github.io/chorei-neta/chorei-neta.html">
+<meta property="og:image" content="https://shirakei68-lgtm.github.io/chorei-neta/line_oa_icon.png">
+<meta property="og:locale" content="ja_JP">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="現場朝礼ネタ｜CHOREI - 建設現場の朝礼スピーチ150選">
+<meta name="twitter:description" content="建設・土木現場の朝礼スピーチ155本以上。現場監督・職長向け、KY・安全衛生・季節の話題まで網羅。">
+<meta name="twitter:image" content="https://shirakei68-lgtm.github.io/chorei-neta/line_oa_icon.png">
+
+<!-- 構造化データ (JSON-LD) -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"現場朝礼ネタ｜CHOREI",
+  "description":"建設・土木現場の朝礼で使えるスピーチ・ネタ集 155本以上。",
+  "url":"https://shirakei68-lgtm.github.io/chorei-neta/chorei-neta.html",
+  "applicationCategory":"BusinessApplication",
+  "operatingSystem":"Web",
+  "inLanguage":"ja",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},
+  "audience":{"@type":"Audience","audienceType":"建設・土木現場 職長・現場監督"},
+  "keywords":"朝礼,朝礼ネタ,建設現場,土木,KY活動,安全朝礼"
+}
+</script>
 <style>
   :root{
     --base-font:18px;
@@ -71,7 +110,9 @@
   .modal-topbar .close-x{background:transparent;border:0;color:#fff;font-size:24px;cursor:pointer;padding:0 4px;}
 
   .feedback-row{display:flex;gap:8px;margin-top:14px;}
-  .feedback-row button{flex:1;background:var(--bg3);border:1px solid var(--line);color:#fff;border-radius:12px;padding:14px;font-size:0.85em;cursor:pointer;}
+  .feedback-row button{flex:1;background:var(--bg3);border:1px solid var(--line);color:#fff;border-radius:12px;padding:14px;font-size:0.85em;cursor:pointer;transition:background .15s,border-color .15s;}
+  .feedback-row button.voted{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700;}
+  .feedback-row button.voted::after{content:" ✓ 取消";font-size:0.75em;color:#000;opacity:.65;margin-left:6px;}
 
   form .row{margin-bottom:12px;}
   form label{display:block;font-size:0.72em;color:var(--muted);margin-bottom:4px;}
@@ -174,7 +215,7 @@
     <div class="section-title">タグでしぼる（タップだけ）</div>
     <div id="tagFilters"></div>
     <div class="filter-bar">
-      <label><input type="checkbox" id="excludeUsed"> 過去1ヶ月に使ったネゾを除外</label>
+      <label><input type="checkbox" id="excludeUsed"> 過去1ヶ月に使ったネタを除外</label>
       <span class="count" id="countLabel"></span>
     </div>
     <div id="searchList"></div>
@@ -188,6 +229,13 @@
 
   <!-- 設定 -->
   <section id="view-settings" class="view" style="display:none;">
+
+    <div class="section-title">📖 使い方・ヘルプ</div>
+    <div class="panel">
+      <p class="help">はじめての方は、操作説明書とLINE公式の使い方をご覧ください。</p>
+      <button class="submit-btn" style="margin-bottom:8px;" onclick="openManual()">📖 取扱説明書を開く</button>
+      <a class="ghost-btn" href="https://line.me/R/ti/p/%40128gbfhl" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none;">💬 LINE公式の使い方（友だち追加）</a>
+    </div>
 
     <div class="section-title">朝礼看板用 QRコード</div>
     <div class="qr-wrap">
@@ -374,6 +422,7 @@ function loadState(){
     modalFontScale:1.0,
     gh:{ token:'', repo:'shirakei68-lgtm/chorei-neta', path:'neta_data.js' },
     local:{},        // {netaId: {fav, used, fb}}
+    myVotes:{},      // {netaId: {good:bool, useful:bool}} ← 端末ごとに「自分が押した」を記録（1ネタ1回・本人のみ取消可）
     overrides:{},    // {netaId: {title, body, category, tags, months}} 編集バッファ
     newNeta:[],      // 新規追加した未反映ネタ
     deleted:[]       // 削除した未反映ネタID
@@ -390,10 +439,21 @@ async function sha256(s){
   const h=await crypto.subtle.digest("SHA-256", buf);
   return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,"0")).join("");
 }
-// 初期パスワード "chorei2026" の SHA-256
-const INITIAL_PW_HASH = "5af8d51ee48bfddacc8b15cb1e9a8b6f23ed16ea6ee75b32fd9bbf28d10a4a25";
-// 初期PIN "123456"
-const INITIAL_PIN_HASH = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92";
+// 初期パスワード "Chorei2026!" の SHA-256
+const INITIAL_PW_HASH = "92454c93e022486158dd613a99fa6a2970f8a8dbe556dd0fb1668dc630209db8";
+// 初期PIN "2580"
+const INITIAL_PIN_HASH = "ed946f65d2c785d90e827c5ffd879ce3b49c68d4c88013074176a7e73bc58bcf";
+// 管理者認証のリセット世代（バンプすると localStorage の chorei_pwhash / chorei_pinhash が一度だけクリアされ、INITIAL_* に戻る）
+const AUTH_RESET_VERSION = "2026-05-23-reset1";
+(function migrateAuth(){
+  try{
+    if(localStorage.getItem("chorei_auth_reset_ver") !== AUTH_RESET_VERSION){
+      localStorage.removeItem("chorei_pwhash");
+      localStorage.removeItem("chorei_pinhash");
+      localStorage.setItem("chorei_auth_reset_ver", AUTH_RESET_VERSION);
+    }
+  }catch(e){}
+})();
 function getPwHash(){ return localStorage.getItem("chorei_pwhash") || INITIAL_PW_HASH; }
 function setPwHash(h){ localStorage.setItem("chorei_pwhash", h); }
 function getPinHash(){ return localStorage.getItem("chorei_pinhash") || INITIAL_PIN_HASH; }
@@ -517,6 +577,10 @@ document.querySelectorAll("nav.tabs button").forEach(b=>{
   });
 });
 function goSettings(){ document.querySelector('nav.tabs button[data-view="settings"]').click(); }
+function openManual(){
+  // 取扱説明書（同リポの manual.html）を新規タブで開く
+  window.open("manual.html", "_blank", "noopener");
+}
 
 /* ========== ホーム ========== */
 function recommendForToday(){
@@ -641,6 +705,7 @@ function openModal(id){
   const n = NETA_DATA.find(x=>x.id===id); if(!n) return;
   currentNetaId = id;
   const fb = n.fb||{good:0,useful:0};
+  const myV = (STATE.myVotes||{})[n.id] || {good:false, useful:false};
   const adminButtons = isAdmin() ? `
     <div style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap;">
       <button class="ghost-btn" onclick="openEditModal('${n.id}')">✏️ 編集</button>
@@ -651,9 +716,10 @@ function openModal(id){
     ${n.category?`<div style="color:#9ad;font-size:0.7em;margin-bottom:8px;">${n.category}</div>`:""}
     <div class="body">${n.body}</div>
     <div class="feedback-row">
-      <button onclick="vote('good')">👍 現場でウケた！ <b>${fb.good}</b></button>
-      <button onclick="vote('useful')">📝 役に立った <b>${fb.useful}</b></button>
+      <button class="${myV.good?'voted':''}" onclick="vote('good')">👍 現場でウケた！ <b>${fb.good}</b></button>
+      <button class="${myV.useful?'voted':''}" onclick="vote('useful')">📝 役に立った <b>${fb.useful}</b></button>
     </div>
+    <div style="font-size:0.65em;color:var(--muted);margin-top:6px;line-height:1.5;">※ 1ネタ1人1回まで。自分が押したボタンは黄色く表示され、もう一度タップで取消できます。</div>
     <div style="margin-top:12px;color:var(--muted);font-size:0.7em;">タグ: ${Object.values(n.tags||{}).flat().join(" / ") || "なし"}</div>
     ${adminButtons}
     <div class="actions">
@@ -675,8 +741,23 @@ function adjustModalFont(delta){
   saveState();
 }
 function vote(kind){
+  // 1ネタ1人（=1端末）1回。本人のみ取消可能（もう一度押すとカウントを-1）。
   const n = NETA_DATA.find(x=>x.id===currentNetaId);
-  n.fb = n.fb||{good:0,useful:0}; n.fb[kind]++; saveLocalFromData(); openModal(currentNetaId);
+  if(!n) return;
+  n.fb = n.fb||{good:0,useful:0};
+  STATE.myVotes = STATE.myVotes || {};
+  const v = STATE.myVotes[n.id] || {good:false, useful:false};
+  if(v[kind]){
+    // 取消
+    n.fb[kind] = Math.max(0, (n.fb[kind]||0) - 1);
+    v[kind] = false;
+  } else {
+    n.fb[kind] = (n.fb[kind]||0) + 1;
+    v[kind] = true;
+  }
+  STATE.myVotes[n.id] = v;
+  saveLocalFromData();   // 内部で saveState() を呼ぶ
+  openModal(currentNetaId);
 }
 function toggleFav(){
   const n = NETA_DATA.find(x=>x.id===currentNetaId);

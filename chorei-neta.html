@@ -238,6 +238,17 @@
       <a class="ghost-btn" href="https://line.me/R/ti/p/%40128gbfhl" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none;">💬 LINE公式の使い方（友だち追加）</a>
     </div>
 
+    <div class="section-title">💾 マイデータのバックアップ・復元</div>
+    <div class="panel">
+      <p class="help">お気に入り・評価・使用履歴を JSON ファイルで保存／復元できます。<br>
+      別の端末でも同じデータを使いたい時は、この端末でバックアップ → AirDrop や iCloud で送って、相手端末で復元してください。<br>
+      ツールがアップデートされても、復元すれば過去のデータが戻ります。</p>
+      <button class="submit-btn" style="margin-bottom:8px;" onclick="backupMyData()">⬇️ マイデータをバックアップ</button>
+      <button class="ghost-btn" style="display:block;width:100%;text-align:center;" onclick="document.getElementById('restoreFile').click()">⬆️ マイデータを復元（JSON読込）</button>
+      <input type="file" id="restoreFile" accept="application/json,.json" style="display:none;" onchange="restoreMyData(event)">
+      <div class="status-line" id="myDataStatus"></div>
+    </div>
+
     <div class="section-title">朝礼看板用 QRコード</div>
     <div class="qr-wrap">
       <img id="qrImg" alt="QR">
@@ -993,6 +1004,78 @@ function resetLocalEdits(){
   saveState();
   reloadData();
   alert("クリアしました");
+}
+
+/* ========== マイデータ バックアップ/復元（クラウド代替・無料） ========== */
+function backupMyData(){
+  // ユーザー固有データのみ抽出（編集バッファ・GitHub設定は除外）
+  const payload = {
+    app: "chorei-neta",
+    version: 1,
+    exported_at: new Date().toISOString(),
+    data: {
+      fontSize: STATE.fontSize,
+      modalFontScale: STATE.modalFontScale,
+      local: STATE.local || {},        // {netaId: {fav, used, fb}}
+      myVotes: STATE.myVotes || {},    // {netaId: {good, useful}}
+    }
+  };
+  const json = JSON.stringify(payload, null, 2);
+  const blob = new Blob([json], {type:"application/json"});
+  const a = document.createElement("a");
+  const ts = new Date().toISOString().slice(0,19).replace(/[:T]/g,"-");
+  a.href = URL.createObjectURL(blob);
+  a.download = `chorei-mydata-${ts}.json`;
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+  const cnt = Object.keys(payload.data.local).length;
+  setStatus("myDataStatus", `✅ バックアップしました（評価/お気に入り ${cnt} 件）`, "ok");
+}
+
+function restoreMyData(e){
+  const f = e.target.files[0];
+  if(!f) return;
+  const r = new FileReader();
+  r.onload = ()=>{
+    try{
+      const obj = JSON.parse(r.result);
+      if(obj.app !== "chorei-neta") throw new Error("これは現場朝礼ネタのバックアップファイルではありません");
+      if(!obj.data) throw new Error("data フィールドが見つかりません");
+      const merge = confirm(
+        "復元方法を選んでください：\n\n" +
+        "✅ OK   → 既存データに上書きマージ（同じネタは上書き、新しいネタは追加）\n" +
+        "❌ キャンセル → 全置換（既存データを完全に消して、バックアップだけにする）\n\n" +
+        "迷ったら OK（マージ）を選んでください。"
+      );
+      const d = obj.data;
+      if(merge){
+        // マージ
+        if(d.fontSize) STATE.fontSize = d.fontSize;
+        if(typeof d.modalFontScale === "number") STATE.modalFontScale = d.modalFontScale;
+        STATE.local = { ...(STATE.local||{}), ...(d.local||{}) };
+        STATE.myVotes = { ...(STATE.myVotes||{}), ...(d.myVotes||{}) };
+      } else {
+        // 全置換
+        if(d.fontSize) STATE.fontSize = d.fontSize;
+        if(typeof d.modalFontScale === "number") STATE.modalFontScale = d.modalFontScale;
+        STATE.local = d.local || {};
+        STATE.myVotes = d.myVotes || {};
+      }
+      saveState();
+      // データに反映
+      document.documentElement.style.setProperty('--base-font', FONT_SIZES[STATE.fontSize||'medium']);
+      document.documentElement.style.setProperty('--modal-font-scale', STATE.modalFontScale||1.0);
+      applyLocalToData();
+      renderAll();
+      const cnt = Object.keys(STATE.local).length;
+      setStatus("myDataStatus", `✅ 復元しました（${merge?"マージ":"全置換"} / 合計 ${cnt} 件）`, "ok");
+    }catch(err){
+      setStatus("myDataStatus", "❌ 復元失敗: " + err.message, "err");
+    }
+    // ファイル選択をリセット（同じファイルを再選択可能に）
+    e.target.value = "";
+  };
+  r.readAsText(f);
 }
 
 /* ========== 描画統合 ========== */

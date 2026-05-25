@@ -121,8 +121,7 @@
     <li><a href="#sec8">💾 マイデータのバックアップ・復元</a></li>
     <li><a href="#sec9">💬 公式LINEで使う</a></li>
     <li><a href="#sec10">朝礼看板に貼る（QR）</a></li>
-    <li><a href="#sec11">管理者機能（ネタの追加・編集・公開）</a></li>
-    <li><a href="#sec12">困ったとき・よくある質問</a></li>
+    <li><a href="#sec11">困ったとき・よくある質問</a></li>
   </ol>
 </div>
 
@@ -139,7 +138,6 @@
     <li>💬 <strong>公式LINE</strong> 毎朝7:00 自動配信＋キーワード送信で関連ネタ返信</li>
     <li>📱 看板用 <strong>QRコード</strong> 自動生成、誰でもスマホで開ける</li>
     <li>💾 <strong>マイデータバックアップ</strong>で他端末にデータ移動可能</li>
-    <li>✏️ 管理者なら <strong>ネタ追加・編集・削除</strong>もブラウザだけで完結</li>
   </ul>
 
   <div class="callout green">
@@ -157,7 +155,7 @@
     <tr><td>🏠 ホーム</td><td>今日のおすすめ＋作業別ボタン＋季節のネタ</td></tr>
     <tr><td>🔍 さがす</td><td>タグを組み合わせて検索（厳密一致）</td></tr>
     <tr><td>⭐ お気に入り</td><td>★を押して保存したネタだけ表示</td></tr>
-    <tr><td>⚙️ 設定</td><td>QR・LINE・文字サイズ・マイデータ・取扱説明書・管理者ログイン</td></tr>
+    <tr><td>⚙️ 設定</td><td>QR・LINE・文字サイズ・マイデータ・取扱説明書</td></tr>
   </table>
 </section>
 
@@ -266,9 +264,6 @@
 
   <h3>あなたが評価したネタ（ランキング）</h3>
   <p>👍と📝の合計が多いネタが上位5つまで表示されます。よく評価したネタを再発見できます。</p>
-
-  <h3>─ Admin ─（一番下）</h3>
-  <p>管理者ログイン用。詳しくは §11 を参照。</p>
 </section>
 
 <section id="sec8">
@@ -353,57 +348,7 @@
 </section>
 
 <section id="sec11">
-  <h2><span class="num">11</span>管理者機能（ネタの追加・編集・公開）</h2>
-  <p>管理者だけが使える機能です。一般ユーザーは飛ばしてOK。</p>
-
-  <h3>ログイン手順（2段階）</h3>
-  <ol class="steps">
-    <li>⚙️ 設定タブの一番下「─ Admin ─」セクション</li>
-    <li>パスワード入力 → <span class="btnsample">次へ</span></li>
-    <li>PIN入力 → <span class="btnsample">ログイン</span></li>
-    <li>右上に <strong>管理</strong> バッジが点灯、編集機能が有効化</li>
-  </ol>
-
-  <div class="callout warn">
-    <h4>🔑 初期パスワード/PIN</h4>
-    <p>パスワード：<kbd>Chorei2026!</kbd><br>
-       PIN：<kbd>2580</kbd></p>
-    <p>※ ログイン後すぐ <span class="btnsample ghost">PW変更</span> <span class="btnsample ghost">PIN変更</span> でご自身用に変更してください。<br>
-       ※ 端末ごとのlocalStorageに保存されます。</p>
-  </div>
-
-  <h3>ネタの追加</h3>
-  <ol class="steps">
-    <li>管理者ログイン後、画面右下に <strong>＋</strong> ボタンが現れます</li>
-    <li>タップして編集画面 → タイトル・カテゴリ・本文・タグ・該当月を入力</li>
-    <li>本文には強調タグが使えます：<br>
-        <code>&lt;b class="num"&gt;数値&lt;/b&gt;</code> → <span class="num-red">数値</span>（赤）<br>
-        <code>&lt;b class="act"&gt;行動&lt;/b&gt;</code> → <span class="num-yellow">行動</span>（黄）</li>
-    <li><span class="btnsample">💾 保存</span> → 端末バッファに記録</li>
-    <li>設定 → ☁️ ネット公開 → <span class="btnsample">📤 編集内容を GitHub に反映</span> で公開</li>
-  </ol>
-
-  <h3>ネタの編集・削除</h3>
-  <p>管理者モードで該当ネタを開くと、本文下に <span class="btnsample ghost">✏️ 編集</span> <span class="btnsample ghost" style="color:#FF6060;border-color:#552020;">🗑️ 削除</span> が出ます。</p>
-
-  <h3>📋 ネタ一覧管理</h3>
-  <p>設定 → 「📋 ネタ一覧管理」→ <span class="btnsample">ネタ一覧を開く</span> で全155件＋を一覧。検索・編集・削除が一画面で可能。</p>
-
-  <h3>☁️ GitHub反映の事前設定</h3>
-  <p>設定 → 「☁️ ネット公開（GitHub）」<br>
-    GitHub PAT（Personal Access Token）を入力して <span class="btnsample ghost">保存</span>。これで <span class="btnsample">📤 GitHub反映</span> が機能します。</p>
-
-  <h3>💾 データ管理</h3>
-  <ul>
-    <li><span class="btnsample ghost">🔄 最新データを再取得</span>：他端末でこちらが反映した最新を取り込む</li>
-    <li><span class="btnsample ghost">📥 neta_data.js で書き出し</span>：バックアップ用エクスポート</li>
-    <li><span class="btnsample ghost">📤 JSON読込み</span>：バックアップからネタ一括復元</li>
-    <li><span class="btnsample" style="color:#FF6060;background:transparent;border:1px solid #552020;">⚠️ 端末の編集中バッファをクリア</span>：未公開の編集を全て破棄</li>
-  </ul>
-</section>
-
-<section id="sec12">
-  <h2><span class="num">12</span>困ったとき・よくある質問</h2>
+  <h2><span class="num">11</span>困ったとき・よくある質問</h2>
 
   <h3>Q. 音声読み上げが動かない</h3>
   <p>A. ブラウザの設定で音声がOFFになっているか、その端末が日本語TTS非対応の可能性。Safari / Chrome の最新版で改善することが多いです。iPhoneは「設定 → アクセシビリティ → 読み上げコンテンツ」で日本語の音声が入っているか確認してください。</p>
@@ -416,12 +361,6 @@
 
   <h3>Q. LINE Botからキーワード送ったのに返信が来ない</h3>
   <p>A. 1～2分待っても返信がなければ、もう一度送り直してください。一時的にサーバが応答不可な場合があります。それでも届かない時は本ツール内の「💬LINE公式 友だち追加」ボタンから直接運営に問い合わせください。</p>
-
-  <h3>Q. 管理者PW・PINを忘れた</h3>
-  <p>A. Chrome開発者ツール（F12）→ Application → Local Storage → <code>chorei_pwhash</code> と <code>chorei_pinhash</code> を削除してリロードすると、初期値（<kbd>Chorei2026!</kbd> / <kbd>2580</kbd>）に戻ります。</p>
-
-  <h3>Q. ネタを編集したのに公開されない</h3>
-  <p>A. 端末バッファに記録されているだけです。「⚙️ 設定 → ☁️ ネット公開 → 📤 編集内容を GitHub に反映」を必ず押してください。「💾 未反映の変更があります」というバナーが画面上部に出るのが目印。</p>
 
   <h3>Q. 看板用QRが小さくて読みづらい</h3>
   <p>A. 設定画面のQR画像を長押し→画像保存して、大きく印刷してください。A4サイズ全面に拡大すれば3mくらい離れていても読めます。</p>

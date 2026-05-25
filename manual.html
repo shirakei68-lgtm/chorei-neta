@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>現場朝礼ネタ｜操作説明書</title>
+<meta name="description" content="現場朝礼ネタ｜CHOREI の使い方ガイド。ホーム・さがす・お気に入り・設定・LINE公式・バックアップまで完全網羅。">
+<style>
+  :root{
+    --bg:#000;--bg2:#111;--bg3:#1c1c1c;--line:#2a2a2a;
+    --text:#fff;--accent:#FFD400;--accent2:#FF4D4D;--good:#28C76F;
+    --muted:#9aa0a6;--tag:#222;--line-green:#06C755;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
+    font-size:17px;line-height:1.75;-webkit-text-size-adjust:100%;}
+  body{padding-bottom:60px;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  header{position:sticky;top:0;z-index:50;background:rgba(0,0,0,.95);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:14px 18px;}
+  header h1{margin:0;font-size:1.05em;font-weight:800;letter-spacing:.04em;}
+  header h1 span{color:var(--accent);}
+  header .sub{font-size:0.72em;color:var(--muted);margin-top:4px;}
+
+  main{max-width:780px;margin:0 auto;padding:0 18px;}
+
+  .toc{background:var(--bg2);border:1px solid var(--line);border-radius:14px;
+    padding:16px 18px;margin:24px 0 28px;}
+  .toc h2{margin:0 0 10px;font-size:0.82em;color:var(--accent);letter-spacing:.1em;}
+  .toc ol{margin:0;padding-left:1.5em;}
+  .toc li{padding:4px 0;font-size:0.95em;}
+  .toc a{color:var(--text);}
+
+  section{margin:40px 0 0;padding-top:12px;border-top:1px solid var(--line);}
+  section:first-of-type{border-top:none;margin-top:8px;}
+  section h2{font-size:1.2em;font-weight:800;color:var(--accent);
+    margin:24px 0 14px;display:flex;align-items:center;gap:10px;line-height:1.4;}
+  section h2 .num{background:var(--accent);color:#111;border-radius:50%;
+    width:1.9em;height:1.9em;display:inline-flex;align-items:center;justify-content:center;
+    font-size:0.7em;font-weight:900;flex:none;}
+  section h3{font-size:1em;color:#fff;margin:22px 0 8px;border-left:3px solid var(--accent);
+    padding-left:10px;}
+
+  p{margin:8px 0;}
+  ul,ol.steps{padding-left:1.4em;margin:8px 0;}
+  li{margin:6px 0;}
+  strong{color:#fff;background:rgba(255,212,0,.12);padding:1px 4px;border-radius:3px;}
+
+  ol.steps{counter-reset:s;list-style:none;padding-left:0;}
+  ol.steps li{counter-increment:s;padding:8px 8px 8px 42px;position:relative;
+    margin:8px 0;background:var(--bg2);border:1px solid var(--line);border-radius:10px;}
+  ol.steps li::before{content:counter(s);position:absolute;left:10px;top:10px;
+    width:24px;height:24px;background:var(--accent);color:#111;border-radius:50%;
+    font-weight:900;font-size:0.85em;display:inline-flex;align-items:center;justify-content:center;}
+
+  .callout{background:rgba(255,212,0,.08);border:1px solid var(--accent);
+    border-radius:10px;padding:12px 16px;margin:16px 0;}
+  .callout h4{margin:0 0 6px;font-size:0.95em;}
+  .callout.warn{background:rgba(255,77,77,.08);border-color:var(--accent2);}
+  .callout.green{background:rgba(40,199,111,.08);border-color:var(--good);}
+  .callout.info{background:rgba(154,160,166,.08);border-color:var(--muted);}
+
+  .btnsample{display:inline-block;background:var(--accent);color:#000;
+    font-weight:700;border-radius:8px;padding:4px 10px;font-size:0.85em;margin:2px;}
+  .btnsample.ghost{background:transparent;color:#fff;border:1px solid var(--line);font-weight:normal;}
+  .btnsample.line{background:var(--line-green);color:#fff;}
+
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:0.9em;
+    background:var(--bg2);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);}
+  th{background:var(--bg3);color:var(--accent);font-weight:700;font-size:0.9em;}
+  tr:last-child td{border-bottom:none;}
+
+  .back-row{display:flex;justify-content:center;margin:40px 0 0;}
+  .back-row a{background:var(--accent);color:#000;font-weight:700;
+    padding:12px 28px;border-radius:10px;display:inline-block;}
+
+  kbd{background:#2a2a2a;border:1px solid #444;border-bottom-width:2px;
+    border-radius:4px;padding:1px 6px;font-size:0.85em;font-family:monospace;color:#ffe066;}
+
+  .num-red{color:var(--accent2);font-size:1.15em;font-weight:700;}
+  .num-yellow{color:var(--accent);font-weight:700;}
+
+  hr{border:none;border-top:1px dashed var(--line);margin:20px 0;}
+
+  .chat-mock{background:#7a9caa;border-radius:14px;padding:14px;margin:14px 0;}
+  .bubble{background:#fff;color:#111;border-radius:14px;padding:10px 14px;
+    margin:6px 0;font-size:0.88em;max-width:85%;word-break:break-word;line-height:1.55;}
+  .bubble.me{background:var(--line-green);color:#fff;margin-left:auto;text-align:right;}
+  .bubble.you{margin-right:auto;}
+
+  .chip{display:inline-block;background:var(--tag);border-radius:14px;
+    padding:3px 10px;font-size:0.78em;margin:2px;color:#ddd;
+    border:1px solid var(--line);}
+  .chip.on{background:var(--accent);color:#111;border-color:var(--accent);font-weight:700;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📖 現場朝礼<span>ネタ</span>｜操作説明書</h1>
+  <div class="sub">スマホ・タブレット・PC、誰でもすぐ使えます ─ 更新 2026-05-25</div>
+</header>
+
+<main>
+
+<div class="toc">
+  <h2>目 次</h2>
+  <ol>
+    <li><a href="#sec1">このツールでできること</a></li>
+    <li><a href="#sec2">画面の基本構成（4タブ）</a></li>
+    <li><a href="#sec3">🏠 ホーム ── 今日のおすすめを開く</a></li>
+    <li><a href="#sec4">🔍 さがす ── タグでしぼり込む</a></li>
+    <li><a href="#sec5">⭐ お気に入り</a></li>
+    <li><a href="#sec6">ネタを開いた画面（モーダル）の使い方</a></li>
+    <li><a href="#sec7">⚙️ 設定 ── QR・文字サイズ・LINE</a></li>
+    <li><a href="#sec8">💾 マイデータのバックアップ・復元</a></li>
+    <li><a href="#sec9">💬 公式LINEで使う</a></li>
+    <li><a href="#sec10">朝礼看板に貼る（QR）</a></li>
+    <li><a href="#sec11">管理者機能（ネタの追加・編集・公開）</a></li>
+    <li><a href="#sec12">困ったとき・よくある質問</a></li>
+  </ol>
+</div>
+
+<section id="sec1">
+  <h2><span class="num">1</span>このツールでできること</h2>
+  <p>土木・建築現場の<strong>朝礼ネタを 155 件以上</strong>収録した、無料の Web アプリです。インストール不要、ブラウザを開くだけ。スマホ・タブレット・PC、どの端末からでも同じように使えます。</p>
+
+  <h3>主な機能</h3>
+  <ul>
+    <li>📅 <strong>今日のおすすめ</strong>が時期・季節・曜日に合わせて自動表示</li>
+    <li>🔍 作業内容／天候／対象者／雰囲気の<strong>4軸タグでしぼり込み</strong></li>
+    <li>🔊 <strong>音声読み上げ</strong>で朝礼台本がそのまま読める</li>
+    <li>⭐ お気に入り保存／使った記録／👍ウケた／📝役に立った を1タップ</li>
+    <li>💬 <strong>公式LINE</strong> 毎朝7:00 自動配信＋キーワード送信で関連ネタ返信</li>
+    <li>📱 看板用 <strong>QRコード</strong> 自動生成、誰でもスマホで開ける</li>
+    <li>💾 <strong>マイデータバックアップ</strong>で他端末にデータ移動可能</li>
+    <li>✏️ 管理者なら <strong>ネタ追加・編集・削除</strong>もブラウザだけで完結</li>
+  </ul>
+
+  <div class="callout green">
+    <h4>💴 完全無料</h4>
+    <p>ログイン・アカウント作成・課金、全て不要です。URLにアクセスするだけ。</p>
+  </div>
+</section>
+
+<section id="sec2">
+  <h2><span class="num">2</span>画面の基本構成（4タブ）</h2>
+  <p>下に固定された4つのタブで画面を切り替えます。</p>
+
+  <table>
+    <tr><th>タブ</th><th>役割</th></tr>
+    <tr><td>🏠 ホーム</td><td>今日のおすすめ＋作業別ボタン＋季節のネタ</td></tr>
+    <tr><td>🔍 さがす</td><td>タグを組み合わせて検索（厳密一致）</td></tr>
+    <tr><td>⭐ お気に入り</td><td>★を押して保存したネタだけ表示</td></tr>
+    <tr><td>⚙️ 設定</td><td>QR・LINE・文字サイズ・マイデータ・取扱説明書・管理者ログイン</td></tr>
+  </table>
+</section>
+
+<section id="sec3">
+  <h2><span class="num">3</span>🏠 ホーム ── 今日のおすすめを開く</h2>
+  <p>アプリを開くと一番最初に表示される画面。朝、現場に着いたらまずここを開いてください。</p>
+
+  <h3>表示の構成（上から）</h3>
+  <ol class="steps">
+    <li><strong>今日の自動レコメンド</strong> ─ 月／曜日／月末などから自動選出した「一番おすすめのネタ」。<span class="btnsample">この台本をひらく</span>で本文が開きます。</li>
+    <li><strong>今日のメイン作業は？</strong> ─ クレーン・コンクリ・運転・高所など6つのカテゴリボタン。タップすると「さがす」タブにジャンプして自動でしぼり込まれます。</li>
+    <li><strong>今の時期のおすすめ</strong> ─ 今月該当のネタが下に続きます。下にスワイプして眺めてください。</li>
+  </ol>
+
+  <div class="callout">
+    <h4>💡 一番ラクな使い方</h4>
+    <p>「今日の自動レコメンド」の<span class="btnsample">この台本をひらく</span>を押すだけで、朝礼で話す内容が用意できます。読み上げ機能（🔊音声）と組み合わせれば、考える時間ゼロ。</p>
+  </div>
+</section>
+
+<section id="sec4">
+  <h2><span class="num">4</span>🔍 さがす ── タグでしぼり込む</h2>
+  <p>4種類のタグを掛け合わせて、目当てのネタを絞り込みます。</p>
+
+  <h3>使えるタグの種類</h3>
+  <table>
+    <tr><th>タグ群</th><th>例</th></tr>
+    <tr><td>作業内容</td><td>クレーン・重機 / コンクリート打設 / 全作業 / 土工 / 型枠 / 掘削 / 運転・交通 / 重機作業 / 電気作業 / 高所作業</td></tr>
+    <tr><td>天候・季節</td><td>冬・冷え込み / 夏・猛暑 / 強風 / 花粉</td></tr>
+    <tr><td>対象者</td><td>全員向け / 新規入場者向け / 運転手向け</td></tr>
+    <tr><td>雰囲気</td><td>場を和ませる（笑い・クイズ）/ 学べる雑学 / 数字で語る / 気を引き締める（法令・罰則・統計）/ 演出・パフォーマンス</td></tr>
+  </table>
+
+  <h3>使い方</h3>
+  <ol class="steps">
+    <li>絞り込みたいタグを順番にタップ。選択中のタグは<span class="chip on">黄色</span>になります。</li>
+    <li>「過去1ヶ月に使ったネタを除外」のチェックを入れると、最近読んだネタは候補から外れます。</li>
+    <li>表示件数が右上に出ます。条件を緩めたい時は黄色のタグをもう一度タップして解除。</li>
+  </ol>
+
+  <div class="callout info">
+    <p><strong>厳密一致モード</strong>：選んだタグを<strong>全て含む</strong>ネタだけ表示されます。「全作業」だけは特別ではなくなりました（以前のフォールバックは廃止）。</p>
+  </div>
+</section>
+
+<section id="sec5">
+  <h2><span class="num">5</span>⭐ お気に入り</h2>
+  <p>ネタ詳細画面で <span class="btnsample ghost">☆</span> を押した台本だけがここに並びます。よく使う鉄板ネタを集めておくと、現場で迷わず使えます。</p>
+  <p>解除はもう一度 <span class="btnsample">⭐</span> を押すだけ。</p>
+</section>
+
+<section id="sec6">
+  <h2><span class="num">6</span>ネタを開いた画面（モーダル）の使い方</h2>
+  <p>どこかのカードをタップすると、画面下から本文が出てきます（モーダル）。</p>
+
+  <h3>上部</h3>
+  <ul>
+    <li><span class="btnsample ghost">A−</span> / <span class="btnsample ghost">A+</span>：この画面だけ文字サイズを一時調整。朝礼で読み上げ中に便利。</li>
+    <li><span class="btnsample ghost">×</span>：閉じる。</li>
+  </ul>
+
+  <h3>本文中の強調表示</h3>
+  <ul>
+    <li><span class="num-red">数値</span> は赤色（例：<span class="num-red">20</span>kg、<span class="num-red">3</span>分）</li>
+    <li><span class="num-yellow">行動</span> は黄色（例：<span class="num-yellow">必ず2人で持つ</span>、<span class="num-yellow">指差し確認</span>）</li>
+  </ul>
+
+  <h3>👍ウケた／📝役に立った ボタン</h3>
+  <p>本文の下に2つの評価ボタンがあります。<strong>1ネタ1端末1回</strong>。押すと黄色く反転して「✓取消」が表示されます。もう一度押すとカウントを取消できます。</p>
+  <div class="callout warn">
+    <p>※ 端末ごとの記録です。複数の端末で別々にカウントされます。<br>
+    複数端末で揃えたい時は「マイデータ バックアップ・復元」で同期できます（§8参照）。</p>
+  </div>
+
+  <h3>下部のアクションボタン</h3>
+  <table>
+    <tr><th>ボタン</th><th>機能</th></tr>
+    <tr><td><span class="btnsample">🔊 音声</span></td><td>本文を読み上げ。もう1回押すと停止。日本語TTS対応端末で動作。</td></tr>
+    <tr><td><span class="btnsample ghost">☆ → ⭐</span></td><td>お気に入りに追加／解除。</td></tr>
+    <tr><td><span class="btnsample ghost">✅ 使った</span></td><td>使用記録。「過去1ヶ月に使ったネタを除外」と連動。</td></tr>
+    <tr><td><span class="btnsample ghost">📤 共有</span></td><td>LINEやメモに本文をテキストで送る／コピー。</td></tr>
+  </table>
+</section>
+
+<section id="sec7">
+  <h2><span class="num">7</span>⚙️ 設定 ── QR・文字サイズ・LINE</h2>
+  <p>設定タブには以下のセクションがあります（上から順番に）。</p>
+
+  <h3>📖 使い方・ヘルプ</h3>
+  <ul>
+    <li><span class="btnsample">📖 取扱説明書を開く</span>：今ご覧のこのページが開きます。</li>
+    <li><span class="btnsample line">💬 LINE公式の使い方</span>：公式LINEの友だち追加。</li>
+  </ul>
+
+  <h3>💾 マイデータのバックアップ・復元</h3>
+  <p>詳しくは §8 を参照してください。</p>
+
+  <h3>朝礼看板用 QRコード</h3>
+  <p>このページのURLを示すQRコードが自動表示されます。スマホで読み取ると同じツールが開きます。看板に貼って共有してください（§10参照）。</p>
+
+  <h3>公式アカウントをフォロー</h3>
+  <p><span class="btnsample line">💬LINE公式 友だち追加</span> / <span class="btnsample" style="background:#000;color:#fff;border:1px solid #444;">𝕏公式アカウントフォロー</span></p>
+
+  <h3>文字サイズ</h3>
+  <p>小 / 中 / 大 / 特大 の 4段階。設定はその端末で記憶されます。</p>
+
+  <h3>あなたが評価したネタ（ランキング）</h3>
+  <p>👍と📝の合計が多いネタが上位5つまで表示されます。よく評価したネタを再発見できます。</p>
+
+  <h3>─ Admin ─（一番下）</h3>
+  <p>管理者ログイン用。詳しくは §11 を参照。</p>
+</section>
+
+<section id="sec8">
+  <h2><span class="num">8</span>💾 マイデータのバックアップ・復元</h2>
+  <p>各端末に保存されている「お気に入り・評価・使用履歴」を JSON ファイルで保存／復元できます。<strong>別の端末でも同じデータを使いたい時</strong>、または<strong>ツールがアップデートされた後も自分の履歴を残したい時</strong>に使います。</p>
+
+  <h3>バックアップ手順（A端末で）</h3>
+  <ol class="steps">
+    <li>⚙️ 設定タブ → 「💾 マイデータのバックアップ・復元」</li>
+    <li><span class="btnsample">⬇️ マイデータをバックアップ</span> をタップ</li>
+    <li><code>chorei-mydata-YYYY-MM-DD-HH-MM-SS.json</code> という名前のファイルがダウンロードされます</li>
+    <li>そのファイルを AirDrop / iCloud Drive / メール / LINE などでB端末に送る</li>
+  </ol>
+
+  <h3>復元手順（B端末で）</h3>
+  <ol class="steps">
+    <li>受け取った JSON ファイルを B端末に保存</li>
+    <li>⚙️ 設定 → 「💾 マイデータのバックアップ・復元」</li>
+    <li><span class="btnsample ghost">⬆️ マイデータを復元</span> をタップ</li>
+    <li>JSON ファイルを選択</li>
+    <li>確認ダイアログで <strong>OK＝マージ</strong> または <strong>キャンセル＝全置換</strong> を選ぶ
+      <ul>
+        <li><strong>マージ</strong>（推奨）：既存データに上書きする。両方の端末で評価したネタは合算ではなく上書き。</li>
+        <li><strong>全置換</strong>：B端末の既存データを消して、JSONの内容だけにする。</li>
+      </ul>
+    </li>
+  </ol>
+
+  <div class="callout green">
+    <h4>✅ 安心ポイント</h4>
+    <p>ツールがアップデートされても、この機能で自分のデータは保護できます。私（運営側）がコード変更してもマイデータは消えません。</p>
+  </div>
+</section>
+
+<section id="sec9">
+  <h2><span class="num">9</span>💬 公式LINEで使う</h2>
+  <p>LINE公式アカウント <strong>@128gbfhl</strong>（現場朝礼ネタ）を友だち追加すると、2つの便利機能が使えます。</p>
+
+  <h3>友だち追加直後</h3>
+  <p>3つの吹き出しが自動で届きます（ツール紹介・使い方・LINEの使い方）。</p>
+
+  <h3>① 毎朝7:00 自動配信</h3>
+  <p>その日のおすすめ朝礼ネタが自動で届きます。読み流すだけで朝礼ネタが拾えます。</p>
+
+  <div class="chat-mock">
+    <div class="bubble you">☀️ おはようございます！<br>今日 5/25 の朝礼ネタです👷<br><br>📋 春の熱中症<br><br>真夏でもないのに熱中症？...<br><br>🏷 全員向け / 学べる雑学</div>
+  </div>
+
+  <h3>② キーワード送信で関連ネタ返信</h3>
+  <p>気になるテーマを送ると、関連するネタをランダムで1件返信します。</p>
+
+  <table>
+    <tr><th>送る言葉</th><th>返信内容</th></tr>
+    <tr><td>熱中症</td><td>「熱中症」を含むネタからランダム1件</td></tr>
+    <tr><td>KY</td><td>KY活動関連ネタ</td></tr>
+    <tr><td>月曜</td><td>月曜・休み明け関連</td></tr>
+    <tr><td>クレーン</td><td>クレーン作業関連</td></tr>
+    <tr><td>12月（または12）</td><td>12月該当のネタ</td></tr>
+    <tr><td>使い方 / ヘルプ</td><td>このLINEの使い方を再表示</td></tr>
+  </table>
+
+  <div class="callout info">
+    <p>※ キーワードは「タイトル／カテゴリ／本文／タグ」の部分一致で検索されます。</p>
+  </div>
+</section>
+
+<section id="sec10">
+  <h2><span class="num">10</span>朝礼看板に貼る（QR）</h2>
+  <p>現場の朝礼看板や休憩所にQRコードを貼っておけば、職人さん全員が自分のスマホでツールを開けます。</p>
+
+  <ol class="steps">
+    <li>⚙️ 設定タブ → 「朝礼看板用 QRコード」</li>
+    <li>表示されているQRを<strong>長押し → 画像保存</strong>（または右クリック保存）</li>
+    <li>A4サイズくらいに印刷</li>
+    <li>看板や休憩所、ヘルメット入れの近くに掲示</li>
+  </ol>
+
+  <div class="callout">
+    <h4>💡 印刷時のコツ</h4>
+    <p>「QR：現場朝礼ネタ・無料・スマホで読み取ってね」など説明文を添えると食いつきが良くなります。</p>
+  </div>
+</section>
+
+<section id="sec11">
+  <h2><span class="num">11</span>管理者機能（ネタの追加・編集・公開）</h2>
+  <p>管理者だけが使える機能です。一般ユーザーは飛ばしてOK。</p>
+
+  <h3>ログイン手順（2段階）</h3>
+  <ol class="steps">
+    <li>⚙️ 設定タブの一番下「─ Admin ─」セクション</li>
+    <li>パスワード入力 → <span class="btnsample">次へ</span></li>
+    <li>PIN入力 → <span class="btnsample">ログイン</span></li>
+    <li>右上に <strong>管理</strong> バッジが点灯、編集機能が有効化</li>
+  </ol>
+
+  <div class="callout warn">
+    <h4>🔑 初期パスワード/PIN</h4>
+    <p>パスワード：<kbd>Chorei2026!</kbd><br>
+       PIN：<kbd>2580</kbd></p>
+    <p>※ ログイン後すぐ <span class="btnsample ghost">PW変更</span> <span class="btnsample ghost">PIN変更</span> でご自身用に変更してください。<br>
+       ※ 端末ごとのlocalStorageに保存されます。</p>
+  </div>
+
+  <h3>ネタの追加</h3>
+  <ol class="steps">
+    <li>管理者ログイン後、画面右下に <strong>＋</strong> ボタンが現れます</li>
+    <li>タップして編集画面 → タイトル・カテゴリ・本文・タグ・該当月を入力</li>
+    <li>本文には強調タグが使えます：<br>
+        <code>&lt;b class="num"&gt;数値&lt;/b&gt;</code> → <span class="num-red">数値</span>（赤）<br>
+        <code>&lt;b class="act"&gt;行動&lt;/b&gt;</code> → <span class="num-yellow">行動</span>（黄）</li>
+    <li><span class="btnsample">💾 保存</span> → 端末バッファに記録</li>
+    <li>設定 → ☁️ ネット公開 → <span class="btnsample">📤 編集内容を GitHub に反映</span> で公開</li>
+  </ol>
+
+  <h3>ネタの編集・削除</h3>
+  <p>管理者モードで該当ネタを開くと、本文下に <span class="btnsample ghost">✏️ 編集</span> <span class="btnsample ghost" style="color:#FF6060;border-color:#552020;">🗑️ 削除</span> が出ます。</p>
+
+  <h3>📋 ネタ一覧管理</h3>
+  <p>設定 → 「📋 ネタ一覧管理」→ <span class="btnsample">ネタ一覧を開く</span> で全155件＋を一覧。検索・編集・削除が一画面で可能。</p>
+
+  <h3>☁️ GitHub反映の事前設定</h3>
+  <p>設定 → 「☁️ ネット公開（GitHub）」<br>
+    GitHub PAT（Personal Access Token）を入力して <span class="btnsample ghost">保存</span>。これで <span class="btnsample">📤 GitHub反映</span> が機能します。</p>
+
+  <h3>💾 データ管理</h3>
+  <ul>
+    <li><span class="btnsample ghost">🔄 最新データを再取得</span>：他端末でこちらが反映した最新を取り込む</li>
+    <li><span class="btnsample ghost">📥 neta_data.js で書き出し</span>：バックアップ用エクスポート</li>
+    <li><span class="btnsample ghost">📤 JSON読込み</span>：バックアップからネタ一括復元</li>
+    <li><span class="btnsample" style="color:#FF6060;background:transparent;border:1px solid #552020;">⚠️ 端末の編集中バッファをクリア</span>：未公開の編集を全て破棄</li>
+  </ul>
+</section>
+
+<section id="sec12">
+  <h2><span class="num">12</span>困ったとき・よくある質問</h2>
+
+  <h3>Q. 音声読み上げが動かない</h3>
+  <p>A. ブラウザの設定で音声がOFFになっているか、その端末が日本語TTS非対応の可能性。Safari / Chrome の最新版で改善することが多いです。iPhoneは「設定 → アクセシビリティ → 読み上げコンテンツ」で日本語の音声が入っているか確認してください。</p>
+
+  <h3>Q. 「今日のおすすめ」が同じネタばかり出る</h3>
+  <p>A. 一度モーダルを開いて「✅ 使った」を押すと、しばらく候補から外れます。または別のカテゴリボタンをタップしてからホームに戻ると変わります。</p>
+
+  <h3>Q. 別の端末でも同じお気に入りを使いたい</h3>
+  <p>A. §8 のバックアップ/復元機能を使ってください。アカウント機能は無料運営のため非搭載です（クラウド同期は有料化のため）。</p>
+
+  <h3>Q. LINE Botからキーワード送ったのに返信が来ない</h3>
+  <p>A. 1～2分待っても返信がなければ、もう一度送り直してください。一時的にサーバが応答不可な場合があります。それでも届かない時は本ツール内の「💬LINE公式 友だち追加」ボタンから直接運営に問い合わせください。</p>
+
+  <h3>Q. 管理者PW・PINを忘れた</h3>
+  <p>A. Chrome開発者ツール（F12）→ Application → Local Storage → <code>chorei_pwhash</code> と <code>chorei_pinhash</code> を削除してリロードすると、初期値（<kbd>Chorei2026!</kbd> / <kbd>2580</kbd>）に戻ります。</p>
+
+  <h3>Q. ネタを編集したのに公開されない</h3>
+  <p>A. 端末バッファに記録されているだけです。「⚙️ 設定 → ☁️ ネット公開 → 📤 編集内容を GitHub に反映」を必ず押してください。「💾 未反映の変更があります」というバナーが画面上部に出るのが目印。</p>
+
+  <h3>Q. 看板用QRが小さくて読みづらい</h3>
+  <p>A. 設定画面のQR画像を長押し→画像保存して、大きく印刷してください。A4サイズ全面に拡大すれば3mくらい離れていても読めます。</p>
+
+  <h3>Q. ツールが急に動かなくなった</h3>
+  <p>A. ブラウザのキャッシュをクリア（Cmd+Shift+R / Ctrl+Shift+R）してから再アクセスしてください。それでもダメな場合は1～2時間後に再試行。GitHub Pages側の一時障害の可能性があります。</p>
+</section>
+
+<div class="back-row">
+  <a href="chorei-neta.html">▶ 現場朝礼ネタを開く</a>
+</div>
+
+</main>
+
+</body>
+</html>

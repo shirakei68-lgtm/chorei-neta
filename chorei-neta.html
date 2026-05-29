@@ -1110,10 +1110,28 @@ function checkHash(){
   if(m) openModal(decodeURIComponent(m[1]));
 }
 
-/* ========== 広告（季節連動・Amazon検索リンク）==========
-   ※ 現状はアフィリエイトIDなし。もしもアフィリエイト登録後、
-      ASSOCIATE_TAG に自分のタグ（例: "yourname-22"）を入れると収益化されます。 */
-const ASSOCIATE_TAG = ""; // ←ここにAmazonアソシエイツのタグを入れる（例: "chorei-22"）
+/* ========== 広告（季節連動・もしも経由楽天市場）========== */
+const MOSHIMO_AID  = "5597652";
+const MOSHIMO_PID  = "54";
+const MOSHIMO_PCID = "54";
+const MOSHIMO_PLID = "616";
+
+function moshimoLink(rakutenUrl) {
+  const params = [
+    `a_id=${MOSHIMO_AID}`,
+    `p_id=${MOSHIMO_PID}`,
+    `pc_id=${MOSHIMO_PCID}`,
+    `pl_id=${MOSHIMO_PLID}`,
+    `url=${encodeURIComponent(rakutenUrl)}`
+  ].join("&");
+  return `https://af.moshimo.com/af/c/click?${params}`;
+}
+function rakutenSearchUrl(keyword) {
+  return `https://search.rakuten.co.jp/search/mall/${encodeURIComponent(keyword)}/`;
+}
+function moshimoImpressionPixel() {
+  return `<img src="https://i.moshimo.com/af/i/impression?a_id=${MOSHIMO_AID}&p_id=${MOSHIMO_PID}&pc_id=${MOSHIMO_PCID}&pl_id=${MOSHIMO_PLID}" width="1" height="1" style="border:none;" alt="" loading="lazy">`;
+}
 
 function seasonalAd() {
   const m = new Date().getMonth() + 1;
@@ -1144,8 +1162,8 @@ function seasonalAd() {
     ];
   }
   return products.map(p => {
-    const url = `https://www.amazon.co.jp/s?k=${encodeURIComponent(p.q)}${ASSOCIATE_TAG?`&tag=${ASSOCIATE_TAG}`:""}`;
-    return `<a href="${url}" target="_blank" rel="nofollow noopener" style="display:inline-block;padding:6px 12px;margin:3px;background:#FF9900;color:#111;text-decoration:none;border-radius:8px;font-size:0.85em;font-weight:700;">${p.emoji} ${p.name}</a>`;
+    const url = moshimoLink(rakutenSearchUrl(p.q));
+    return `<a href="${url}" target="_blank" rel="nofollow noopener" referrerpolicy="no-referrer-when-downgrade" style="display:inline-block;padding:6px 12px;margin:3px;background:#bf0000;color:#fff;text-decoration:none;border-radius:8px;font-size:0.85em;font-weight:700;">${p.emoji} ${p.name}</a>`;
   }).join("");
 }
 
@@ -1153,9 +1171,10 @@ function renderAds() {
   const ads = document.querySelectorAll(".ad-slot");
   ads.forEach(slot => {
     const html = `
-      <div class="ad-label">広告 / Amazonで現場用品を探す</div>
+      <div class="ad-label">広告 / 楽天市場で現場用品を探す</div>
       <div>${seasonalAd()}</div>
-      <div style="font-size:0.65em;color:var(--muted);margin-top:6px;">※ 季節に合わせて自動切り替え。リンク先はAmazon。</div>
+      <div style="font-size:0.65em;color:var(--muted);margin-top:6px;">※ 季節に合わせて自動切り替え。リンク先は楽天市場。</div>
+      ${moshimoImpressionPixel()}
     `;
     slot.innerHTML = html;
     slot.classList.add("live");

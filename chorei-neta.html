@@ -128,6 +128,13 @@
   .qr-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;background:#fff;color:#000;padding:18px;border-radius:14px;}
   .qr-wrap img{width:220px;height:220px;}
 
+  /* 広告枠 */
+  .ad-slot{background:var(--bg2);border:1px dashed var(--line);border-radius:12px;padding:12px;margin:14px 0;text-align:center;font-size:0.78em;color:var(--muted);min-height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
+  .ad-slot .ad-label{font-size:0.65em;color:#555;letter-spacing:.1em;text-transform:uppercase;}
+  .ad-slot a{color:var(--accent);text-decoration:none;}
+  .ad-slot.live{border:1px solid var(--line);background:#0a0a0a;}
+  .ad-slot img{max-width:100%;height:auto;border-radius:6px;}
+
   .empty{color:var(--muted);text-align:center;padding:24px;}
   .topbar-recommend{background:linear-gradient(135deg,#1c1c1c,#2a2200);border:1px solid #5a4a00;border-radius:14px;padding:14px;margin-bottom:14px;}
   .topbar-recommend .label{color:var(--accent);font-size:0.7em;letter-spacing:.1em;}
@@ -207,6 +214,7 @@
     <div class="topbar-recommend" id="recommendBox"></div>
     <div class="section-title">今日のメイン作業は？</div>
     <div class="work-grid" id="workGrid"></div>
+    <div class="ad-slot" id="adHome"><div class="ad-label">広告</div><div>現場用品をチェック</div></div>
     <div class="section-title">今の時期のおすすめ</div>
     <div id="seasonalList"></div>
   </section>
@@ -249,6 +257,15 @@
       <div class="status-line" id="myDataStatus"></div>
     </div>
 
+    <div class="section-title">📊 現場で使える無料テンプレート</div>
+    <div class="panel">
+      <p class="help"><strong>土木工事 歩掛り記録テンプレート（Google スプレッドシート）</strong><br>
+      毎日の作業実績を入力すると、工種ごとの『実績歩掛り（人工/単位、単位/人工、単位/日）』が自動集計されるテンプレートです。<br>
+      ボタンを押すと、<strong>あなたのGoogleドライブに自分専用のコピー</strong>が作成されます（Googleアカウントが必要）。元のファイルが書き換わることはありません。</p>
+      <a class="submit-btn" style="display:block;text-align:center;text-decoration:none;margin-bottom:8px;" href="https://docs.google.com/spreadsheets/d/1oofpWd_m-yHad-Ml-3ukdd4ACOar8xFcY7LywFiXw4c/copy" target="_blank" rel="noopener">📊 歩掛り記録テンプレートを取得</a>
+      <a class="ghost-btn" style="display:block;text-align:center;text-decoration:none;font-size:0.78em;" href="https://docs.google.com/spreadsheets/d/1oofpWd_m-yHad-Ml-3ukdd4ACOar8xFcY7LywFiXw4c/edit" target="_blank" rel="noopener">👀 中身をプレビュー（編集なし）</a>
+    </div>
+
     <div class="section-title">朝礼看板用 QRコード</div>
     <div class="qr-wrap">
       <img id="qrImg" alt="QR">
@@ -256,13 +273,10 @@
       <div style="font-size:0.65em;color:#555;text-align:center;word-break:break-all;" id="qrUrl"></div>
     </div>
 
-    <div class="section-title">公式アカウントをフォロー</div>
-    <div class="follow-grid">
+    <div class="section-title">公式LINE</div>
+    <div class="follow-grid" style="grid-template-columns:1fr;">
       <a class="follow-btn line" href="https://line.me/R/ti/p/%40128gbfhl" target="_blank">
         <span class="ico">💬</span>LINE公式<br>友だち追加
-      </a>
-      <a class="follow-btn x" href="https://x.com/intent/follow?screen_name=10yaJd0bb779114" target="_blank">
-        <span class="ico">𝕏</span>公式アカウント<br>フォロー
       </a>
     </div>
 
@@ -732,6 +746,7 @@ function openModal(id){
       <button class="${myV.useful?'voted':''}" onclick="vote('useful')">📝 役に立った <b>${fb.useful}</b></button>
     </div>
     <div style="font-size:0.65em;color:var(--muted);margin-top:6px;line-height:1.5;">※ 1ネタ1人1回まで。自分が押したボタンは黄色く表示され、もう一度タップで取消できます。</div>
+    <div class="ad-slot" id="adModal"><div class="ad-label">広告</div><div>現場で役立つアイテム</div></div>
     <div style="margin-top:12px;color:var(--muted);font-size:0.7em;">タグ: ${Object.values(n.tags||{}).flat().join(" / ") || "なし"}</div>
     ${adminButtons}
     <div class="actions">

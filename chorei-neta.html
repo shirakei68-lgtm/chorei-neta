@@ -756,6 +756,7 @@ function openModal(id){
       <button onclick="shareNeta()"><span class="ico">📤</span>共有</button>
     </div>`;
   document.getElementById("modal").classList.add("open");
+  renderAds();
 }
 function closeModal(){
   document.getElementById("modal").classList.remove("open");
@@ -1109,6 +1110,58 @@ function checkHash(){
   if(m) openModal(decodeURIComponent(m[1]));
 }
 
+/* ========== 広告（季節連動・Amazon検索リンク）==========
+   ※ 現状はアフィリエイトIDなし。もしもアフィリエイト登録後、
+      ASSOCIATE_TAG に自分のタグ（例: "yourname-22"）を入れると収益化されます。 */
+const ASSOCIATE_TAG = ""; // ←ここにAmazonアソシエイツのタグを入れる（例: "chorei-22"）
+
+function seasonalAd() {
+  const m = new Date().getMonth() + 1;
+  let products;
+  if ([6,7,8,9].includes(m)) {
+    products = [
+      {emoji:"🌡️", name:"空調服", q:"空調服 ファン付き 作業着"},
+      {emoji:"🥤", name:"冷感タオル", q:"冷感タオル 現場"},
+      {emoji:"🧂", name:"塩分タブレット", q:"塩分タブレット 熱中症対策"},
+    ];
+  } else if ([11,12,1,2].includes(m)) {
+    products = [
+      {emoji:"🔥", name:"使い捨てカイロ", q:"カイロ 貼る 大判 業務用"},
+      {emoji:"🧥", name:"防寒作業着", q:"防寒 作業着 メンズ"},
+      {emoji:"🧤", name:"防寒手袋", q:"防寒 手袋 作業用 滑り止め"},
+    ];
+  } else if ([3,4,5].includes(m)) {
+    products = [
+      {emoji:"😷", name:"防塵マスク", q:"防塵マスク 花粉 工事用"},
+      {emoji:"👟", name:"安全靴", q:"安全靴 メンズ 軽量"},
+      {emoji:"🧢", name:"安全ヘルメット", q:"ヘルメット 工事用"},
+    ];
+  } else {
+    products = [
+      {emoji:"👟", name:"安全靴", q:"安全靴 メンズ 軽量"},
+      {emoji:"🦺", name:"フルハーネス", q:"フルハーネス 安全帯"},
+      {emoji:"🧤", name:"作業手袋", q:"作業手袋 滑り止め 現場"},
+    ];
+  }
+  return products.map(p => {
+    const url = `https://www.amazon.co.jp/s?k=${encodeURIComponent(p.q)}${ASSOCIATE_TAG?`&tag=${ASSOCIATE_TAG}`:""}`;
+    return `<a href="${url}" target="_blank" rel="nofollow noopener" style="display:inline-block;padding:6px 12px;margin:3px;background:#FF9900;color:#111;text-decoration:none;border-radius:8px;font-size:0.85em;font-weight:700;">${p.emoji} ${p.name}</a>`;
+  }).join("");
+}
+
+function renderAds() {
+  const ads = document.querySelectorAll(".ad-slot");
+  ads.forEach(slot => {
+    const html = `
+      <div class="ad-label">広告 / Amazonで現場用品を探す</div>
+      <div>${seasonalAd()}</div>
+      <div style="font-size:0.65em;color:var(--muted);margin-top:6px;">※ 季節に合わせて自動切り替え。リンク先はAmazon。</div>
+    `;
+    slot.innerHTML = html;
+    slot.classList.add("live");
+  });
+}
+
 /* ========== 起動 ========== */
 async function init(){
   // フォントサイズ適用
@@ -1124,6 +1177,7 @@ async function init(){
   applyOverridesToData();
   applyLocalToData();
   renderHome();
+  renderAds();
   checkHash();
   refreshPendingBanner();
 }

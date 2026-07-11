@@ -233,11 +233,24 @@
   <!-- 設定 -->
   <section id="view-settings" class="view" style="display:none;">
 
+    <div class="section-title">💬 公式LINE（毎朝の自動配信）</div>
+    <div class="follow-grid" style="grid-template-columns:1fr;">
+      <a class="follow-btn line" href="https://line.me/R/ti/p/%40128gbfhl" target="_blank">
+        <span class="ico">💬</span>LINE公式<br>友だち追加
+      </a>
+    </div>
+
+    <div class="section-title">📸 朝礼看板用 QRコード</div>
+    <div class="qr-wrap">
+      <img id="qrImg" alt="QR">
+      <div style="font-weight:700;font-size:0.9em;">スマホのカメラで読み取り</div>
+      <div style="font-size:0.65em;color:#555;text-align:center;word-break:break-all;" id="qrUrl"></div>
+    </div>
+
     <div class="section-title">📖 使い方・ヘルプ</div>
     <div class="panel">
-      <p class="help">はじめての方は、操作説明書とLINE公式の使い方をご覧ください。</p>
+      <p class="help">操作の詳細は取扱説明書をご覧ください。</p>
       <button class="submit-btn" style="margin-bottom:8px;" onclick="openManual()">📖 取扱説明書を開く</button>
-      <a class="ghost-btn" href="https://line.me/R/ti/p/%40128gbfhl" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none;">💬 LINE公式の使い方（友だち追加）</a>
       <a class="ghost-btn" href="privacy.html" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none;">🔒 プライバシーポリシー</a>
     </div>
 
@@ -259,20 +272,6 @@
       ボタンを押すと、<strong>あなたのGoogleドライブに自分専用のコピー</strong>が作成されます（Googleアカウントが必要）。元のファイルが書き換わることはありません。</p>
       <a class="submit-btn" style="display:block;text-align:center;text-decoration:none;margin-bottom:8px;" href="https://docs.google.com/spreadsheets/d/1oofpWd_m-yHad-Ml-3ukdd4ACOar8xFcY7LywFiXw4c/copy" target="_blank" rel="noopener">📊 歩掛り記録テンプレートを取得</a>
       <a class="ghost-btn" style="display:block;text-align:center;text-decoration:none;font-size:0.78em;" href="https://docs.google.com/spreadsheets/d/1oofpWd_m-yHad-Ml-3ukdd4ACOar8xFcY7LywFiXw4c/edit" target="_blank" rel="noopener">👀 中身をプレビュー（編集なし）</a>
-    </div>
-
-    <div class="section-title">朝礼看板用 QRコード</div>
-    <div class="qr-wrap">
-      <img id="qrImg" alt="QR">
-      <div style="font-weight:700;font-size:0.9em;">スマホのカメラで読み取り</div>
-      <div style="font-size:0.65em;color:#555;text-align:center;word-break:break-all;" id="qrUrl"></div>
-    </div>
-
-    <div class="section-title">公式LINE</div>
-    <div class="follow-grid" style="grid-template-columns:1fr;">
-      <a class="follow-btn line" href="https://line.me/R/ti/p/%40128gbfhl" target="_blank">
-        <span class="ico">💬</span>LINE公式<br>友だち追加
-      </a>
     </div>
 
     <div class="section-title">文字サイズ</div>
@@ -605,24 +604,36 @@ function openManual(){
 
 /* ========== ホーム ========== */
 function recommendForToday(){
+  // 1. 現月のネタのみ
   let pool = NETA_DATA.filter(n=>(n.months||[]).includes(monthNow));
   if(pool.length===0) pool = NETA_DATA;
+
+  // 2. 月別に優先したい weather タグ
+  const weatherPref = {
+    1:['冬・冷え込み'], 2:['冬・冷え込み'], 3:['春・気温差','花粉'],
+    4:['春・気温差','花粉'], 5:['春・気温差','夏・猛暑'],
+    6:['梅雨・雨天','夏・猛暑'], 7:['夏・猛暑','梅雨・雨天'],
+    8:['夏・猛暑','台風・大雨'], 9:['夏・猛暑','台風・大雨'],
+    10:['秋・涼しい'], 11:['冬・冷え込み'], 12:['冬・冷え込み']
+  }[monthNow] || [];
+
+  // 3. 季節タグに一致するネタを優先プールに（3本以上あれば採用）
+  const seasonPool = pool.filter(n =>
+    (n.tags?.weather||[]).some(w => weatherPref.includes(w))
+  );
+  const chosen = seasonPool.length >= 3 ? seasonPool : pool;
+
+  // 4. 特別な日
   if(dayOfWeek===1){
-    const p = pool.find(n=>/月曜|連休明け|休み明け|睡眠/.test(n.title)); if(p) return p;
+    const p = chosen.find(n=>/月曜|連休明け|休み明け|睡眠/.test(n.title)); if(p) return p;
   }
   if(today.getDate()>=25){
-    const p = pool.find(n=>/工期末|焦/.test(n.title)); if(p) return p;
+    const p = chosen.find(n=>/工期末|焦/.test(n.title)); if(p) return p;
   }
-  if(monthNow===5){
-    const p = pool.find(n=>/連休|急な気温|春の熱中症/.test(n.title)); if(p) return p;
-  }
-  if([6,7,8,9].includes(monthNow)){
-    const p = pool.find(n=>/熱中症|水分|暑/.test(n.title)); if(p) return p;
-  }
-  if([11,12,1,2].includes(monthNow)){
-    const p = pool.find(n=>/冬|寒|凍|冷え/.test(n.title)); if(p) return p;
-  }
-  return [...pool].sort((a,b)=>(b.fb?.good||0)-(a.fb?.good||0))[0] || NETA_DATA[0];
+
+  // 5. day-of-year でローテーション（毎日別のネタが出る）
+  const doy = Math.floor((today - new Date(today.getFullYear(),0,0)) / 86400000);
+  return chosen[doy % chosen.length] || NETA_DATA[0];
 }
 function stripTagsForSummary(html, len=90){
   return (html||"").replace(/<br\s*\/?>/g,"  ").replace(/<[^>]+>/g,"").slice(0,len) + "…";

@@ -129,12 +129,6 @@
   .qr-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;background:#fff;color:#000;padding:18px;border-radius:14px;}
   .qr-wrap img{width:220px;height:220px;}
 
-  /* 広告枠 */
-  .ad-slot{background:var(--bg2);border:1px dashed var(--line);border-radius:12px;padding:12px;margin:14px 0;text-align:center;font-size:0.78em;color:var(--muted);min-height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
-  .ad-slot .ad-label{font-size:0.65em;color:#555;letter-spacing:.1em;text-transform:uppercase;}
-  .ad-slot a{color:var(--accent);text-decoration:none;}
-  .ad-slot.live{border:1px solid var(--line);background:#0a0a0a;}
-  .ad-slot img{max-width:100%;height:auto;border-radius:6px;}
 
   .empty{color:var(--muted);text-align:center;padding:24px;}
   .topbar-recommend{background:linear-gradient(135deg,#1c1c1c,#2a2200);border:1px solid #5a4a00;border-radius:14px;padding:14px;margin-bottom:14px;}
@@ -215,7 +209,6 @@
     <div class="topbar-recommend" id="recommendBox"></div>
     <div class="section-title">今日のメイン作業は？</div>
     <div class="work-grid" id="workGrid"></div>
-    <div class="ad-slot" id="adHome"><div class="ad-label">広告</div><div>現場用品をチェック</div></div>
     <div class="section-title">今の時期のおすすめ</div>
     <div id="seasonalList"></div>
   </section>
@@ -750,7 +743,6 @@ function openModal(id){
       <button class="${myV.useful?'voted':''}" onclick="vote('useful')">📝 役に立った <b>${fb.useful}</b></button>
     </div>
     <div style="font-size:0.65em;color:var(--muted);margin-top:6px;line-height:1.5;">※ 1ネタ1人1回まで。自分が押したボタンは黄色く表示され、もう一度タップで取消できます。</div>
-    <div class="ad-slot" id="adModal"><div class="ad-label">広告</div><div>現場で役立つアイテム</div></div>
     <div style="margin-top:12px;color:var(--muted);font-size:0.7em;">タグ: ${Object.values(n.tags||{}).flat().join(" / ") || "なし"}</div>
     ${adminButtons}
     <div class="actions">
@@ -760,7 +752,6 @@ function openModal(id){
       <button onclick="shareNeta()"><span class="ico">📤</span>共有</button>
     </div>`;
   document.getElementById("modal").classList.add("open");
-  renderAds();
 }
 function closeModal(){
   document.getElementById("modal").classList.remove("open");
@@ -1114,77 +1105,6 @@ function checkHash(){
   if(m) openModal(decodeURIComponent(m[1]));
 }
 
-/* ========== 広告（季節連動・もしも経由楽天市場）========== */
-const MOSHIMO_AID  = "5597652";
-const MOSHIMO_PID  = "54";
-const MOSHIMO_PCID = "54";
-const MOSHIMO_PLID = "616";
-
-function moshimoLink(rakutenUrl) {
-  const params = [
-    `a_id=${MOSHIMO_AID}`,
-    `p_id=${MOSHIMO_PID}`,
-    `pc_id=${MOSHIMO_PCID}`,
-    `pl_id=${MOSHIMO_PLID}`,
-    `url=${encodeURIComponent(rakutenUrl)}`
-  ].join("&");
-  return `https://af.moshimo.com/af/c/click?${params}`;
-}
-function rakutenSearchUrl(keyword) {
-  return `https://search.rakuten.co.jp/search/mall/${encodeURIComponent(keyword)}/`;
-}
-function moshimoImpressionPixel() {
-  return `<img src="https://i.moshimo.com/af/i/impression?a_id=${MOSHIMO_AID}&p_id=${MOSHIMO_PID}&pc_id=${MOSHIMO_PCID}&pl_id=${MOSHIMO_PLID}" width="1" height="1" style="border:none;" alt="" loading="lazy">`;
-}
-
-function seasonalAd() {
-  const m = new Date().getMonth() + 1;
-  let products;
-  if ([6,7,8,9].includes(m)) {
-    products = [
-      {emoji:"🌡️", name:"空調服", q:"空調服 ファン付き 作業着"},
-      {emoji:"🥤", name:"冷感タオル", q:"冷感タオル 現場"},
-      {emoji:"🧂", name:"塩分タブレット", q:"塩分タブレット 熱中症対策"},
-    ];
-  } else if ([11,12,1,2].includes(m)) {
-    products = [
-      {emoji:"🔥", name:"使い捨てカイロ", q:"カイロ 貼る 大判 業務用"},
-      {emoji:"🧥", name:"防寒作業着", q:"防寒 作業着 メンズ"},
-      {emoji:"🧤", name:"防寒手袋", q:"防寒 手袋 作業用 滑り止め"},
-    ];
-  } else if ([3,4,5].includes(m)) {
-    products = [
-      {emoji:"😷", name:"防塵マスク", q:"防塵マスク 花粉 工事用"},
-      {emoji:"👟", name:"安全靴", q:"安全靴 メンズ 軽量"},
-      {emoji:"🧢", name:"安全ヘルメット", q:"ヘルメット 工事用"},
-    ];
-  } else {
-    products = [
-      {emoji:"👟", name:"安全靴", q:"安全靴 メンズ 軽量"},
-      {emoji:"🦺", name:"フルハーネス", q:"フルハーネス 安全帯"},
-      {emoji:"🧤", name:"作業手袋", q:"作業手袋 滑り止め 現場"},
-    ];
-  }
-  return products.map(p => {
-    const url = moshimoLink(rakutenSearchUrl(p.q));
-    return `<a href="${url}" target="_blank" rel="nofollow noopener" referrerpolicy="no-referrer-when-downgrade" style="display:inline-block;padding:6px 12px;margin:3px;background:#bf0000;color:#fff;text-decoration:none;border-radius:8px;font-size:0.85em;font-weight:700;">${p.emoji} ${p.name}</a>`;
-  }).join("");
-}
-
-function renderAds() {
-  const ads = document.querySelectorAll(".ad-slot");
-  ads.forEach(slot => {
-    const html = `
-      <div class="ad-label">広告 / 楽天市場で現場用品を探す</div>
-      <div>${seasonalAd()}</div>
-      <div style="font-size:0.65em;color:var(--muted);margin-top:6px;">※ 季節に合わせて自動切り替え。リンク先は楽天市場。</div>
-      ${moshimoImpressionPixel()}
-    `;
-    slot.innerHTML = html;
-    slot.classList.add("live");
-  });
-}
-
 /* ========== 起動 ========== */
 async function init(){
   // フォントサイズ適用
@@ -1200,7 +1120,6 @@ async function init(){
   applyOverridesToData();
   applyLocalToData();
   renderHome();
-  renderAds();
   checkHash();
   refreshPendingBanner();
 }

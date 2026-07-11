@@ -256,7 +256,7 @@ def call_gemini(prompt):
     if not api_key:
         raise RuntimeError('GEMINI_API_KEY not set')
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-2.5-flash',
+    model = genai.GenerativeModel('gemini-flash-lite-latest',
                                    generation_config={'response_mime_type': 'application/json',
                                                        'temperature': 0.9})
     resp = model.generate_content(prompt)

@@ -256,8 +256,24 @@ def call_gemini(prompt):
     if not api_key:
         raise RuntimeError('GEMINI_API_KEY not set')
     genai.configure(api_key=api_key)
+    # response_schemaでスキーマを固定してJSON構造化出力
+    schema = {
+        "type": "object",
+        "properties": {
+            "title": {"type": "string"},
+            "category": {"type": "string"},
+            "body": {"type": "string"},
+            "tags_work": {"type": "array", "items": {"type": "string"}},
+            "tags_weather": {"type": "array", "items": {"type": "string"}},
+            "tags_audience": {"type": "array", "items": {"type": "string"}},
+            "tags_mood": {"type": "array", "items": {"type": "string"}},
+            "months": {"type": "array", "items": {"type": "integer"}},
+        },
+        "required": ["title","category","body","tags_work","tags_audience","tags_mood","months"],
+    }
     model = genai.GenerativeModel('gemini-flash-latest',
                                    generation_config={'response_mime_type': 'application/json',
+                                                       'response_schema': schema,
                                                        'temperature': 0.9})
     resp = model.generate_content(prompt)
     return resp.text
@@ -268,27 +284,16 @@ def parse_neta_json(text):
     if text.startswith('```'):
         text = re.sub(r'^```(?:json)?\s*', '', text)
         text = re.sub(r'\s*```\s*$', '', text)
-    # JSON文字列内の生改行を \n にエスケープする
-    # 文字列リテラル("...")内の改行のみ変換
-    result = []
-    in_string = False
-    escape = False
-    for ch in text:
-        if escape:
-            result.append(ch)
-            escape = False
-        elif ch == '\\':
-            result.append(ch)
-            escape = True
-        elif ch == '"':
-            result.append(ch)
-            in_string = not in_string
-        elif in_string and ch in '\n\r':
-            result.append('\\n' if ch == '\n' else '\\r')
-        else:
-            result.append(ch)
-    text = ''.join(result)
-    return json.loads(text)
+    obj = json.loads(text)
+    # フラット構造からtags辞書に組み立て直す
+    if 'tags_work' in obj:
+        obj['tags'] = {
+            'work': obj.pop('tags_work', []),
+            'weather': obj.pop('tags_weather', []),
+            'audience': obj.pop('tags_audience', []),
+            'mood': obj.pop('tags_mood', []),
+        }
+    return obj
 
 
 def validate_neta(neta):

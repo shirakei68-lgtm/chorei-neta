@@ -256,7 +256,7 @@ def call_gemini(prompt):
     if not api_key:
         raise RuntimeError('GEMINI_API_KEY not set')
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-flash-lite-latest',
+    model = genai.GenerativeModel('gemini-flash-latest',
                                    generation_config={'response_mime_type': 'application/json',
                                                        'temperature': 0.9})
     resp = model.generate_content(prompt)
@@ -268,6 +268,26 @@ def parse_neta_json(text):
     if text.startswith('```'):
         text = re.sub(r'^```(?:json)?\s*', '', text)
         text = re.sub(r'\s*```\s*$', '', text)
+    # JSON文字列内の生改行を \n にエスケープする
+    # 文字列リテラル("...")内の改行のみ変換
+    result = []
+    in_string = False
+    escape = False
+    for ch in text:
+        if escape:
+            result.append(ch)
+            escape = False
+        elif ch == '\\':
+            result.append(ch)
+            escape = True
+        elif ch == '"':
+            result.append(ch)
+            in_string = not in_string
+        elif in_string and ch in '\n\r':
+            result.append('\\n' if ch == '\n' else '\\r')
+        else:
+            result.append(ch)
+    text = ''.join(result)
     return json.loads(text)
 
 

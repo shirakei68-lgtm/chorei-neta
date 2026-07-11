@@ -1,10 +1,10 @@
-name: Daily Neta Add
+name: Daily Neta Add (Gemini)
 
 on:
   schedule:
-    # 毎日 19:00 UTC = 04:00 JST に実行
+    # 毎日 19:00 UTC = 04:00 JST
     - cron: '0 19 * * *'
-  workflow_dispatch:  # 手動実行も可
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -18,50 +18,45 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.11'
 
-      - name: Dequeue and append neta
-        id: dequeue
-        run: python .github/scripts/dequeue_and_append.py
+      - name: Install deps
+        run: pip install google-generativeai
+
+      - name: Generate and append neta
+        id: gen
         env:
-          LOW_THRESHOLD: '10'
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python .github/scripts/gemini_add_neta.py
 
       - name: Configure git
-        if: steps.dequeue.outputs.added == 'true'
+        if: steps.gen.outputs.added == 'true'
         run: |
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "chorei-bot"
 
       - name: Commit and push
-        if: steps.dequeue.outputs.added == 'true'
+        if: steps.gen.outputs.added == 'true'
         run: |
-          git add neta_data.js neta_queue.json
-          git commit -m "auto: add neta ${{ steps.dequeue.outputs.id }} (${{ steps.dequeue.outputs.title }})"
+          git add neta_data.js chorei-neta.html 2>/dev/null || true
+          git diff --cached --quiet && echo "no changes" && exit 0
+          git commit -m "auto(gemini): add neta ${{ steps.gen.outputs.id }} (${{ steps.gen.outputs.title }})"
           git push
 
-      - name: Open low-queue issue
-        if: steps.dequeue.outputs.low == 'true'
+      - name: Report failure
+        if: failure()
         uses: actions/github-script@v7
         with:
           script: |
-            const remaining = '${{ steps.dequeue.outputs.remaining }}';
             const today = new Date().toISOString().slice(0,10);
-            const title = `ネタプール残り ${remaining} 本 (${today})`;
-            const body = [
-              `ネタキュー (neta_queue.json) の残りが **${remaining} 本**になりました。`,
-              ``,
-              `Cowork (Claude Desktop) に行き、以下と伝えてください：`,
-              ``,
-              `> 「ネタプールを補充して」`,
-              ``,
-              `私が新たな30本を生成して neta_queue.json に追加します。`,
-            ].join('\n');
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title, body,
+              title: `Daily Neta Add 失敗 (${today})`,
+              body: `本日のGemini生成が失敗しました。ログ: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}\n\nCoworkで白澤さんが「朝礼ネタ失敗の原因調べて」と伝えれば私が調査します。`,
             });

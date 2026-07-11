@@ -84,7 +84,8 @@
   .meta .pill.fav{background:#332b00;color:var(--accent);border-color:#5a4a00;}
   .meta .pill.cat{background:#102030;color:#9ad;border-color:#1c3a5a;}
 
-  .work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+  .work-btn{min-height:70px;padding:10px 4px !important;}
   .work-btn{background:var(--bg3);border:1px solid var(--line);color:var(--text);border-radius:14px;padding:14px 6px;font-size:0.8em;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;}
   .work-btn .ico{font-size:1.7em;}
 
@@ -643,8 +644,10 @@ function renderHome(){
       <button class="submit-btn" onclick="openModal('${r.id}')">この台本をひらく</button>`;
   }
   const works = [
-    {key:"運転・交通",ico:"🚛"},{key:"コンクリート打設",ico:"🧱"},{key:"クレーン・重機",ico:"🏗️"},
-    {key:"高所作業",ico:"🪜"},{key:"電気作業",ico:"⚡"},{key:"全作業",ico:"📋"}
+    {key:"運転・交通",ico:"🚛"},{key:"クレーン・重機",ico:"🏗️"},{key:"高所作業",ico:"🪜"},
+    {key:"足場組立解体",ico:"🔩"},{key:"コンクリート打設",ico:"🧱"},{key:"鉄筋組立",ico:"🔧"},
+    {key:"溶接・切断",ico:"🔥"},{key:"塗装・防水",ico:"🎨"},{key:"解体作業",ico:"💥"},
+    {key:"電気作業",ico:"⚡"},{key:"玉掛け作業",ico:"⛓️"},{key:"全作業",ico:"📋"}
   ];
   document.getElementById("workGrid").innerHTML = works.map(w=>
     `<button class="work-btn" onclick="filterByWork('${w.key}')"><span class="ico">${w.ico}</span>${w.key}</button>`

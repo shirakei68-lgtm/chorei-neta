@@ -613,7 +613,7 @@ document.querySelectorAll("nav.tabs button").forEach(b=>{
     if(b.dataset.view==="fav") renderFav();
     if(b.dataset.view==="settings") renderSettings();
     // タブ切替時に画面トップへスクロール
-    window.scrollTo({top:0, left:0, behavior:"instant"});
+    window.scrollTo({top:0, left:0, behavior:"smooth"});
   });
 });
 function goSettings(){ document.querySelector('nav.tabs button[data-view="settings"]').click(); }

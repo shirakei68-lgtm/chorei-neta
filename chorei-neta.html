@@ -746,10 +746,10 @@ function filterByWork(key){
 
 /* ========== 季節タブ ========== */
 const SEASONS = {
-  spring: {label:'春 3-5月', ico:'🌸', months:[3,4,5], weather:['春・気温差','花粉']},
-  summer: {label:'夏 6-9月', ico:'☀️', months:[6,7,8,9], weather:['夏・猛暑','梅雨・雨天','台風・大雨','紫外線・晴天']},
-  autumn: {label:'秋 10-11月', ico:'🍂', months:[10,11], weather:['秋・涼しい','台風・大雨']},
-  winter: {label:'冬 12-2月', ico:'❄️', months:[12,1,2], weather:['冬・冷え込み','雪・凍結']}
+  spring: {label:'春 3-5月', ico:'🌸', months:[3,4,5], weather:['春・気温差','花粉'], categories:[]},
+  summer: {label:'夏 6-9月', ico:'☀️', months:[6,7,8,9], weather:['夏・猛暑','梅雨・雨天','台風・大雨','紫外線・晴天'], categories:['熱中症・暑熱対策']},
+  autumn: {label:'秋 10-11月', ico:'🍂', months:[10,11], weather:['秋・涼しい','台風・大雨'], categories:[]},
+  winter: {label:'冬 12-2月', ico:'❄️', months:[12,1,2], weather:['冬・冷え込み','雪・凍結'], categories:[]}
 };
 function currentSeason(){
   const m = monthNow;
@@ -771,10 +771,11 @@ function renderSeason(){
   const seasonMonthSet = new Set(sel.months);
   const netas = NETA_DATA.filter(n=>{
     const hasWeather = (n.tags?.weather||[]).some(w=>sel.weather.includes(w));
+    const hasCategory = (sel.categories||[]).includes(n.category);
     const monthsArr = n.months||[];
     const isSeasonOnly = monthsArr.length > 0 && monthsArr.length <= 6 &&
                          monthsArr.every(m=>seasonMonthSet.has(m));
-    return hasWeather || isSeasonOnly;
+    return hasWeather || hasCategory || isSeasonOnly;
   });
   document.getElementById("seasonList").innerHTML =
     `<div class="section-title">${sel.ico} ${sel.label} のネタ（${netas.length}本）</div>` +

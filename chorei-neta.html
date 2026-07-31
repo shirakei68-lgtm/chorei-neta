@@ -68,7 +68,7 @@
   header .admin-badge{background:var(--accent);color:#000;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;margin-left:8px;display:none;}
   header .admin-badge.on{display:inline-block;}
 
-  nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:50;background:#000;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);}
+  nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:50;background:#000;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);}
   nav.tabs button{appearance:none;background:transparent;border:0;color:var(--muted);padding:10px 4px 14px;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;}
   nav.tabs button .icon{font-size:22px;}
   nav.tabs button.active{color:var(--accent);}
@@ -85,6 +85,10 @@
   .meta .pill.cat{background:#102030;color:#9ad;border-color:#1c3a5a;}
 
   .work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+  .season-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;}
+  .season-btn{background:var(--bg3);border:2px solid var(--line);color:var(--text);border-radius:14px;padding:16px 4px;font-size:0.9em;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;font-weight:700;transition:all .15s;}
+  .season-btn .season-ico{font-size:2em;line-height:1;}
+  .season-btn.active{background:var(--accent);color:#000;border-color:var(--accent);}
   .work-btn{min-height:70px;padding:10px 4px !important;}
   .work-btn{background:var(--bg3);border:1px solid var(--line);color:var(--text);border-radius:14px;padding:14px 6px;font-size:0.8em;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;}
   .work-btn .ico{font-size:1.7em;}
@@ -230,6 +234,12 @@
   </section>
 
   <!-- お気に入り -->
+  <section id="view-season" class="view" style="display:none;">
+    <div class="section-title">季節を選ぶ</div>
+    <div class="season-grid" id="seasonBtns"></div>
+    <div id="seasonList"></div>
+  </section>
+
   <section id="view-fav" class="view" style="display:none;">
     <div class="section-title">お気に入りに保存したネタ</div>
     <div id="favList"></div>
@@ -414,6 +424,7 @@
 <nav class="tabs">
   <button data-view="home" class="active"><span class="icon">🏠</span>ホーム</button>
   <button data-view="search"><span class="icon">🔍</span>さがす</button>
+  <button data-view="season"><span class="icon">🍃</span>季節</button>
   <button data-view="fav"><span class="icon">⭐</span>お気に入り</button>
   <button data-view="settings"><span class="icon">⚙️</span>設定</button>
 </nav>
@@ -597,6 +608,7 @@ document.querySelectorAll("nav.tabs button").forEach(b=>{
     document.querySelectorAll(".view").forEach(v=>v.style.display="none");
     document.getElementById("view-"+b.dataset.view).style.display="block";
     if(b.dataset.view==="search") renderSearch();
+    if(b.dataset.view==="season") renderSeason();
     if(b.dataset.view==="fav") renderFav();
     if(b.dataset.view==="settings") renderSettings();
   });
@@ -729,6 +741,49 @@ function filterByWork(key){
   Object.values(activeFilters).forEach(s=>s.clear());
   if(key!=="全作業") activeFilters.work.add(key);
   document.querySelector('nav.tabs button[data-view="search"]').click();
+}
+
+
+/* ========== 季節タブ ========== */
+const SEASONS = {
+  spring: {label:'春 3-5月', ico:'🌸', months:[3,4,5], weather:['春・気温差','花粉']},
+  summer: {label:'夏 6-9月', ico:'☀️', months:[6,7,8,9], weather:['夏・猛暑','梅雨・雨天','台風・大雨','紫外線・晴天']},
+  autumn: {label:'秋 10-11月', ico:'🍂', months:[10,11], weather:['秋・涼しい','台風・大雨']},
+  winter: {label:'冬 12-2月', ico:'❄️', months:[12,1,2], weather:['冬・冷え込み','雪・凍結']}
+};
+function currentSeason(){
+  const m = monthNow;
+  if([3,4,5].includes(m)) return 'spring';
+  if([6,7,8,9].includes(m)) return 'summer';
+  if([10,11].includes(m)) return 'autumn';
+  return 'winter';
+}
+function renderSeason(){
+  if(!STATE.selectedSeason) STATE.selectedSeason = currentSeason();
+  const wrap = document.getElementById("seasonBtns");
+  wrap.innerHTML = Object.entries(SEASONS).map(([k,s])=>
+    `<button class="season-btn ${STATE.selectedSeason===k?'active':''}" onclick="selectSeason('${k}')">
+       <span class="season-ico">${s.ico}</span>${s.label}
+     </button>`
+  ).join("");
+  const sel = SEASONS[STATE.selectedSeason];
+  // その季節に該当するネタ：weather一致 OR monthsが季節内に完全に含まれる（[1..12]の通年は除外）
+  const seasonMonthSet = new Set(sel.months);
+  const netas = NETA_DATA.filter(n=>{
+    const hasWeather = (n.tags?.weather||[]).some(w=>sel.weather.includes(w));
+    const monthsArr = n.months||[];
+    const isSeasonOnly = monthsArr.length > 0 && monthsArr.length <= 6 &&
+                         monthsArr.every(m=>seasonMonthSet.has(m));
+    return hasWeather || isSeasonOnly;
+  });
+  document.getElementById("seasonList").innerHTML =
+    `<div class="section-title">${sel.ico} ${sel.label} のネタ（${netas.length}本）</div>` +
+    (netas.map(cardHTML).join("") || '<div class="empty">該当なし</div>');
+  saveState();
+}
+function selectSeason(k){
+  STATE.selectedSeason = k;
+  renderSeason();
 }
 
 /* ========== お気に入り ========== */

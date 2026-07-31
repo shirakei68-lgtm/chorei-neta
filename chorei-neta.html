@@ -109,6 +109,7 @@
   .modal .actions{position:fixed;left:0;right:0;bottom:0;background:#000;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:8px;z-index:101;max-width:640px;margin:0 auto;}
   .modal .actions button{appearance:none;background:var(--bg3);border:1px solid var(--line);color:#fff;border-radius:10px;padding:10px 4px;font-size:0.75em;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;}
   .modal .actions button.primary{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700;}
+  .modal .actions button.used-on{background:#3a2200;color:#FFB060;border-color:#553200;font-weight:700;}
   .modal .actions button .ico{font-size:18px;}
   .modal-topbar{display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#000;padding:4px 0 8px;z-index:5;}
   .modal-topbar .font-adj{display:flex;gap:6px;}
@@ -820,7 +821,7 @@ function openModal(id){
     <div class="actions">
       <button class="primary" onclick="speak()"><span class="ico">🔊</span>音声</button>
       <button onclick="toggleFav()"><span class="ico">${n.fav?"⭐":"☆"}</span>★</button>
-      <button onclick="markUsed()"><span class="ico">✅</span>使った</button>
+      <button class="${isUsedRecently(n)?'used-on':''}" onclick="markUsed()"><span class="ico">${isUsedRecently(n)?"✅":"⬜"}</span>${isUsedRecently(n)?"使用済 (取消)":"使った"}</button>
       <button onclick="shareNeta()"><span class="ico">📤</span>共有</button>
     </div>`;
   document.getElementById("modal").classList.add("open");
@@ -860,8 +861,18 @@ function toggleFav(){
 }
 function markUsed(){
   const n = NETA_DATA.find(x=>x.id===currentNetaId);
-  n.used = n.used||[]; n.used.push(new Date().toISOString()); saveLocalFromData();
-  alert("使用済として記録しました");
+  n.used = n.used||[];
+  if(isUsedRecently(n)){
+    // 直近30日以内に記録あり → 解除（最新1件を削除）
+    n.used.pop();
+    saveLocalFromData();
+    openModal(currentNetaId); // 再描画
+  } else {
+    // 未使用扱い → 記録追加
+    n.used.push(new Date().toISOString());
+    saveLocalFromData();
+    openModal(currentNetaId); // 再描画（ボタン状態も更新）
+  }
 }
 async function shareNeta(){
   const n = NETA_DATA.find(x=>x.id===currentNetaId);

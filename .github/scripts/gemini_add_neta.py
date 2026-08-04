@@ -253,11 +253,11 @@ def build_prompt(existing_titles, next_id, month_jst):
 - explanation: 正解の理由を1〜2文で説明（本文の該当箇所を根拠に）
 
 **良い例**：
-- 本文：「気温35度でアスファルト表面温度は60度近くに」
-- question: "気温35度時のアスファルト表面温度は約何度？"
-- choices: ["40度", "50度", "60度", "80度"]
-- correct_index: 2
-- explanation: "気温35度の日、直射日光下のアスファルト表面は約60度まで上昇します。"
+- 本文例：気温35度でアスファルト表面温度は60度近くになる
+- question: 気温35度時のアスファルト表面温度は約何度？
+- choices: 40度 / 50度 / 60度 / 80度
+- correct_index: 2 （60度が正解）
+- explanation: 気温35度の日、直射日光下のアスファルト表面は約60度まで上昇します
 
 **避けるべき問題**：
 - 「タイトルはどれ？」といった単純な当てもの
@@ -266,7 +266,7 @@ def build_prompt(existing_titles, next_id, month_jst):
 
 ## ふりがな (furigana_pairs) ★重要★
 本文で使う「難読漢字・専門用語」の読み方を furigana_pairs に含めてください。
-- 例: [{"kanji":"墜落","reading":"ついらく"}, {"kanji":"玉掛","reading":"たまがけ"}]
+- 例: kanji=墜落, reading=ついらく / kanji=玉掛, reading=たまがけ
 - 建設現場でよく出る難しい熟語（労安衛・粉じん・化学物質名など）を積極的に含める
 - 平易な語（作業・現場・安全など）は不要
 - 該当なしの場合は空配列 `[]`

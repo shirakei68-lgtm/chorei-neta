@@ -152,6 +152,21 @@
   .freeword-wrap input{width:100%;padding:12px 40px 12px 14px;font-size:1em;background:var(--bg2);border:2px solid var(--line);border-radius:12px;color:var(--text);box-sizing:border-box;font-family:inherit;}
   .freeword-wrap input:focus{outline:none;border-color:var(--accent);}
   .freeword-wrap .freeword-clear{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:var(--tag);color:var(--muted);border:0;border-radius:50%;width:28px;height:28px;font-size:1em;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .quiz-modal{max-width:520px;padding:20px;}
+  .quiz-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+  .quiz-badge{background:var(--accent);color:#000;font-weight:900;padding:4px 12px;border-radius:999px;font-size:0.85em;letter-spacing:.05em;}
+  .quiz-question{background:var(--bg3);padding:14px;border-radius:12px;font-size:0.95em;line-height:1.6;margin-bottom:14px;border-left:4px solid var(--accent);}
+  .quiz-choices{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+  .quiz-choice{background:var(--bg2);border:2px solid var(--line);color:var(--text);text-align:left;padding:12px 16px;border-radius:10px;font-size:0.9em;cursor:pointer;transition:all .15s;font-family:inherit;}
+  .quiz-choice:hover{border-color:var(--accent);}
+  .quiz-choice.correct{background:#0a4d2c;border-color:#28C76F;color:#a7f0c5;font-weight:700;}
+  .quiz-choice.wrong{background:#4d0a0a;border-color:#FF4D4D;color:#ffb0b0;}
+  .quiz-choice.disabled{cursor:default;opacity:0.6;}
+  .quiz-result{padding:14px;border-radius:12px;text-align:center;font-weight:700;font-size:1em;margin-bottom:12px;}
+  .quiz-result.correct{background:#0a4d2c;color:#a7f0c5;}
+  .quiz-result.wrong{background:#4d0a0a;color:#ffb0b0;}
+  .quiz-footer{display:flex;justify-content:space-between;gap:10px;align-items:center;}
+  .quiz-footer button.small{font-size:0.8em;padding:8px 14px;}
   .empty{color:var(--muted);text-align:center;padding:24px;}
   .topbar-recommend{background:linear-gradient(135deg,#1c1c1c,#2a2200);border:1px solid #5a4a00;border-radius:14px;padding:14px;margin-bottom:14px;}
   .topbar-recommend .label{color:var(--accent);font-size:0.7em;letter-spacing:.1em;}
@@ -294,6 +309,10 @@
         <span>ふ ふりがな表示（難しい漢字にルビ）</span>
         <input type="checkbox" id="furiToggle">
       </label>
+      <label class="toggle-row">
+        <span>🎯 起動時クイズ（1日1回）</span>
+        <input type="checkbox" id="quizToggle">
+      </label>
     </div>
 
     <div class="section-title">📸 朝礼看板用 QRコード</div>
@@ -415,6 +434,23 @@
       <button class="close-x" onclick="closeModal()">×</button>
     </div>
     <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- クイズモーダル -->
+<div class="modal-back" id="quizModal" style="display:none;">
+  <div class="modal quiz-modal">
+    <div class="quiz-header">
+      <span class="quiz-badge">🎯 今日の朝礼クイズ</span>
+      <button class="close-x" onclick="closeQuiz()">×</button>
+    </div>
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="quiz-choices" id="quizChoices"></div>
+    <div class="quiz-result" id="quizResult" style="display:none;"></div>
+    <div class="quiz-footer">
+      <button class="ghost-btn small" onclick="disableQuiz()">今後表示しない</button>
+      <button class="submit-btn small" id="quizNextBtn" onclick="closeQuiz()">閉じる</button>
+    </div>
   </div>
 </div>
 
@@ -1073,6 +1109,15 @@ function bindToggles(){
     // 開いているモーダルがあれば再描画
     if(currentNetaId) openModal(currentNetaId);
   });
+  const qt = document.getElementById("quizToggle");
+  if(qt){
+    qt.checked = !STATE.quizDisabled;
+    qt.addEventListener("change", e=>{
+      STATE.quizDisabled = !e.target.checked;
+      if(!STATE.quizDisabled){ STATE.lastQuizDate = null; }
+      saveState();
+    });
+  }
 }
 
 function renderSettings(){
@@ -1278,6 +1323,88 @@ function checkHash(){
   if(m) openModal(decodeURIComponent(m[1]));
 }
 
+
+/* ========== 起動時4択クイズ ========== */
+function shuffle(arr){
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function todayKey(){
+  const t = new Date();
+  return `${t.getFullYear()}-${t.getMonth()+1}-${t.getDate()}`;
+}
+function showQuizIfNeeded(){
+  if(STATE.quizDisabled) return;
+  if(STATE.lastQuizDate === todayKey()) return;
+  if(!NETA_DATA || NETA_DATA.length < 4) return;
+  showQuiz();
+}
+function showQuiz(){
+  // 正解ネタをランダム選出
+  const correct = NETA_DATA[Math.floor(Math.random()*NETA_DATA.length)];
+  // ダミー3本もランダム（正解と重複なし）
+  const others = NETA_DATA.filter(n => n.id !== correct.id);
+  const dummies = shuffle(others).slice(0,3);
+  const choices = shuffle([correct, ...dummies]);
+
+  // 本文の一部を「問題文」として抜粋（タイトルは含めない）
+  const bodyText = (correct.body||"").replace(/<[^>]+>/g,"").replace(/&nbsp;/g," ");
+  const excerpt = bodyText.slice(0, 140);
+  const questionText = `次の内容を扱った朝礼ネタのタイトルはどれ？<br><br>「${excerpt}${bodyText.length>140?'…':''}」`;
+
+  document.getElementById("quizQuestion").innerHTML = questionText;
+  const choicesEl = document.getElementById("quizChoices");
+  choicesEl.innerHTML = choices.map((c,i) =>
+    `<button class="quiz-choice" data-correct="${c.id===correct.id?'1':'0'}" data-id="${c.id}" onclick="answerQuiz(this)">${String.fromCharCode(65+i)}. ${c.title}</button>`
+  ).join("");
+  document.getElementById("quizResult").style.display = "none";
+  document.getElementById("quizNextBtn").textContent = "閉じる";
+  document.getElementById("quizModal").style.display = "flex";
+  // 表示日を記録
+  STATE.lastQuizDate = todayKey();
+  saveState();
+}
+function answerQuiz(btn){
+  const isCorrect = btn.dataset.correct === "1";
+  const correctId = document.querySelector(".quiz-choice[data-correct='1']")?.dataset.id;
+  // 全ボタンを無効化＋正誤マーク
+  document.querySelectorAll(".quiz-choice").forEach(b => {
+    b.classList.add("disabled");
+    b.disabled = true;
+    if(b.dataset.correct === "1") b.classList.add("correct");
+    else if(b === btn) b.classList.add("wrong");
+  });
+  const resultEl = document.getElementById("quizResult");
+  resultEl.className = "quiz-result " + (isCorrect ? "correct" : "wrong");
+  resultEl.innerHTML = isCorrect
+    ? "🎉 正解！ お見事です"
+    : "❌ 不正解。正解は上記の緑色のネタでした";
+  resultEl.style.display = "block";
+  document.getElementById("quizNextBtn").textContent = "ネタを開く";
+  document.getElementById("quizNextBtn").onclick = () => {
+    closeQuiz();
+    if(correctId) openModal(correctId);
+  };
+}
+function closeQuiz(){
+  document.getElementById("quizModal").style.display = "none";
+  document.getElementById("quizNextBtn").onclick = closeQuiz;
+}
+function disableQuiz(){
+  if(confirm("今後クイズを表示しないようにします。よろしいですか？（設定タブから再オンにできます）")){
+    STATE.quizDisabled = true;
+    saveState();
+    closeQuiz();
+  }
+}
+function enableQuiz(){
+  STATE.quizDisabled = false;
+  STATE.lastQuizDate = null; // すぐ表示
+  saveState();
+  showQuizIfNeeded();
+}
+
 /* ========== 起動 ========== */
 async function init(){
   applyTheme();
@@ -1296,6 +1423,8 @@ async function init(){
   renderHome();
   checkHash();
   refreshPendingBanner();
+  // 起動時クイズ（1日1回・オフでなければ）
+  setTimeout(showQuizIfNeeded, 500);
 }
 init();
 </script>

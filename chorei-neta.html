@@ -60,17 +60,51 @@
   }
   /* ライトモード（屋外の直射日光下でも読みやすい高コントラスト） */
   body.theme-light{
-    --bg:#f5f5f5;--bg2:#ffffff;--bg3:#eaeaea;--line:#c8c8c8;
-    --text:#111;--accent:#c88600;--accent2:#D93030;--good:#0a8f4e;
-    --muted:#555;--tag:#e8e8e8;--tagOn:#c88600;--tagOnText:#fff;
+    --bg:#f4f4f2;--bg2:#ffffff;--bg3:#eeeeee;--line:#bbbbbb;
+    --text:#0a0a0a;--accent:#b26a00;--accent2:#c62828;--good:#1e7e40;
+    --muted:#333333;--tag:#e0e0e0;--tagOn:#b26a00;--tagOnText:#ffffff;
   }
-  body.theme-light nav.tabs{background:#ffffff;border-top:1px solid #c8c8c8;}
-  body.theme-light header{background:#ffffff;color:#111;}
-  body.theme-light .card{box-shadow:0 1px 3px rgba(0,0,0,0.08);}
-  body.theme-light .modal{background:#ffffff;color:#111;}
-  body.theme-light b.num{color:#c00;}
-  body.theme-light b.act{color:#c88600;background:#fff8e0;padding:1px 4px;border-radius:3px;}
-  body.theme-light .topbar-recommend{background:linear-gradient(135deg,#fff8e0,#fffaf0);border:1px solid #e0c060;}
+  /* 主要コンポーネント */
+  body.theme-light nav.tabs{background:#ffffff;border-top:1px solid #bbb;}
+  body.theme-light nav.tabs button{color:#555;}
+  body.theme-light nav.tabs button.active{color:#b26a00;}
+  body.theme-light header{background:#ffffff;color:#0a0a0a;}
+  body.theme-light .card{box-shadow:0 2px 6px rgba(0,0,0,0.12);border:1px solid #d5d5d5;}
+  body.theme-light .card p.summary{color:#333;}
+  body.theme-light .modal{background:#ffffff;color:#0a0a0a;}
+  body.theme-light .modal .actions button{color:#111;}
+  body.theme-light .meta .pill{color:#333;background:#e8e8e8;border:1px solid #c8c8c8;}
+  body.theme-light .meta .pill.cat{background:#e0edf8;color:#12456e;border-color:#8ab5d8;}
+  body.theme-light .meta .pill.fav{background:#fff2c0;color:#8a5b00;border-color:#e0c060;}
+  body.theme-light .meta .pill.used{background:#ffe0c8;color:#8a4a00;border-color:#e0a870;}
+  body.theme-light .tag{color:#333;background:#e0e0e0;border:1px solid #b8b8b8;}
+  body.theme-light .tag.on{background:#b26a00;color:#fff;border-color:#b26a00;}
+  body.theme-light b.num{color:#c62828;font-weight:900;}
+  body.theme-light b.act{color:#8a5b00;background:#fff2c0;padding:1px 5px;border-radius:3px;font-weight:900;}
+  body.theme-light .topbar-recommend{background:linear-gradient(135deg,#fff8e0,#fffaf0);border:2px solid #d8a840;}
+  body.theme-light .topbar-recommend .label{color:#8a5b00;}
+  body.theme-light .topbar-recommend .title{color:#0a0a0a;}
+  body.theme-light .topbar-recommend p{color:#333 !important;}
+  body.theme-light .section-title{color:#555;font-weight:700;}
+  body.theme-light .empty{color:#666;}
+  body.theme-light .help{color:#333;}
+  body.theme-light .work-btn{background:#ffffff;color:#0a0a0a;border:1px solid #bbb;}
+  body.theme-light .work-btn:hover{border-color:#b26a00;}
+  body.theme-light .season-btn{background:#ffffff;color:#0a0a0a;border:2px solid #bbb;}
+  body.theme-light .season-btn.active{background:#b26a00;color:#ffffff;border-color:#b26a00;}
+  body.theme-light .quiz-modal{background:#ffffff;color:#0a0a0a;}
+  body.theme-light .quiz-question{background:#f4f4f2;color:#0a0a0a;border-left-color:#b26a00;}
+  body.theme-light .quiz-choice{background:#ffffff;color:#0a0a0a;border:2px solid #bbb;}
+  body.theme-light .quiz-choice.correct{background:#c8f0d8;color:#0a4d1c;border-color:#28C76F;}
+  body.theme-light .quiz-choice.wrong{background:#ffd0d0;color:#8a0000;border-color:#c62828;}
+  body.theme-light .quiz-result.correct{background:#c8f0d8;color:#0a4d1c;}
+  body.theme-light .quiz-result.wrong{background:#ffd0d0;color:#8a0000;}
+  body.theme-light .freeword-wrap input{background:#ffffff;color:#0a0a0a;border-color:#bbb;}
+  body.theme-light .freeword-wrap input:focus{border-color:#b26a00;}
+  /* インラインで色指定されている「今日の自動レコメンド」本文をライトモード時に読める色に */
+  body.theme-light .topbar-recommend > p[style*="color:#ccc"]{color:#333 !important;}
+  /* ふりがなのルビ */
+  body.theme-light ruby rt{color:#b26a00;}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;font-size:var(--base-font);line-height:1.55;}
   body{padding-bottom:96px;}
@@ -299,6 +333,13 @@
       </a>
     </div>
 
+    <div class="section-title">📸 朝礼看板用 QRコード</div>
+    <div class="qr-wrap">
+      <img id="qrImg" alt="QR">
+      <div style="font-weight:700;font-size:0.9em;">スマホのカメラで読み取り</div>
+      <div style="font-size:0.65em;color:#555;text-align:center;word-break:break-all;" id="qrUrl"></div>
+    </div>
+
     <div class="section-title">🎨 表示設定</div>
     <div class="panel">
       <label class="toggle-row">
@@ -306,20 +347,13 @@
         <input type="checkbox" id="themeToggle">
       </label>
       <label class="toggle-row">
-        <span>ふ ふりがな表示（難しい漢字にルビ）</span>
+        <span>ふりがな表示（難しい漢字にルビ）</span>
         <input type="checkbox" id="furiToggle">
       </label>
       <label class="toggle-row">
         <span>🎯 起動時クイズ（1日1回）</span>
         <input type="checkbox" id="quizToggle">
       </label>
-    </div>
-
-    <div class="section-title">📸 朝礼看板用 QRコード</div>
-    <div class="qr-wrap">
-      <img id="qrImg" alt="QR">
-      <div style="font-weight:700;font-size:0.9em;">スマホのカメラで読み取り</div>
-      <div style="font-size:0.65em;color:#555;text-align:center;word-break:break-all;" id="qrUrl"></div>
     </div>
 
     <div class="section-title">📖 使い方・ヘルプ</div>

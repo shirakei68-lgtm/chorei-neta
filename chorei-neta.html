@@ -1375,34 +1375,63 @@ function showQuizIfNeeded(){
   showQuiz();
 }
 function showQuiz(){
-  // 正解ネタをランダム選出
-  const correct = NETA_DATA[Math.floor(Math.random()*NETA_DATA.length)];
-  // ダミー3本もランダム（正解と重複なし）
-  const others = NETA_DATA.filter(n => n.id !== correct.id);
-  const dummies = shuffle(others).slice(0,3);
-  const choices = shuffle([correct, ...dummies]);
+  // ★優先: quiz 埋め込み済みのネタからランダム選出（知識問題）
+  const withQuiz = NETA_DATA.filter(n => n.quiz && n.quiz.question && Array.isArray(n.quiz.choices) && n.quiz.choices.length === 4);
+  let mode, source;
+  if(withQuiz.length > 0){
+    source = withQuiz[Math.floor(Math.random()*withQuiz.length)];
+    mode = "knowledge";
+  } else {
+    // フォールバック: カテゴリ当てクイズ
+    source = NETA_DATA[Math.floor(Math.random()*NETA_DATA.length)];
+    mode = "category";
+  }
 
-  // 本文の一部を「問題文」として抜粋（タイトルは含めない）
-  const bodyText = (correct.body||"").replace(/<[^>]+>/g,"").replace(/&nbsp;/g," ");
-  const excerpt = bodyText.slice(0, 140);
-  const questionText = `次の内容を扱った朝礼ネタのタイトルはどれ？<br><br>「${excerpt}${bodyText.length>140?'…':''}」`;
+  let questionHTML, choiceObjects, correctIdx;
 
-  document.getElementById("quizQuestion").innerHTML = questionText;
+  if(mode === "knowledge"){
+    // 知識問題：Geminiが生成した4択クイズを使用
+    const q = source.quiz;
+    questionHTML = `<div style="font-size:0.75em;color:var(--muted);margin-bottom:6px;">📖 ${source.title}</div>` +
+                   `<div>${q.question}</div>`;
+    choiceObjects = q.choices.map((text, i) => ({text, isCorrect: i === q.correct_index}));
+    // シャッフル
+    const shuffled = shuffle(choiceObjects.map((c,i)=>({...c, origIdx:i})));
+    choiceObjects = shuffled;
+    correctIdx = shuffled.findIndex(c=>c.isCorrect);
+    window.__quizExplanation = q.explanation || "";
+    window.__quizNetaId = source.id;
+  } else {
+    // フォールバック：カテゴリ当てクイズ
+    const bodyText = (source.body||"").replace(/<[^>]+>/g,"").replace(/&nbsp;/g," ");
+    const excerpt = bodyText.slice(0, 140);
+    questionHTML = `<div style="font-size:0.75em;color:var(--muted);margin-bottom:6px;">📖 このネタのカテゴリは？</div>` +
+                   `<div style="font-size:0.9em;">「${excerpt}${bodyText.length>140?'…':''}」</div>`;
+    const allCategories = [...new Set(NETA_DATA.map(n=>n.category).filter(Boolean))];
+    const wrongs = shuffle(allCategories.filter(c => c !== source.category)).slice(0,3);
+    choiceObjects = shuffle([
+      {text: source.category, isCorrect: true},
+      ...wrongs.map(c => ({text: c, isCorrect: false}))
+    ]);
+    correctIdx = choiceObjects.findIndex(c=>c.isCorrect);
+    window.__quizExplanation = `このネタのカテゴリは「${source.category}」です。`;
+    window.__quizNetaId = source.id;
+  }
+
+  document.getElementById("quizQuestion").innerHTML = questionHTML;
   const choicesEl = document.getElementById("quizChoices");
-  choicesEl.innerHTML = choices.map((c,i) =>
-    `<button class="quiz-choice" data-correct="${c.id===correct.id?'1':'0'}" data-id="${c.id}" onclick="answerQuiz(this)">${String.fromCharCode(65+i)}. ${c.title}</button>`
+  choicesEl.innerHTML = choiceObjects.map((c,i) =>
+    `<button class="quiz-choice" data-correct="${c.isCorrect?'1':'0'}" onclick="answerQuiz(this)">${String.fromCharCode(65+i)}. ${c.text}</button>`
   ).join("");
   document.getElementById("quizResult").style.display = "none";
   document.getElementById("quizNextBtn").textContent = "閉じる";
+  document.getElementById("quizNextBtn").onclick = closeQuiz;
   document.getElementById("quizModal").style.display = "flex";
-  // 表示日を記録
   STATE.lastQuizDate = todayKey();
   saveState();
 }
 function answerQuiz(btn){
   const isCorrect = btn.dataset.correct === "1";
-  const correctId = document.querySelector(".quiz-choice[data-correct='1']")?.dataset.id;
-  // 全ボタンを無効化＋正誤マーク
   document.querySelectorAll(".quiz-choice").forEach(b => {
     b.classList.add("disabled");
     b.disabled = true;
@@ -1411,14 +1440,16 @@ function answerQuiz(btn){
   });
   const resultEl = document.getElementById("quizResult");
   resultEl.className = "quiz-result " + (isCorrect ? "correct" : "wrong");
-  resultEl.innerHTML = isCorrect
-    ? "🎉 正解！ お見事です"
-    : "❌ 不正解。正解は上記の緑色のネタでした";
+  const explanation = window.__quizExplanation || "";
+  resultEl.innerHTML = (isCorrect
+    ? "🎉 正解！"
+    : "❌ 不正解。正解は上記の緑色の選択肢")
+    + (explanation ? `<div style="font-weight:400;font-size:0.9em;margin-top:8px;line-height:1.5;">💡 ${explanation}</div>` : "");
   resultEl.style.display = "block";
-  document.getElementById("quizNextBtn").textContent = "ネタを開く";
+  document.getElementById("quizNextBtn").textContent = "ネタを開いて詳しく読む";
   document.getElementById("quizNextBtn").onclick = () => {
     closeQuiz();
-    if(correctId) openModal(correctId);
+    if(window.__quizNetaId) openModal(window.__quizNetaId);
   };
 }
 function closeQuiz(){

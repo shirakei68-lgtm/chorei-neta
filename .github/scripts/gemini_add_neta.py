@@ -244,6 +244,26 @@ def build_prompt(existing_titles, next_id, month_jst):
 - 段落区切りは `<br>`
 - 事実・法令・統計は正確に
 
+## 4択クイズ (quiz) ★必須★
+ネタの内容から**知識習得できる4択クイズを1問**必ず作成してください。目的は「読み手が実際に学べる」こと。
+
+- question: 本文の**重要な事実・数値・行動ルール**に関する問題文（40文字以内・端的に）
+- choices: **4つ** の選択肢。正解1つ+それらしいダミー3つ。全て15文字以内目安
+- correct_index: 0〜3（choices配列のインデックス）
+- explanation: 正解の理由を1〜2文で説明（本文の該当箇所を根拠に）
+
+**良い例**：
+- 本文：「気温35度でアスファルト表面温度は60度近くに」
+- question: "気温35度時のアスファルト表面温度は約何度？"
+- choices: ["40度", "50度", "60度", "80度"]
+- correct_index: 2
+- explanation: "気温35度の日、直射日光下のアスファルト表面は約60度まで上昇します。"
+
+**避けるべき問題**：
+- 「タイトルはどれ？」といった単純な当てもの
+- 常識的すぎる問題
+- 本文に答えの根拠がない問題
+
 ## ふりがな (furigana_pairs) ★重要★
 本文で使う「難読漢字・専門用語」の読み方を furigana_pairs に含めてください。
 - 例: [{"kanji":"墜落","reading":"ついらく"}, {"kanji":"玉掛","reading":"たまがけ"}]
@@ -286,8 +306,18 @@ def call_gemini(prompt):
                 "properties": {"kanji": {"type": "string"}, "reading": {"type": "string"}},
                 "required": ["kanji","reading"]
             }},
+            "quiz": {
+                "type": "object",
+                "properties": {
+                    "question": {"type": "string"},
+                    "choices": {"type": "array", "items": {"type": "string"}},
+                    "correct_index": {"type": "integer"},
+                    "explanation": {"type": "string"}
+                },
+                "required": ["question","choices","correct_index","explanation"]
+            },
         },
-        "required": ["title","category","body","tags_work","tags_audience","tags_mood","months"],
+        "required": ["title","category","body","tags_work","tags_audience","tags_mood","months","quiz"],
     }
     model = genai.GenerativeModel('gemini-flash-latest',
                                    generation_config={'response_mime_type': 'application/json',

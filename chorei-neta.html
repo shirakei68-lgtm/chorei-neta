@@ -58,6 +58,19 @@
     --line-green:#06C755;
     --x-black:#000;
   }
+  /* ライトモード（屋外の直射日光下でも読みやすい高コントラスト） */
+  body.theme-light{
+    --bg:#f5f5f5;--bg2:#ffffff;--bg3:#eaeaea;--line:#c8c8c8;
+    --text:#111;--accent:#c88600;--accent2:#D93030;--good:#0a8f4e;
+    --muted:#555;--tag:#e8e8e8;--tagOn:#c88600;--tagOnText:#fff;
+  }
+  body.theme-light nav.tabs{background:#ffffff;border-top:1px solid #c8c8c8;}
+  body.theme-light header{background:#ffffff;color:#111;}
+  body.theme-light .card{box-shadow:0 1px 3px rgba(0,0,0,0.08);}
+  body.theme-light .modal{background:#ffffff;color:#111;}
+  body.theme-light b.num{color:#c00;}
+  body.theme-light b.act{color:#c88600;background:#fff8e0;padding:1px 4px;border-radius:3px;}
+  body.theme-light .topbar-recommend{background:linear-gradient(135deg,#fff8e0,#fffaf0);border:1px solid #e0c060;}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;font-size:var(--base-font);line-height:1.55;}
   body{padding-bottom:96px;}
@@ -135,6 +148,10 @@
   .qr-wrap img{width:220px;height:220px;}
 
 
+  .freeword-wrap{position:relative;margin-bottom:14px;}
+  .freeword-wrap input{width:100%;padding:12px 40px 12px 14px;font-size:1em;background:var(--bg2);border:2px solid var(--line);border-radius:12px;color:var(--text);box-sizing:border-box;font-family:inherit;}
+  .freeword-wrap input:focus{outline:none;border-color:var(--accent);}
+  .freeword-wrap .freeword-clear{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:var(--tag);color:var(--muted);border:0;border-radius:50%;width:28px;height:28px;font-size:1em;cursor:pointer;display:flex;align-items:center;justify-content:center;}
   .empty{color:var(--muted);text-align:center;padding:24px;}
   .topbar-recommend{background:linear-gradient(135deg,#1c1c1c,#2a2200);border:1px solid #5a4a00;border-radius:14px;padding:14px;margin-bottom:14px;}
   .topbar-recommend .label{color:var(--accent);font-size:0.7em;letter-spacing:.1em;}
@@ -153,7 +170,13 @@
   .floating-add{position:fixed;right:16px;bottom:84px;width:56px;height:56px;border-radius:50%;background:var(--accent);color:#000;font-size:30px;border:0;box-shadow:0 4px 14px rgba(0,0,0,.6);z-index:40;display:none;cursor:pointer;font-weight:700;}
   .floating-add.show{display:block;}
 
-  .admin-only{display:none;}
+  .toggle-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0;cursor:pointer;font-size:0.9em;}
+  .toggle-row input[type="checkbox"]{width:44px;height:24px;appearance:none;background:var(--tag);border-radius:12px;position:relative;cursor:pointer;transition:all .2s;flex-shrink:0;}
+  .toggle-row input[type="checkbox"]:checked{background:var(--accent);}
+  .toggle-row input[type="checkbox"]::before{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;background:#fff;border-radius:50%;transition:all .2s;}
+  .toggle-row input[type="checkbox"]:checked::before{left:22px;}
+  ruby rt{font-size:0.55em;color:var(--accent);opacity:0.9;line-height:1;}
+    .admin-only{display:none;}
   body.admin .admin-only{display:block;}
   body.admin .admin-only-inline{display:inline-block;}
 
@@ -225,6 +248,11 @@
 
   <!-- さがす -->
   <section id="view-search" class="view" style="display:none;">
+    <div class="section-title">🔎 キーワード検索</div>
+    <div class="freeword-wrap">
+      <input type="search" id="freewordInput" placeholder="例: 熱中症, フルハーネス, 電気 …">
+      <button class="freeword-clear" id="freewordClear" title="クリア" style="display:none;">✕</button>
+    </div>
     <div class="section-title">タグでしぼる（タップだけ）</div>
     <div id="tagFilters"></div>
     <div class="filter-bar">
@@ -254,6 +282,18 @@
       <a class="follow-btn line" href="https://line.me/R/ti/p/%40128gbfhl" target="_blank">
         <span class="ico">💬</span>LINE公式<br>友だち追加
       </a>
+    </div>
+
+    <div class="section-title">🎨 表示設定</div>
+    <div class="panel">
+      <label class="toggle-row">
+        <span>🌗 ライトモード（屋外で読みやすい白背景）</span>
+        <input type="checkbox" id="themeToggle">
+      </label>
+      <label class="toggle-row">
+        <span>ふ ふりがな表示（難しい漢字にルビ）</span>
+        <input type="checkbox" id="furiToggle">
+      </label>
     </div>
 
     <div class="section-title">📸 朝礼看板用 QRコード</div>
@@ -723,12 +763,19 @@ function toggleFilter(cat,t){
 }
 function applySearch(){
   const exclude = document.getElementById("excludeUsed").checked;
+  const kw = (document.getElementById("freewordInput")?.value||"").trim().toLowerCase();
+  const clearBtn = document.getElementById("freewordClear");
+  if(clearBtn) clearBtn.style.display = kw ? "flex" : "none";
   const list = NETA_DATA.filter(n=>{
+    // キーワード検索：タイトル+本文+カテゴリ
+    if(kw){
+      const hay = (n.title + " " + (n.body||"").replace(/<[^>]+>/g,"") + " " + (n.category||"")).toLowerCase();
+      if(!hay.includes(kw)) return false;
+    }
     for(const cat of Object.keys(activeFilters)){
       const sel = activeFilters[cat]; if(sel.size===0) continue;
       const tagSet = new Set(n.tags?.[cat]||[]);
       let ok=false;
-      // 厳密一致のみ。「全作業」のフォールバックは廃止。
       for(const v of sel){ if(tagSet.has(v)) ok=true; }
       if(!ok) return false;
     }
@@ -740,6 +787,8 @@ function applySearch(){
     : `<div class="empty">条件に合うネタがありません</div>`;
 }
 document.getElementById("excludeUsed").addEventListener("change", applySearch);
+document.getElementById("freewordInput").addEventListener("input", ()=>{ clearTimeout(window.__fwTimer); window.__fwTimer=setTimeout(applySearch, 200); });
+document.getElementById("freewordClear").addEventListener("click", ()=>{ document.getElementById("freewordInput").value=""; applySearch(); document.getElementById("freewordInput").focus(); });
 function filterByWork(key){
   Object.values(activeFilters).forEach(s=>s.clear());
   if(key!=="全作業") activeFilters.work.add(key);
@@ -812,7 +861,7 @@ function openModal(id){
   document.getElementById("modalContent").innerHTML = `
     <h2>${n.title}</h2>
     ${n.category?`<div style="color:#9ad;font-size:0.7em;margin-bottom:8px;">${n.category}</div>`:""}
-    <div class="body">${n.body}</div>
+    <div class="body">${applyFurigana(n.body)}</div>
     <div class="feedback-row">
       <button class="${myV.good?'voted':''}" onclick="vote('good')">👍 現場でウケた！ <b>${fb.good}</b></button>
       <button class="${myV.useful?'voted':''}" onclick="vote('useful')">📝 役に立った <b>${fb.useful}</b></button>
@@ -988,6 +1037,41 @@ function renderListBody(){
 }
 
 /* ========== 設定タブ ========== */
+
+/* ========== ふりがな辞書 & 変換 ========== */
+const FURI_DICT = {"墜落": "ついらく", "転落": "てんらく", "感電": "かんでん", "漏電": "ろうでん", "労災": "ろうさい", "労働災害": "ろうどうさいがい", "休業災害": "きゅうぎょうさいがい", "死亡災害": "しぼうさいがい", "災害": "さいがい", "危険予知": "きけんよち", "危険": "きけん", "予知": "よち", "予測": "よそく", "事故": "じこ", "負傷": "ふしょう", "怪我": "けが", "失明": "しつめい", "切断": "せつだん", "熱中症": "ねっちゅうしょう", "脱水": "だっすい", "猛暑": "もうしょ", "暑熱": "しょねつ", "凍結": "とうけつ", "低体温": "ていたいおん", "粉塵": "ふんじん", "粉じん": "ふんじん", "落雷": "らくらい", "突風": "とっぷう", "強風": "きょうふう", "豪雨": "ごうう", "台風": "たいふう", "保護具": "ほごぐ", "安全帯": "あんぜんたい", "安全靴": "あんぜんぐつ", "安全帽": "あんぜんぼう", "保護帽": "ほごぼう", "保護眼鏡": "ほごめがね", "フルハーネス": "フルハーネス", "遮熱": "しゃねつ", "防塵": "ぼうじん", "防音": "ぼうおん", "耐熱": "たいねつ", "施工": "せこう", "建設": "けんせつ", "土木": "どぼく", "解体": "かいたい", "舗装": "ほそう", "掘削": "くっさく", "打設": "だせつ", "型枠": "かたわく", "鉄筋": "てっきん", "足場": "あしば", "溶接": "ようせつ", "塗装": "とそう", "防水": "ぼうすい", "内装": "ないそう", "屋根": "やね", "玉掛": "たまがけ", "玉掛け": "たまがけ", "吊荷": "つりに", "吊り荷": "つりに", "旋回": "せんかい", "重機": "じゅうき", "重量物": "じゅうりょうぶつ", "車両": "しゃりょう", "誘導": "ゆうどう", "巻込": "まきこみ", "巻込み": "まきこみ", "巻き込み": "まきこみ", "職長": "しょくちょう", "監督": "かんとく", "作業員": "さぎょういん", "運転手": "うんてんしゅ", "元請": "もとうけ", "下請": "したうけ", "下請け": "したうけ", "現場監督": "げんばかんとく", "罰則": "ばっそく", "違反": "いはん", "違法": "いほう", "法令": "ほうれい", "規則": "きそく", "遵守": "じゅんしゅ", "義務": "ぎむ", "責任": "せきにん", "責務": "せきむ", "権利": "けんり", "労働安全衛生法": "ろうどうあんぜんえいせいほう", "労働安全衛生": "ろうどうあんぜんえいせい", "労働基準監督署": "ろうどうきじゅんかんとくしょ", "労基署": "ろうきしょ", "懲役": "ちょうえき", "罰金": "ばっきん", "賠償": "ばいしょう", "慰謝料": "いしゃりょう", "遺族": "いぞく", "血圧": "けつあつ", "血糖": "けっとう", "脈拍": "みゃくはく", "呼吸": "こきゅう", "睡眠": "すいみん", "疲労": "ひろう", "筋肉": "きんにく", "腰痛": "ようつう", "内臓": "ないぞう", "眼球": "がんきゅう", "溶剤": "ようざい", "塩素": "えんそ", "酸素": "さんそ", "硫酸": "りゅうさん", "有機": "ゆうき", "石綿": "せきめん", "中皮腫": "ちゅうひしゅ", "肺がん": "はいがん", "確認": "かくにん", "点検": "てんけん", "徹底": "てってい", "措置": "そち", "報告": "ほうこく", "指差呼称": "ゆびさしこしょう", "現場": "げんば", "仮設": "かせつ", "配線": "はいせん", "漏水": "ろうすい", "電源": "でんげん", "電線": "でんせん", "高所": "こうしょ", "高所作業": "こうしょさぎょう", "掲示": "けいじ", "朝礼": "ちょうれい", "看板": "かんばん", "唱和": "しょうわ", "唱える": "となえる", "紫外線": "しがいせん", "日焼け": "ひやけ", "気温": "きおん", "湿度": "しつど"};
+// 辞書を長い語順にソートして正規表現作成（前方一致優先）
+const FURI_KEYS = Object.keys(FURI_DICT).sort((a,b)=>b.length-a.length);
+const FURI_RE = new RegExp("(" + FURI_KEYS.map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|") + ")", "g");
+function applyFurigana(html){
+  if(!STATE.furiOn) return html;
+  // HTMLタグの中身は避け、テキストノードだけ置換
+  // 簡易実装：<b>や<br>タグを一時退避して置換 → 復元
+  const tokens = [];
+  html = html.replace(/<[^>]+>/g, m => { tokens.push(m); return `\uE000${tokens.length-1}\uE001`; });
+  html = html.replace(FURI_RE, (m) => `<ruby>${m}<rt>${FURI_DICT[m]}</rt></ruby>`);
+  html = html.replace(/\uE000(\d+)\uE001/g, (_,i) => tokens[+i]);
+  return html;
+}
+
+/* ========== テーマ & ふりがな トグル ========== */
+function applyTheme(){
+  document.body.classList.toggle("theme-light", !!STATE.themeLight);
+}
+function bindToggles(){
+  const tt = document.getElementById("themeToggle");
+  const ft = document.getElementById("furiToggle");
+  if(!tt || !ft) return;
+  tt.checked = !!STATE.themeLight;
+  ft.checked = !!STATE.furiOn;
+  tt.addEventListener("change", e=>{ STATE.themeLight = e.target.checked; applyTheme(); saveState(); });
+  ft.addEventListener("change", e=>{
+    STATE.furiOn = e.target.checked; saveState();
+    // 開いているモーダルがあれば再描画
+    if(currentNetaId) openModal(currentNetaId);
+  });
+}
+
 function renderSettings(){
   // QR
   const url = location.href.split("#")[0].split("?")[0];
@@ -1010,6 +1094,7 @@ function renderSettings(){
       <div class="meta"><span class="pill">👍 ${n.fb?.good||0}</span><span class="pill">📝 ${n.fb?.useful||0}</span></div>
     </div>`).join("") : `<div class="empty" style="font-size:0.75em;">あなたが「👍」「📝」を押したネタが上位に表示されます</div>`;
   applyAdminUI();
+  bindToggles();
 }
 function setFontSize(k){
   STATE.fontSize = k;
@@ -1192,6 +1277,7 @@ function checkHash(){
 
 /* ========== 起動 ========== */
 async function init(){
+  applyTheme();
   // フォントサイズ適用
   document.documentElement.style.setProperty('--base-font', FONT_SIZES[STATE.fontSize||'medium']);
   document.documentElement.style.setProperty('--modal-font-scale', STATE.modalFontScale||1.0);

@@ -244,6 +244,13 @@ def build_prompt(existing_titles, next_id, month_jst):
 - 段落区切りは `<br>`
 - 事実・法令・統計は正確に
 
+## ふりがな (furigana_pairs) ★重要★
+本文で使う「難読漢字・専門用語」の読み方を furigana_pairs に含めてください。
+- 例: [{"kanji":"墜落","reading":"ついらく"}, {"kanji":"玉掛","reading":"たまがけ"}]
+- 建設現場でよく出る難しい熟語（労安衛・粉じん・化学物質名など）を積極的に含める
+- 平易な語（作業・現場・安全など）は不要
+- 該当なしの場合は空配列 `[]`
+
 ## 選定方針
 - 今月は{month_jst}月。季節に合ったテーマを優先
 - 直近の労災事例、季節リスク、法改正、豆知識、ヒューマンエラー対策など
@@ -274,6 +281,11 @@ def call_gemini(prompt):
             "tags_audience": {"type": "array", "items": {"type": "string"}},
             "tags_mood": {"type": "array", "items": {"type": "string"}},
             "months": {"type": "array", "items": {"type": "integer"}},
+            "furigana_pairs": {"type": "array", "items": {
+                "type": "object",
+                "properties": {"kanji": {"type": "string"}, "reading": {"type": "string"}},
+                "required": ["kanji","reading"]
+            }},
         },
         "required": ["title","category","body","tags_work","tags_audience","tags_mood","months"],
     }
@@ -299,6 +311,9 @@ def parse_neta_json(text):
             'audience': obj.pop('tags_audience', []),
             'mood': obj.pop('tags_mood', []),
         }
+    fp = obj.pop('furigana_pairs', None)
+    if fp:
+        obj['furigana'] = {p['kanji']: p['reading'] for p in fp if 'kanji' in p and 'reading' in p}
     return obj
 
 

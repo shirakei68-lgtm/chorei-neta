@@ -861,7 +861,7 @@ function openModal(id){
   document.getElementById("modalContent").innerHTML = `
     <h2>${n.title}</h2>
     ${n.category?`<div style="color:#9ad;font-size:0.7em;margin-bottom:8px;">${n.category}</div>`:""}
-    <div class="body">${applyFurigana(n.body)}</div>
+    <div class="body">${applyFurigana(n.body, n.furigana)}</div>
     <div class="feedback-row">
       <button class="${myV.good?'voted':''}" onclick="vote('good')">👍 現場でウケた！ <b>${fb.good}</b></button>
       <button class="${myV.useful?'voted':''}" onclick="vote('useful')">📝 役に立った <b>${fb.useful}</b></button>
@@ -1043,13 +1043,16 @@ const FURI_DICT = {"墜落": "ついらく", "転落": "てんらく", "感電":
 // 辞書を長い語順にソートして正規表現作成（前方一致優先）
 const FURI_KEYS = Object.keys(FURI_DICT).sort((a,b)=>b.length-a.length);
 const FURI_RE = new RegExp("(" + FURI_KEYS.map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|") + ")", "g");
-function applyFurigana(html){
+function applyFurigana(html, netaFuri){
   if(!STATE.furiOn) return html;
-  // HTMLタグの中身は避け、テキストノードだけ置換
-  // 簡易実装：<b>や<br>タグを一時退避して置換 → 復元
+  // per-netaの辞書 + グローバル辞書をマージ（per-neta優先）
+  const merged = Object.assign({}, FURI_DICT, netaFuri||{});
+  const keys = Object.keys(merged).sort((a,b)=>b.length-a.length);
+  if(keys.length===0) return html;
+  const re = new RegExp("(" + keys.map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|") + ")", "g");
   const tokens = [];
   html = html.replace(/<[^>]+>/g, m => { tokens.push(m); return `\uE000${tokens.length-1}\uE001`; });
-  html = html.replace(FURI_RE, (m) => `<ruby>${m}<rt>${FURI_DICT[m]}</rt></ruby>`);
+  html = html.replace(re, (m) => `<ruby>${m}<rt>${merged[m]}</rt></ruby>`);
   html = html.replace(/\uE000(\d+)\uE001/g, (_,i) => tokens[+i]);
   return html;
 }

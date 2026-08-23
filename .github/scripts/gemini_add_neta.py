@@ -322,7 +322,8 @@ def call_gemini(prompt):
     model = genai.GenerativeModel('gemini-flash-latest',
                                    generation_config={'response_mime_type': 'application/json',
                                                        'response_schema': schema,
-                                                       'temperature': 0.9})
+                                                       'temperature': 0.9,
+                                                       'max_output_tokens': 8192})
     resp = model.generate_content(prompt)
     return resp.text
 
@@ -357,6 +358,15 @@ def validate_neta(neta):
         for t in neta['tags'].get(k, []):
             assert t in allowed, f"invalid {k} tag: {t}"
     assert 80 <= len(neta['body']) <= 700, f"body length out of range: {len(neta['body'])}"
+    # 途切れ検出: body が閉じタグ以外で終わっていないか
+    body = neta['body']
+    import re as _re
+    plain = _re.sub(r'<[^>]+>', '', body).strip()
+    assert plain and plain[-1] in '。！？」）', f"body appears truncated (末尾: ...{plain[-30:]})"
+    # bタグの開閉数一致
+    open_b = len(_re.findall(r'<b\b[^>]*>', body))
+    close_b = body.count('</b>')
+    assert open_b == close_b, f"unmatched <b> tags (open={open_b}, close={close_b})"
 
 
 def main():

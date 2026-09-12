@@ -32,7 +32,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n2",
@@ -60,7 +63,10 @@ const NETA_DATA = [
       1,
       2,
       3
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n3",
@@ -93,7 +99,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n4",
@@ -120,7 +129,10 @@ const NETA_DATA = [
       2,
       3,
       4
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n5",
@@ -154,7 +166,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n6",
@@ -191,7 +206,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n7",
@@ -224,7 +242,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n8",
@@ -252,7 +273,10 @@ const NETA_DATA = [
     "months": [
       5,
       6
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n9",
@@ -287,7 +311,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n10",
@@ -321,7 +348,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n11",
@@ -354,7 +384,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n12",
@@ -391,7 +424,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n13",
@@ -420,7 +456,10 @@ const NETA_DATA = [
       2,
       3,
       4
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n14",
@@ -453,7 +492,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n15",
@@ -481,7 +523,10 @@ const NETA_DATA = [
       7,
       8,
       9
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n16",
@@ -514,7 +559,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n17",
@@ -548,7 +596,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n18",
@@ -582,7 +633,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n19",
@@ -618,7 +672,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n20",
@@ -655,7 +712,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n21",
@@ -690,6 +750,12 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "建設業の死亡災害は毎年200〜300人前後発生しています",
+      "仮に年間270人とすると、月22人、ほぼ毎日どこかの現場で1人以上が亡くなっている計算です"
     ]
   },
   {
@@ -723,7 +789,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n23",
@@ -758,7 +827,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n24",
@@ -796,6 +868,11 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "長尺物は2人以上で運ぶ、シート類は土嚢でしっかり固定する、を徹底しましょう"
     ]
   },
   {
@@ -828,7 +905,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n26",
@@ -863,7 +943,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n27",
@@ -896,7 +979,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n28",
@@ -925,7 +1011,10 @@ const NETA_DATA = [
       7,
       8,
       9
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n29",
@@ -958,7 +1047,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n30",
@@ -990,7 +1082,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n31",
@@ -1027,7 +1122,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n32",
@@ -1059,7 +1157,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n33",
@@ -1094,7 +1195,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n34",
@@ -1127,7 +1231,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n35",
@@ -1161,7 +1268,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n36",
@@ -1195,7 +1305,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n37",
@@ -1229,7 +1342,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": []
   },
   {
     "id": "n38",
@@ -1263,7 +1379,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n39",
@@ -1298,7 +1417,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n40",
@@ -1331,6 +1453,11 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "medium",
+    "verify_by": "2028-09-11",
+    "fact_claims": [
+      "皆さんが被っているヘルメットは、規格上『約5kgのものが1mの高さから落ちてきた衝撃』を分散して脳を守る設計です"
     ]
   },
   {
@@ -1361,7 +1488,10 @@ const NETA_DATA = [
       7,
       8,
       9
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n42",
@@ -1394,7 +1524,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n43",
@@ -1426,7 +1559,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n44",
@@ -1458,7 +1594,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n45",
@@ -1491,7 +1630,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n46",
@@ -1525,7 +1667,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n47",
@@ -1557,7 +1702,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n48",
@@ -1594,6 +1742,13 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "玉掛けや重機運転の無資格作業は、事業主だけでなく本人にも罰金や懲役が科される重大な犯罪です",
+      "例えば移動式クレーンの無資格運転は、労働安全衛生法違反で6ヶ月以下の懲役または50万円以下の罰金",
+      "資格のない作業は、その場で職長か元請に申告して、有資格者に代わってもらう"
     ]
   },
   {
@@ -1626,6 +1781,12 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "会社が用意している保護具を自己判断で外すと、労働者本人にも罰金が科される可能性があります（労働安全衛生法違反）",
+      "つまり『暑いから安全帯を外した』『邪魔だから保護メガネを取った』は、会社のルール違反であると同時に、法律違反でもあるのです"
     ]
   },
   {
@@ -1658,6 +1819,13 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "現場のゴミを個人で適当に捨てる『不法投棄』は、廃棄物処理法違反で『5年以下の懲役または1000万円以下の罰金』が科される重罪です",
+      "法人なら『3億円以下の罰金』",
+      "1人のモラル違反で全員の仕事が止まることを、絶対に忘れないでください"
     ]
   },
   {
@@ -1692,6 +1860,12 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "小さな怪我であっても、会社の労災を使わず個人健康保険で受診すると『労災かくし』となり犯罪です（労働安全衛生法120条で50万円以下の罰金）",
+      "休業4日以上の労働災害は『労働者死傷病報告』を所轄労働基準監督署長へ提出する義務があり、虚偽報告や未報告は罰則対象です"
     ]
   },
   {
@@ -1726,6 +1900,12 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "道路使用許可を取って作業していても、許可範囲を1mでもはみ出して資材を置けば、道路交通法違反になります",
+      "さらに会社には『道路使用許可の運用が甘い』として、次回以降の許可が取りにくくなる二次被害まで波及します"
     ]
   },
   {
@@ -1760,7 +1940,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n54",
@@ -1793,7 +1976,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n55",
@@ -1828,7 +2014,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n56",
@@ -1860,7 +2049,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n57",
@@ -1893,7 +2085,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n58",
@@ -1926,7 +2121,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n59",
@@ -1960,7 +2158,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n60",
@@ -1994,6 +2195,11 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "体内の水分が2%減ると、脳血流が低下してイライラしやすくなることが研究で分かっています"
     ]
   },
   {
@@ -2028,7 +2234,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n62",
@@ -2062,7 +2271,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n63",
@@ -2096,7 +2308,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n64",
@@ -2132,7 +2347,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n65",
@@ -2167,7 +2385,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n66",
@@ -2200,7 +2421,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n67",
@@ -2232,6 +2456,11 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "medium",
+    "verify_by": "2028-09-11",
+    "fact_claims": [
+      "この同調圧力が現場の安全基準を一気に下げます"
     ]
   },
   {
@@ -2264,7 +2493,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n69",
@@ -2300,6 +2532,11 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "medium",
+    "verify_by": "2028-09-11",
+    "fact_claims": [
+      "メーカー団体の自主基準では、ロープ・ランヤード・ストラップ類の交換目安は使用開始から2年、ハーネス本体は3年とされています"
     ]
   },
   {
@@ -2334,7 +2571,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n71",
@@ -2368,7 +2608,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n72",
@@ -2402,7 +2645,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n73",
@@ -2435,7 +2681,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n74",
@@ -2467,7 +2716,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n75",
@@ -2495,7 +2747,10 @@ const NETA_DATA = [
       7,
       8,
       9
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n76",
@@ -2525,7 +2780,10 @@ const NETA_DATA = [
       7,
       8,
       9
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n77",
@@ -2558,7 +2816,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n78",
@@ -2591,6 +2852,11 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "medium",
+    "verify_by": "2028-09-11",
+    "fact_claims": [
+      "安全色彩規格でも黄色は『注意・警告』を示す色です"
     ]
   },
   {
@@ -2619,7 +2885,10 @@ const NETA_DATA = [
       7,
       8,
       9
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n80",
@@ -2647,7 +2916,10 @@ const NETA_DATA = [
       7,
       8,
       9
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n81",
@@ -2681,7 +2953,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n82",
@@ -2715,7 +2990,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n83",
@@ -2749,7 +3027,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n84",
@@ -2782,7 +3063,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n85",
@@ -2815,7 +3099,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n86",
@@ -2849,7 +3136,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n87",
@@ -2884,7 +3174,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "medium",
+    "verify_by": "2028-09-11",
+    "fact_claims": []
   },
   {
     "id": "n88",
@@ -2919,7 +3212,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n89",
@@ -2953,7 +3249,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n90",
@@ -2986,7 +3285,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n91",
@@ -3018,7 +3320,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "medium",
+    "verify_by": "2028-09-11",
+    "fact_claims": []
   },
   {
     "id": "n92",
@@ -3051,7 +3356,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n93",
@@ -3086,7 +3394,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n94",
@@ -3122,7 +3433,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n95",
@@ -3155,6 +3469,11 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "2人以上は絶対禁止です"
     ]
   },
   {
@@ -3187,7 +3506,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n97",
@@ -3220,7 +3542,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n98",
@@ -3254,7 +3579,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n99",
@@ -3287,7 +3615,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n100",
@@ -3320,7 +3651,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n101",
@@ -3355,7 +3689,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n102",
@@ -3391,7 +3728,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n103",
@@ -3423,7 +3763,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n104",
@@ -3458,6 +3801,11 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "medium",
+    "verify_by": "2028-09-11",
+    "fact_claims": [
+      "労働基準局長通達（S50.12.17基発759号）では、次の通り安全離隔距離が定められています"
     ]
   },
   {
@@ -3488,6 +3836,11 @@ const NETA_DATA = [
       1,
       2,
       3
+    ],
+    "fact_risk": "medium",
+    "verify_by": "2028-09-11",
+    "fact_claims": [
+      "地山掘削、主任者の選任基準をご存知ですか"
     ]
   },
   {
@@ -3521,6 +3874,11 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "medium",
+    "verify_by": "2028-09-11",
+    "fact_claims": [
+      "足場の作業床、寸法基準をご存知ですか"
     ]
   },
   {
@@ -3554,7 +3912,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n108",
@@ -3587,7 +3948,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n109",
@@ -3620,7 +3984,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n110",
@@ -3655,7 +4022,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n111",
@@ -3689,7 +4059,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n112",
@@ -3717,7 +4090,10 @@ const NETA_DATA = [
       7,
       8,
       9
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n113",
@@ -3747,7 +4123,10 @@ const NETA_DATA = [
       7,
       8,
       9
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n114",
@@ -3775,7 +4154,10 @@ const NETA_DATA = [
       7,
       8,
       9
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n115",
@@ -3807,7 +4189,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n116",
@@ -3841,7 +4226,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n117",
@@ -3873,6 +4261,12 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "排出ガス対策型建設機械の指定制度は、第1次基準値（1992年開始）、第2次（2001年）、第3次（2006年）と段階的に強化されてきました",
+      "オフロード法では、2006年10月以降に製造された建設機械等は適合表示ステッカーが付されたものを使用してください"
     ]
   },
   {
@@ -3906,7 +4300,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n119",
@@ -3938,7 +4335,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n120",
@@ -3970,6 +4370,12 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "看板は60cm×60cm以上のサイズで掲示し、品目等所定の事項を明示する必要があります（廃棄物処理法則8）",
+      "現場外で300m²以上の保管場所では、あらかじめ都道府県知事に『産業廃棄物事業場外保管届出書』が必要（廃棄物処理法12、12の2）"
     ]
   },
   {
@@ -4002,7 +4408,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n122",
@@ -4034,7 +4443,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n123",
@@ -4066,7 +4478,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n124",
@@ -4101,7 +4516,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": []
   },
   {
     "id": "n125",
@@ -4135,6 +4553,11 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "medium",
+    "verify_by": "2028-09-11",
+    "fact_claims": [
+      "事業者には、リスクアセスメント結果を踏まえ労働者がばく露される濃度を基準値以下とすること、適切な保護具を使用させること、化学物質管理者の選任等の自律的管理が求められます"
     ]
   },
   {
@@ -4168,6 +4591,12 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "2023年4月1日施行の改正で、業務を請負人に請け負わせるとき、または同じ作業場所にいる労働者以外の人（一人親方、他社の労働者、資材搬入業者、警備員等）に対しても、労働者と同等の保護措置が義務付けられました（令和4年厚生労働省令第82号、基",
+      "元請から関係請負人への必要な指示も義務化"
     ]
   },
   {
@@ -4202,7 +4631,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n128",
@@ -4235,7 +4667,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n129",
@@ -4268,6 +4703,11 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "medium",
+    "verify_by": "2028-09-11",
+    "fact_claims": [
+      "資格者リスト、現場に掲示されていますか"
     ]
   },
   {
@@ -4300,6 +4740,11 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "労働安全衛生法上の『危険物』の分類、ご存知ですか"
     ]
   },
   {
@@ -4334,6 +4779,11 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "medium",
+    "verify_by": "2028-09-11",
+    "fact_claims": [
+      "KYで出てきた危険源、この基準で1〜9点をつけてみてください"
     ]
   },
   {
@@ -4370,7 +4820,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n133",
@@ -4405,7 +4858,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n134",
@@ -4437,7 +4893,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n135",
@@ -4470,6 +4929,11 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "medium",
+    "verify_by": "2028-09-11",
+    "fact_claims": [
+      "掘削・吹付け・ずり積卸し等切羽作業に従事する者は、全員電動ファン付呼吸用保護具の使用が義務化されています（粉じん則27）"
     ]
   },
   {
@@ -4503,7 +4967,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n137",
@@ -4536,6 +5003,11 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "レベル誤認は重大違反"
     ]
   },
   {
@@ -4569,6 +5041,11 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "排出事業者の責任は、廃棄物の最終処分が完了するまで、または廃棄物でなくなる（売却・再生利用）時点まで及びます（廃棄物処理法12）"
     ]
   },
   {
@@ -4603,6 +5080,11 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "排出事業者は産業廃棄物が運搬されるまでの間、保管基準に従って保管しなければなりません（廃棄物処理法12、12の2）"
     ]
   },
   {
@@ -4636,7 +5118,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n141",
@@ -4668,7 +5153,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n142",
@@ -4701,7 +5189,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n143",
@@ -4734,7 +5225,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n144",
@@ -4767,7 +5261,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n145",
@@ -4801,7 +5298,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n146",
@@ -4836,7 +5336,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n147",
@@ -4868,7 +5371,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n148",
@@ -4901,6 +5407,11 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "medium",
+    "verify_by": "2028-09-11",
+    "fact_claims": [
+      "安全カバー（覆い）は構造規格で改造禁止"
     ]
   },
   {
@@ -4935,7 +5446,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n150",
@@ -4968,7 +5482,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n151",
@@ -5004,7 +5521,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n152",
@@ -5038,6 +5558,12 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "会社の労災を使わず個人健康保険で受診すると『労災かくし』となり犯罪です",
+      "安衛則97条で休業4日以上の労働災害は『労働者死傷病報告』を所轄労働基準監督署長へ提出する義務があり、虚偽報告や未報告は労安法120条で50万円以下の罰金"
     ]
   },
   {
@@ -5070,7 +5596,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n154",
@@ -5105,6 +5634,11 @@ const NETA_DATA = [
       10,
       11,
       12
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "2021年4月1日から特定化学物質として追加され、屋内作業場でのアーク溶接作業時には、全体換気装置による換気の実施、要求性能呼吸用保護具の使用（特定化学物質作業主任者の選任）、特殊健康診断（6か月以内ごと1回）が義務化されました"
     ]
   },
   {
@@ -5138,7 +5672,10 @@ const NETA_DATA = [
       10,
       11,
       12
-    ]
+    ],
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "id": "n156",
@@ -5167,6 +5704,13 @@ const NETA_DATA = [
       7,
       8,
       9
+    ],
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "2025年6月1日から、職場の熱中症対策が労働安全衛生規則により事業者の義務になったのを知っていますか",
+      "違反して災害が起きれば、6ヶ月以下の懲役または50万円以下の罰金が事業者に科されます",
+      "我慢する人がいる現場は、法律違反の現場です"
     ]
   },
   {
@@ -5201,7 +5745,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n157"
+    "id": "n157",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "ヘルメットの賞味期限",
@@ -5237,7 +5784,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n158"
+    "id": "n158",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "KYで「危険箇所」と「危険な行為」",
@@ -5270,7 +5820,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n159"
+    "id": "n159",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "電動工具の絶縁劣化",
@@ -5307,7 +5860,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n160"
+    "id": "n160",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "油圧ホースの皮膚貫通",
@@ -5342,7 +5898,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n161"
+    "id": "n161",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "報連相のSBAR",
@@ -5376,7 +5935,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n162"
+    "id": "n162",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "玉掛けワイヤーの廃棄基準",
@@ -5411,7 +5973,13 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n163"
+    "id": "n163",
+    "fact_risk": "medium",
+    "verify_by": "2028-09-11",
+    "fact_claims": [
+      "法令で廃棄基準が明確に決まっていることをご存知ですか",
+      "今日も作業前にワイヤーの目視点検、基準に該当したら絶対に使わないでください"
+    ]
   },
   {
     "title": "一人作業が禁止される理由",
@@ -5446,7 +6014,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n164"
+    "id": "n164",
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": []
   },
   {
     "title": "連勤の脳機能カーブ",
@@ -5483,7 +6054,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n165"
+    "id": "n165",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "思い込み「プライミング」",
@@ -5515,7 +6089,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n166"
+    "id": "n166",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "「だろう」と「かもしれない」",
@@ -5549,7 +6126,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n167"
+    "id": "n167",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "工具落下防止の3点セット",
@@ -5583,7 +6163,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n168"
+    "id": "n168",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "災害が多い時間帯",
@@ -5617,7 +6200,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n169"
+    "id": "n169",
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": []
   },
   {
     "title": "2つの真実1つの嘘",
@@ -5653,7 +6239,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n170"
+    "id": "n170",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "電動ドリルのトルク反力",
@@ -5686,7 +6275,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n171"
+    "id": "n171",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "足場の手すり先行工法",
@@ -5722,7 +6314,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n172"
+    "id": "n172",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "腰痛ベルトの落とし穴",
@@ -5754,7 +6349,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n173"
+    "id": "n173",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "救急車到着までの平均",
@@ -5788,7 +6386,12 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n174"
+    "id": "n174",
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "心停止の救命率は1分ごとに10%低下します"
+    ]
   },
   {
     "title": "確認の「指で数える」",
@@ -5821,7 +6424,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n175"
+    "id": "n175",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "アスベスト含有建材",
@@ -5856,7 +6462,13 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n176"
+    "id": "n176",
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "2006年以前の建物の解体・改修工事では、アスベスト（石綿）含有建材が今でも残っている可能性があります",
+      "事前調査と分析報告書なしに解体することは法律違反です（大気汚染防止法・石綿障害予防規則）"
+    ]
   },
   {
     "title": "日報を書くと事故が減る",
@@ -5889,7 +6501,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n177"
+    "id": "n177",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "色覚特性と注意喚起",
@@ -5922,7 +6537,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n178"
+    "id": "n178",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "「気持ち悪い」を言葉に",
@@ -5956,7 +6574,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n179"
+    "id": "n179",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "安全靴の鉄芯の限界",
@@ -5988,7 +6609,12 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n180"
+    "id": "n180",
+    "fact_risk": "medium",
+    "verify_by": "2028-09-11",
+    "fact_claims": [
+      "JIS規格では『20kgの物が30cmから落ちた衝撃』までしか保証されていません"
+    ]
   },
   {
     "title": "監督との距離感",
@@ -6025,7 +6651,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n181"
+    "id": "n181",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "梅雨時期の墜落リスク",
@@ -6054,7 +6683,10 @@ const NETA_DATA = [
       9,
       10
     ],
-    "id": "n182"
+    "id": "n182",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "労災の慰謝料",
@@ -6088,7 +6720,12 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n183"
+    "id": "n183",
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "労災保険からの給付に加え、企業が安全配慮義務違反で民事責任を負う場合の総額です"
+    ]
   },
   {
     "title": "朝礼の3つの問いかけ",
@@ -6123,7 +6760,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n184"
+    "id": "n184",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "5SのLIFOルール",
@@ -6155,7 +6795,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n185"
+    "id": "n185",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "ヒヤリハット報告のコツ",
@@ -6189,7 +6832,10 @@ const NETA_DATA = [
       11,
       12
     ],
-    "id": "n186"
+    "id": "n186",
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": []
   },
   {
     "title": "WBGT「33」の意味と警戒アラート",
@@ -6215,7 +6861,10 @@ const NETA_DATA = [
         "数字で語る"
       ]
     },
-    "id": "n187"
+    "id": "n187",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "ファン付き服とハーネスの正しい重ね着",
@@ -6244,7 +6893,10 @@ const NETA_DATA = [
         "KY・危険予知"
       ]
     },
-    "id": "n190"
+    "id": "n190",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "口をつけたペットボトルの細菌リスク",
@@ -6269,7 +6921,10 @@ const NETA_DATA = [
         "健康・体調管理"
       ]
     },
-    "id": "n191"
+    "id": "n191",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "爪を2秒押すだけの簡易脱水チェック",
@@ -6297,7 +6952,10 @@ const NETA_DATA = [
         "KY・危険予知"
       ]
     },
-    "id": "n192"
+    "id": "n192",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "朝の味噌汁1杯が熱中症を防ぐ理由",
@@ -6322,7 +6980,10 @@ const NETA_DATA = [
         "学べる雑学"
       ]
     },
-    "id": "n193"
+    "id": "n193",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "アイススラリーで深部体温を下げる",
@@ -6347,7 +7008,10 @@ const NETA_DATA = [
         "学べる雑学"
       ]
     },
-    "id": "n195"
+    "id": "n195",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "7月急増！ハチ遭遇時の退避ルール",
@@ -6374,7 +7038,10 @@ const NETA_DATA = [
         "KY・危険予知"
       ]
     },
-    "id": "n196"
+    "id": "n196",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "雷鳴が聞こえたら即退避！落雷の安全対策",
@@ -6400,7 +7067,10 @@ const NETA_DATA = [
         "KY・危険予知"
       ]
     },
-    "id": "n197"
+    "id": "n197",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "夏の車内にファン付き服の電池放置は厳禁",
@@ -6425,7 +7095,10 @@ const NETA_DATA = [
         "気を引き締める（法令・罰則・統計）"
       ]
     },
-    "id": "n198"
+    "id": "n198",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "夏の紫外線から目を守るUV保護メガネ",
@@ -6452,7 +7125,10 @@ const NETA_DATA = [
         "学べる雑学"
       ]
     },
-    "id": "n199"
+    "id": "n199",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "夏場に激増！汗と水濡れによる感電リスク",
@@ -6479,7 +7155,10 @@ const NETA_DATA = [
         "KY・危険予知"
       ]
     },
-    "id": "n200"
+    "id": "n200",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "経口補水液が美味しく感じたら危険",
@@ -6505,7 +7184,10 @@ const NETA_DATA = [
         "健康・体調管理"
       ]
     },
-    "id": "n201"
+    "id": "n201",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "夏場の食中毒を防ぐお弁当の温度管理",
@@ -6531,7 +7213,10 @@ const NETA_DATA = [
         "健康・体調管理"
       ]
     },
-    "id": "n202"
+    "id": "n202",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "炎天下の鉄板や工具による火傷を防ぐ",
@@ -6557,7 +7242,10 @@ const NETA_DATA = [
         "KY・危険予知"
       ]
     },
-    "id": "n203"
+    "id": "n203",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "夏の夜はエアコン活用で睡眠を確保しよう",
@@ -6583,7 +7271,10 @@ const NETA_DATA = [
         "数字で語る"
       ]
     },
-    "id": "n204"
+    "id": "n204",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "塩分タブレットの摂りすぎに注意！",
@@ -6609,7 +7300,10 @@ const NETA_DATA = [
         "学べる雑学"
       ]
     },
-    "id": "n205"
+    "id": "n205",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "照り返し対策！路面温度は60度超え",
@@ -6639,7 +7333,10 @@ const NETA_DATA = [
         "健康・体調管理"
       ]
     },
-    "id": "n206"
+    "id": "n206",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "夏の西日による眩しさと夕方の危険",
@@ -6668,7 +7365,10 @@ const NETA_DATA = [
         "気を引き締める（法令・罰則・統計）"
       ]
     },
-    "id": "n207"
+    "id": "n207",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "夏場の火気作業と作業服の素材選び",
@@ -6696,7 +7396,10 @@ const NETA_DATA = [
         "KY・危険予知"
       ]
     },
-    "id": "n208"
+    "id": "n208",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "エナジードリンクは危険？夏の水分補給の罠",
@@ -6738,7 +7441,10 @@ const NETA_DATA = [
       "利尿": "りにょう",
       "経口補水液": "けいこうほすいえき"
     },
-    "id": "n209"
+    "id": "n209",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "熱中症の重症度！Ⅱ度を見逃さない",
@@ -6781,7 +7487,10 @@ const NETA_DATA = [
       "応急処置": "おうきゅうしょち",
       "意識障害": "いしきしょうがい"
     },
-    "id": "n210"
+    "id": "n210",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "夏の汗で工具の手滑り！手袋とグリップ点検",
@@ -6823,7 +7532,12 @@ const NETA_DATA = [
       "摩擦": "まさつ",
       "危害": "きがい"
     },
-    "id": "n211"
+    "id": "n211",
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": [
+      "実験データでは、汗や油で濡れた手袋での作業は、乾燥時に比べて工具を保持する力が約30%低下すると言われています"
+    ]
   },
   {
     "title": "暑中コンクリートとコールドジョイント",
@@ -6867,7 +7581,10 @@ const NETA_DATA = [
       "打設": "だせつ",
       "硬化": "こうか"
     },
-    "id": "n212"
+    "id": "n212",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "夏場に危険度が跳ね上がる酸素欠乏症",
@@ -6912,7 +7629,10 @@ const NETA_DATA = [
       "硫化水素": "りゅうかすいそ",
       "滞留": "たいりゅう"
     },
-    "id": "n213"
+    "id": "n213",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "冷却スプレーの引火に注意！火気付近は厳禁",
@@ -6955,7 +7675,10 @@ const NETA_DATA = [
       "可燃性": "かねんせい",
       "引火": "いんか"
     },
-    "id": "n214"
+    "id": "n214",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "猛暑期のタイヤバーストを防ぐ点検術",
@@ -7001,7 +7724,10 @@ const NETA_DATA = [
       "摩擦熱": "まさつねつ",
       "亀裂": "きれつ"
     },
-    "id": "n215"
+    "id": "n215",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "夏場に激増！気温上昇と有機溶剤の危険",
@@ -7047,7 +7773,10 @@ const NETA_DATA = [
       "充満": "じゅうまん",
       "防毒": "ぼうどく"
     },
-    "id": "n216"
+    "id": "n216",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "夏場危険！ガソリン携行缶のエア抜き徹底",
@@ -7091,7 +7820,10 @@ const NETA_DATA = [
       "内圧": "ないあつ",
       "引火": "いんか"
     },
-    "id": "n217"
+    "id": "n217",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "夏場に激増！汗とセメントによる化学やけど",
@@ -7134,7 +7866,10 @@ const NETA_DATA = [
       "粉じん": "ふんじん",
       "強アルカリ": "きょうあるかり"
     },
-    "id": "n218"
+    "id": "n218",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "猛暑の直射日光注意！高圧ガス容器の40℃管理",
@@ -7180,7 +7915,10 @@ const NETA_DATA = [
       "溶接": "ようせつ",
       "遮光": "しゃこう"
     },
-    "id": "n219"
+    "id": "n219",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "お盆明け注意！暑熱順化は4日で消える",
@@ -7220,7 +7958,10 @@ const NETA_DATA = [
     "furigana": {
       "暑熱順化": "しょねつじゅんか"
     },
-    "id": "n224"
+    "id": "n224",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "体重の2％脱水で判断力と集中力が低下",
@@ -7263,7 +8004,10 @@ const NETA_DATA = [
       "喪失": "そうしつ",
       "発汗": "はっかん"
     },
-    "id": "n226"
+    "id": "n226",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "猛暑で軟化！アスファルトのアウトリガー沈下",
@@ -7315,7 +8059,10 @@ const NETA_DATA = [
       "敷設": "ふせつ",
       "著しく": "いちじるしく"
     },
-    "id": "n227"
+    "id": "n227",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "ゲリラ豪雨の突風対策！足場シートの風抜き",
@@ -7364,7 +8111,10 @@ const NETA_DATA = [
       "破断": "はだん",
       "倒壊": "とうかい"
     },
-    "id": "n228"
+    "id": "n228",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "直射日光で50度超！ヘルメットの遮熱対策",
@@ -7409,7 +8159,10 @@ const NETA_DATA = [
       "頭部": "とうぶ",
       "過剰": "かじょう"
     },
-    "id": "n229"
+    "id": "n229",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "手のひら冷却で深部体温を効率的に下げる",
@@ -7451,7 +8204,10 @@ const NETA_DATA = [
       "深部体温": "しんぶたいおん",
       "血管収縮": "けっかんしゅうしゅく"
     },
-    "id": "n230"
+    "id": "n230",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "秋の日はつるべ落とし！薄暮時の事故を防ぐ",
@@ -7497,7 +8253,10 @@ const NETA_DATA = [
       "薄暮": "はくぼ",
       "暗順応": "あんじゅんのう"
     },
-    "id": "n231"
+    "id": "n231",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "秋雨注意！地山の含水比と法面崩壊リスク",
@@ -7546,7 +8305,10 @@ const NETA_DATA = [
       "法肩": "のりかた",
       "養生": "ようじょう"
     },
-    "id": "n232"
+    "id": "n232",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "風速10mで即中止！高所作業の強風基準",
@@ -7592,7 +8354,12 @@ const NETA_DATA = [
       "突風": "とっぷう",
       "兆候": "ちょうこう"
     },
-    "id": "n233"
+    "id": "n233",
+    "fact_risk": "medium",
+    "verify_by": "2028-09-11",
+    "fact_claims": [
+      "平均風速が基準以下であっても、最大瞬間風速が跳ね上がる場合があります"
+    ]
   },
   {
     "title": "蒸発現象に注意！ライトで消える歩行者",
@@ -7637,7 +8404,10 @@ const NETA_DATA = [
       "蒸発現象": "じょうはつげんしょう",
       "薄暮時": "はくぼじ"
     },
-    "id": "n234"
+    "id": "n234",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   },
   {
     "title": "台風一過の油断！作業再開前の法定点検徹底",
@@ -7683,7 +8453,10 @@ const NETA_DATA = [
       "倒壊": "とうかい",
       "沈下": "ちんか"
     },
-    "id": "n235"
+    "id": "n235",
+    "fact_risk": "high",
+    "verify_by": "2027-09-12",
+    "fact_claims": []
   },
   {
     "title": "寒暖差7度で警戒！秋バテ防ぐ自律神経ケア",
@@ -7723,6 +8496,9 @@ const NETA_DATA = [
       "寒暖差": "かんだんさ",
       "副交感神経": "ふくこうかんしんけい"
     },
-    "id": "n236"
+    "id": "n236",
+    "fact_risk": "low",
+    "verify_by": "2031-09-11",
+    "fact_claims": []
   }
 ];

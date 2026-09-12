@@ -661,7 +661,9 @@ async function loadNetaData(){
   const code = await r.text();
   const m = code.match(/\[[\s\S]*\]/);
   if(!m) throw new Error("neta_data.js parse failed");
-  return JSON.parse(m[0]);
+  const arr = JSON.parse(m[0]);
+  // 事実監査で hidden:true が付与されたネタは配信・表示・クイズ・検索から一律除外
+  return arr.filter(n => !n.hidden);
 }
 function applyLocalToData(){
   for(const n of NETA_DATA){

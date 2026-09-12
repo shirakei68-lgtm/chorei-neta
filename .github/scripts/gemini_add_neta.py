@@ -12,6 +12,11 @@ from collections import Counter
 
 import google.generativeai as genai
 
+sys_path_add = os.path.dirname(os.path.abspath(__file__))
+if sys_path_add not in __import__("sys").path:
+    __import__("sys").path.insert(0, sys_path_add)
+from fact_risk import annotate_fact_metadata
+
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATA_PATH = os.path.join(ROOT, 'neta_data.js')
 HTML_PATH = os.path.join(ROOT, 'chorei-neta.html')
@@ -423,9 +428,11 @@ def main():
         emit_output('added', 'false')
         sys.exit(1)
 
+    annotate_fact_metadata(new_neta)
     data.append(new_neta)
     write_neta_data(data)
     print(f"✅ added {new_neta['id']}: {new_neta['title']} [{new_neta['category']}]")
+    print(f"   fact_risk={new_neta.get('fact_risk')} verify_by={new_neta.get('verify_by')} claims={len(new_neta.get('fact_claims',[]))}")
     emit_output('added', 'true')
     emit_output('id', new_neta['id'])
     emit_output('title', new_neta['title'].replace('\n',' ').replace('\r',' ')[:60])

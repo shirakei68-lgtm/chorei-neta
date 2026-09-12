@@ -1,0 +1,53 @@
+name: Monthly Fact Audit
+
+on:
+  schedule:
+    # 毎月1日 08:00 JST = 前日23:00 UTC
+    - cron: '0 23 1 * *'
+  workflow_dispatch:  # 手動実行も可
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: pip install google-generativeai
+
+      - name: Run fact verification
+        id: verify
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python .github/scripts/verify_neta_facts.py > /tmp/report.md
+          echo "report_path=/tmp/report.md" >> $GITHUB_OUTPUT
+          # 変更があるかどうか
+          if ! git diff --quiet neta_data.js 2>/dev/null; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push if changed
+        if: steps.verify.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add neta_data.js .github/archive/ 2>/dev/null || true
+          git commit -m "audit: monthly fact verification $(date -u +%Y-%m-%d)"
+          git push
+
+      - name: Create issue with report
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TITLE="[月次監査] $(date +%Y-%m) 事実確認レポート"
+          gh issue create --title "$TITLE" --body-file /tmp/report.md || echo "issue creation skipped"

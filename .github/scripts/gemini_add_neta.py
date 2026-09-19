@@ -354,24 +354,59 @@ def parse_neta_json(text):
 
 
 def validate_neta(neta):
+    """検証＋軽微な問題は auto-fix する（過剰な失敗を防ぐ）"""
+    import re as _re
     required = ['id', 'title', 'category', 'body', 'tags', 'months']
     for k in required:
         assert k in neta, f'missing key: {k}'
     assert neta['category'] in CATEGORIES, f"invalid category: {neta['category']}"
+    # 未知タグは削除（弾かない）
     for k, allowed in [('work', WORK_TAGS), ('weather', WEATHER_TAGS),
                        ('audience', AUDIENCE_TAGS), ('mood', MOOD_TAGS)]:
-        for t in neta['tags'].get(k, []):
-            assert t in allowed, f"invalid {k} tag: {t}"
-    assert 80 <= len(neta['body']) <= 700, f"body length out of range: {len(neta['body'])}"
-    # 途切れ検出: body が閉じタグ以外で終わっていないか
+        neta['tags'][k] = [t for t in neta['tags'].get(k, []) if t in allowed]
+    if not neta['tags'].get('work'): neta['tags']['work'] = ['全作業']
+    if not neta['tags'].get('audience'): neta['tags']['audience'] = ['全員向け']
+    if not neta['tags'].get('mood'): neta['tags']['mood'] = ['学べる雑学']
+    # 本文長: 80〜900（前は700で厳しすぎた）
     body = neta['body']
-    import re as _re
+    assert 80 <= len(body) <= 900, f"body length out of range: {len(body)}"
+    # 途切れ検出: 拡張された終端文字セット。auto-fix として句点を足す
     plain = _re.sub(r'<[^>]+>', '', body).strip()
-    assert plain and plain[-1] in '。！？」）', f"body appears truncated (末尾: ...{plain[-30:]})"
-    # bタグの開閉数一致
-    open_b = len(_re.findall(r'<b\b[^>]*>', body))
-    close_b = body.count('</b>')
-    assert open_b == close_b, f"unmatched <b> tags (open={open_b}, close={close_b})"
+    assert plain, "body has no plain text"
+    terminators = "。！？」）』】…♪〜ー・"
+    if plain[-1] not in terminators:
+        # 「〜てください」「〜ましょう」等で終わる場合は句点を足す
+        if plain.endswith(('てください', 'ましょう', 'ましょ', 'ましょう。', 'をお願いします',
+                            'こと', 'ため', 'する', 'ます', 'です', 'ない', 'ある')):
+            neta['body'] = body.rstrip() + '。'
+            body = neta['body']
+            print(f"  auto-fixed: added period at end")
+        else:
+            # 最後の完全な文以降を削除（部分的な途切れをカット）
+            m = _re.search(r'^(.*[。！？」）』])[^。！？」）』]*$', plain, _re.DOTALL)
+            if m and len(m.group(1)) >= 80:
+                # 対応する位置までbodyを切る
+                truncated = plain[:len(m.group(1))]
+                # HTMLタグ位置を保ちつつ切る（簡易版）
+                neta['body'] = body[:body.rfind(truncated[-5:]) + 5] if truncated[-5:] in body else body
+                if not neta['body'].rstrip().endswith(('。','！','？','」','）')):
+                    neta['body'] = neta['body'].rstrip() + '。'
+                print(f"  auto-fixed: truncated tail")
+            else:
+                raise AssertionError(f"body appears truncated (末尾: ...{plain[-30:]})")
+    # bタグ不整合: auto-fix
+    open_b = len(_re.findall(r'<b\b[^>]*>', neta['body']))
+    close_b = neta['body'].count('</b>')
+    if open_b > close_b:
+        neta['body'] += '</b>' * (open_b - close_b)
+        print(f"  auto-fixed: added {open_b - close_b} closing </b> tags")
+    elif close_b > open_b:
+        # 余分な </b> を削除
+        for _ in range(close_b - open_b):
+            idx = neta['body'].rfind('</b>')
+            if idx >= 0:
+                neta['body'] = neta['body'][:idx] + neta['body'][idx+4:]
+        print(f"  auto-fixed: removed extra </b> tags")
 
 
 def main():
@@ -400,7 +435,7 @@ def main():
 
     # 生成＋検証＋重複タイトル回避（最大3回試行）
     new_neta = None
-    for attempt in range(3):
+    for attempt in range(5):
         try:
             raw = call_gemini(prompt)
             print(f"attempt {attempt+1}: got response ({len(raw)} chars)")
@@ -416,7 +451,7 @@ def main():
             print(f"  attempt {attempt+1} failed: {e}")
 
     if new_neta is None:
-        print("failed to generate valid neta after 3 attempts")
+        print("failed to generate valid neta after 5 attempts")
         # リトロフィット/HTML更新だけでもコミットしたい場合の分岐
         if retrofit_done or html_updated:
             write_neta_data(data)

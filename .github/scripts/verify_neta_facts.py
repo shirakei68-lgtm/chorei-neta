@@ -104,6 +104,19 @@ Web検索で公的機関（厚生労働省・国土交通省・警察庁・気�
         resp = model.generate_content(prompt)
         return json.loads(resp.text)
     except Exception as e:
+        # Vertex AI フォールバック
+        project = os.environ.get('GCP_PROJECT_ID')
+        if project:
+            try:
+                import vertexai
+                from vertexai.generative_models import GenerativeModel as VxModel, GenerationConfig as VxCfg
+                vertexai.init(project=project, location=os.environ.get('GCP_REGION', 'us-central1'))
+                vx_model = VxModel('gemini-2.0-flash-001')
+                vx_resp = vx_model.generate_content(prompt, generation_config=VxCfg(
+                    temperature=0.2, max_output_tokens=2048, response_mime_type='application/json'))
+                return json.loads(vx_resp.text)
+            except Exception as e2:
+                return {"verdict": "uncertain", "reason": f"Gemini+Vertex both failed: {str(e)[:40]} / {str(e2)[:40]}", "correction": ""}
         return {"verdict": "uncertain", "reason": f"API error: {str(e)[:80]}", "correction": ""}
 
 

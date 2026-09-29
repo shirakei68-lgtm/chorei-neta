@@ -289,47 +289,83 @@ JSONオブジェクト1つのみ（説明文・コードブロック不要）。
 """
 
 
+# ========== 出力スキーマ（Gemini API / Vertex AI 共通） ==========
+NETA_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "title": {"type": "string"},
+        "category": {"type": "string"},
+        "body": {"type": "string"},
+        "tags_work": {"type": "array", "items": {"type": "string"}},
+        "tags_weather": {"type": "array", "items": {"type": "string"}},
+        "tags_audience": {"type": "array", "items": {"type": "string"}},
+        "tags_mood": {"type": "array", "items": {"type": "string"}},
+        "months": {"type": "array", "items": {"type": "integer"}},
+        "furigana_pairs": {"type": "array", "items": {
+            "type": "object",
+            "properties": {"kanji": {"type": "string"}, "reading": {"type": "string"}},
+            "required": ["kanji","reading"]
+        }},
+        "quiz": {
+            "type": "object",
+            "properties": {
+                "question": {"type": "string"},
+                "choices": {"type": "array", "items": {"type": "string"}},
+                "correct_index": {"type": "integer"},
+                "explanation": {"type": "string"}
+            },
+            "required": ["question","choices","correct_index","explanation"]
+        },
+    },
+    "required": ["title","category","body","tags_work","tags_audience","tags_mood","months","quiz"],
+}
+
+GEN_CONFIG = {
+    'response_mime_type': 'application/json',
+    'response_schema': NETA_SCHEMA,
+    'temperature': 0.9,
+    'max_output_tokens': 8192,
+}
+
+
 def call_gemini(prompt):
+    """1次経路: Gemini API (google-generativeai)"""
     api_key = os.environ.get('GEMINI_API_KEY')
     if not api_key:
         raise RuntimeError('GEMINI_API_KEY not set')
     genai.configure(api_key=api_key)
-    # response_schemaでスキーマを固定してJSON構造化出力
-    schema = {
-        "type": "object",
-        "properties": {
-            "title": {"type": "string"},
-            "category": {"type": "string"},
-            "body": {"type": "string"},
-            "tags_work": {"type": "array", "items": {"type": "string"}},
-            "tags_weather": {"type": "array", "items": {"type": "string"}},
-            "tags_audience": {"type": "array", "items": {"type": "string"}},
-            "tags_mood": {"type": "array", "items": {"type": "string"}},
-            "months": {"type": "array", "items": {"type": "integer"}},
-            "furigana_pairs": {"type": "array", "items": {
-                "type": "object",
-                "properties": {"kanji": {"type": "string"}, "reading": {"type": "string"}},
-                "required": ["kanji","reading"]
-            }},
-            "quiz": {
-                "type": "object",
-                "properties": {
-                    "question": {"type": "string"},
-                    "choices": {"type": "array", "items": {"type": "string"}},
-                    "correct_index": {"type": "integer"},
-                    "explanation": {"type": "string"}
-                },
-                "required": ["question","choices","correct_index","explanation"]
-            },
-        },
-        "required": ["title","category","body","tags_work","tags_audience","tags_mood","months","quiz"],
-    }
-    model = genai.GenerativeModel('gemini-flash-latest',
-                                   generation_config={'response_mime_type': 'application/json',
-                                                       'response_schema': schema,
-                                                       'temperature': 0.9,
-                                                       'max_output_tokens': 8192})
+    model = genai.GenerativeModel('gemini-flash-latest', generation_config=GEN_CONFIG)
     resp = model.generate_content(prompt)
+    return resp.text
+
+
+def call_vertex(prompt):
+    """フォールバック経路: Vertex AI (google-cloud-aiplatform)
+    Gemini API が使えないとき（クォータ枯渇・障害等）に利用。
+    必要な環境変数:
+      GCP_PROJECT_ID: GCPプロジェクトID
+      GCP_REGION: リージョン（省略時 us-central1）
+      GOOGLE_APPLICATION_CREDENTIALS: サービスアカウントJSONへのパス
+                                       （GitHub Actions側で secrets から書き出す）
+    """
+    project = os.environ.get('GCP_PROJECT_ID')
+    if not project:
+        raise RuntimeError('Vertex AI not configured (GCP_PROJECT_ID not set)')
+    region = os.environ.get('GCP_REGION', 'us-central1')
+    try:
+        import vertexai
+        from vertexai.generative_models import GenerativeModel, GenerationConfig
+    except ImportError:
+        raise RuntimeError('vertexai package not installed')
+    vertexai.init(project=project, location=region)
+    # Vertex AI では response_schema はサポート形式が若干異なるため単純化
+    gen_config = GenerationConfig(
+        temperature=0.9,
+        max_output_tokens=8192,
+        response_mime_type='application/json',
+    )
+    model = GenerativeModel('gemini-2.0-flash-001')
+    resp = model.generate_content(prompt, generation_config=gen_config)
     return resp.text
 
 
@@ -433,25 +469,33 @@ def main():
 
     prompt = build_prompt(existing_titles, next_id, jst_month)
 
-    # 生成＋検証＋重複タイトル回避（最大3回試行）
+    # 生成＋検証＋重複タイトル回避
+    # 1次: Gemini API (5回) → 2次: Vertex AI (3回) の2段構え
     new_neta = None
-    for attempt in range(5):
-        try:
-            raw = call_gemini(prompt)
-            print(f"attempt {attempt+1}: got response ({len(raw)} chars)")
-            candidate = parse_neta_json(raw)
-            candidate['id'] = next_id
-            validate_neta(candidate)
-            if candidate['title'] in existing_titles:
-                print(f"  duplicate title: {candidate['title']}, retrying...")
-                continue
-            new_neta = candidate
+    routes = [('Gemini API', call_gemini, 5), ('Vertex AI', call_vertex, 3)]
+    for route_name, caller, max_attempts in routes:
+        if new_neta is not None:
             break
-        except Exception as e:
-            print(f"  attempt {attempt+1} failed: {e}")
+        for attempt in range(max_attempts):
+            try:
+                raw = caller(prompt)
+                print(f"[{route_name}] attempt {attempt+1}: got response ({len(raw)} chars)")
+                candidate = parse_neta_json(raw)
+                candidate['id'] = next_id
+                validate_neta(candidate)
+                if candidate['title'] in existing_titles:
+                    print(f"  duplicate title: {candidate['title']}, retrying...")
+                    continue
+                new_neta = candidate
+                print(f"✅ success via {route_name}")
+                break
+            except Exception as e:
+                print(f"  [{route_name}] attempt {attempt+1} failed: {e}")
+        if new_neta is None:
+            print(f"⚠️  {route_name} exhausted all {max_attempts} attempts, trying next route...")
 
     if new_neta is None:
-        print("failed to generate valid neta after 5 attempts")
+        print("failed to generate valid neta after all routes (Gemini API + Vertex AI)")
         # リトロフィット/HTML更新だけでもコミットしたい場合の分岐
         if retrofit_done or html_updated:
             write_neta_data(data)

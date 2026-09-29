@@ -26,12 +26,22 @@ jobs:
           python-version: '3.11'
 
       - name: Install deps
-        run: pip install google-generativeai
+        run: pip install google-generativeai google-cloud-aiplatform
+
+      - name: Configure Vertex AI credentials (optional)
+        if: env.GCP_SA_KEY != ''
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        run: |
+          echo "$GCP_SA_KEY" > /tmp/gcp-sa.json
+          echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcp-sa.json" >> $GITHUB_ENV
 
       - name: Generate and append neta
         id: gen
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          GCP_REGION: ${{ secrets.GCP_REGION }}
         run: python .github/scripts/gemini_add_neta.py
 
       - name: Configure git
